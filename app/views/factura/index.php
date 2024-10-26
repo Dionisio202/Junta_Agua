@@ -26,7 +26,7 @@
                     <?php if ($rol === 'Administrador'): ?>
                         <td>
                             <a href="/app/controllers/FacturaController.php?action=edit&id=<?= $factura['idfactura'] ?>">✏️</a>
-                            <a href="/app/controllers/FacturaController.php?action=delete&id=<?= $factura['idfactura'] ?>">🗑️</a>
+                            <a href="/Junta_Agua/public/content.php?view=factura/index&action=delete&id=<?= $factura['idfactura'] ?>" onclick="return confirm('¿Estás seguro de eliminar esta factura?')">🗑️</a>
                         </td>
                     <?php endif; ?>
                 </tr>

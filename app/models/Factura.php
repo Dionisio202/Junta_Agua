@@ -36,4 +36,10 @@ class Factura {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function delete($id) {
+        // Consulta para eliminar una factura por su ID
+        $stmt = $this->conn->prepare('DELETE FROM factura WHERE idfactura = :id');
+        $stmt->bindParam(':id', $id);
+        return $stmt->execute();
+    }
 }

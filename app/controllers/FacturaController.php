@@ -35,4 +35,11 @@ class FacturaController {
         // Pasamos las variables necesarias a la vista
         require_once __DIR__ . '/../views/factura/index.php';
     }
+    public function deleteFactura($id) {
+        if ($this->factura->delete($id)) {
+            echo "Factura eliminada correctamente.";
+        } else {
+            echo "Error al eliminar la factura.";
+        }
+    }
 }
