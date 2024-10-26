@@ -17,8 +17,8 @@
         <!-- Menú Lateral -->
         <aside id="sidebar" class="sidebar">
             <div class="sidebar-header">
-                <h2 class="sidebar-rol">Rol</h2>
-                <h2 class="sidebar-nombre">Nombre</h2>
+                <h2 class="sidebar-rol"><?= htmlspecialchars($_SESSION['rol'] ?? 'Invitado'); ?></h2>
+                <h2 class="sidebar-nombre"><?= htmlspecialchars($_SESSION['nombre'] ?? 'Usuario'); ?></h2>
             </div>
             <nav class="sidebar-nav">
                 <a href="?view=factura/landing" class="sidebar-link"><i class="fas fa-home"></i> <span>Landing</span></a>
@@ -28,21 +28,13 @@
                 <a href="?view=gestion_usuarios" class="sidebar-link"><i class="fas fa-users"></i> <span>Gestión de Usuarios</span></a>
             </nav>
             <div class="sidebar-footer">
-                <a href="#" class="sidebar-link"><i class="fas fa-sign-out-alt"></i> <span>Salir</span></a>
+                <a href="logout.php" class="sidebar-link"><i class="fas fa-sign-out-alt"></i> <span>Salir</span></a>
             </div>
         </aside>
 
         <!-- Contenido Principal -->
         <main class="main-content">
-            <?php
-            $view = $_GET['view'] ?? 'factura/index';
-            $viewFile = "../app/views/{$view}.php";
-            if (file_exists($viewFile)) {
-                include($viewFile);
-            } else {
-                echo "<p>Vista no encontrada.</p>";
-            }
-            ?>
+            <?php include 'content.php'; ?>
         </main>
     </div>
 </body>
