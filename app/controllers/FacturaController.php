@@ -6,7 +6,7 @@ require_once __DIR__ . '/../models/Factura.php';
 class FacturaController {
     public function index() {
         // Definir el rol desde la sesión o establecer 'Administrador' como valor predeterminado
-        $rol = $_SESSION['rol'] ?? 'Administrador';
+        $rol = $_SESSION['rol'] ?? 'Tesorero';
 
         // Imprimir el rol para verificar que se establece correctamente en el controlador
         echo "<pre>Rol en el controlador: ";
