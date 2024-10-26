@@ -1,22 +1,28 @@
 <?php
-session_start(); // Inicia la sesión para poder acceder a $_SESSION
+// app/controllers/FacturaController.php
 
+session_start();
 require_once __DIR__ . '/../models/Factura.php';
 
 class FacturaController {
     public function index() {
-        // Definir el rol desde la sesión o establecer 'Administrador' como valor predeterminado
-        $rol = $_SESSION['rol'] ?? 'Tesorero';
-
-        // Imprimir el rol para verificar que se establece correctamente en el controlador
-        echo "<pre>Rol en el controlador: ";
-        print_r($rol);
-        echo "</pre>";
-
-        // Obtener todas las facturas
+        $rol = $_SESSION['rol'] ?? 'Administrador';
+        
+        // Obtenemos todas las facturas
         $facturas = Factura::getAll();
+        $totalFacturas = count($facturas);
+        $itemsPerPage = 5;
+        $totalPages = ceil($totalFacturas / $itemsPerPage);
+        
+        // Página actual y cálculo de índices
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        if ($currentPage < 1) $currentPage = 1;
+        if ($currentPage > $totalPages) $currentPage = $totalPages;
 
-        // Pasar las variables a la vista
+        $startIndex = ($currentPage - 1) * $itemsPerPage;
+        $currentFacturas = array_slice($facturas, $startIndex, $itemsPerPage);
+
+        // Pasamos las variables necesarias a la vista
         require_once __DIR__ . '/../views/factura/index.php';
     }
 }

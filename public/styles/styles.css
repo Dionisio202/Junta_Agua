@@ -128,3 +128,98 @@ body {
         margin-left: 200px;
     }
 }
+.table-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+.table-container button {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 10px 15px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.2s;
+}
+
+.table-container button:hover {
+    background-color: #0056b3;
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table-container th,
+.table-container td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #dddddd;
+}
+
+.table-container th {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.table-container tr:hover {
+    background-color: #f2f2f2;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pagination span {
+    margin: 0 5px;
+    cursor: pointer;
+    color: #007bff;
+    font-weight: 600;
+}
+
+.pagination span:hover {
+    color: #0056b3;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.page-number, .page-arrow {
+    margin: 0 5px;
+    cursor: pointer;
+    color: #007bff;
+    font-weight: 600;
+}
+
+.page-number.active {
+    color: #ffffff;
+    background-color: #007bff;
+    padding: 5px 10px;
+    border-radius: 50%;
+}
+
+.page-arrow:hover,
+.page-number:hover {
+    color: #0056b3;
+}

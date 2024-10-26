@@ -16,8 +16,8 @@
             <?php endif; ?>
         </tr>
         
-        <?php if (!empty($facturas)): ?>
-            <?php foreach ($facturas as $factura): ?>
+        <?php if (!empty($currentFacturas)): ?>
+            <?php foreach ($currentFacturas as $factura): ?>
                 <tr>
                     <td><?= htmlspecialchars($factura['nombre']) ?></td>
                     <td><?= htmlspecialchars($factura['cedula']) ?></td>
@@ -37,4 +37,19 @@
             </tr>
         <?php endif; ?>
     </table>
+    <div class="pagination">
+    <span id="prev-page" class="page-arrow">
+        <a href="?view=factura/index&page=<?= max(1, $currentPage - 1); ?>">&lt;</a>
+    </span>
+    
+    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+        <span class="page-number <?= $i === $currentPage ? 'active' : ''; ?>">
+            <a href="?view=factura/index&page=<?= $i; ?>"><?= $i; ?></a>
+        </span>
+    <?php endfor; ?>
+    
+    <span id="next-page" class="page-arrow">
+        <a href="?view=factura/index&page=<?= min($totalPages, $currentPage + 1); ?>">&gt;</a>
+    </span>
+</div>
 </div>
