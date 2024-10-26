@@ -16,7 +16,7 @@ class FacturaController {
     }
 
     public function index() {
-        $rol = $_SESSION['rol'] ?? 'Administrador';
+        $rol = $_SESSION['Rol'] ?? 'Administrador';
         
         // Obtenemos todas las facturas a través del modelo
         $facturas = $this->factura->getAll();

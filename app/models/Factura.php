@@ -12,8 +12,13 @@ class Factura {
 
     // Método para obtener todas las facturas
     public function getAll() {
-        // Consulta para obtener todas las facturas
-        $stmt = $this->conn->query('SELECT * FROM factura');
+        // Consulta para obtener las facturas junto con la información del cliente
+        $query = "SELECT f.idfactura, c.nombre, c.cedula, c.telefono, f.fecha_emision AS detalle, f.total, f.estado_pago 
+                  FROM factura f
+                  JOIN Cliente c ON f.idcliente = c.idcliente";
+                  
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     public function getById($id) {
