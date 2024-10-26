@@ -128,6 +128,25 @@ body {
         margin-left: 200px;
     }
 }
+
+.user-info {
+    text-align: right; 
+    font-size: 14px; 
+    color: #333; 
+    padding: 5px;
+}
+
+.user-role {
+    display: block; 
+    font-size: 14px; 
+    color: #333; 
+}
+
+.user-name {
+    font-size: 14px; 
+    color: #333; 
+}
+
 .table-container {
     background-color: #ffffff;
     padding: 20px;
@@ -142,8 +161,24 @@ h1 {
     margin-bottom: 20px;
 }
 
+.header-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.table-container {
+    margin-top: 20px; 
+}
+
 .table-container button {
-    background-color: #007bff;
+    background-color: #3282B8;
     color: #ffffff;
     padding: 10px 15px;
     font-size: 14px;
@@ -155,29 +190,51 @@ h1 {
 }
 
 .table-container button:hover {
-    background-color: #0056b3;
+    background-color: #64a1ca;
 }
 
 .table-container table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
     margin-top: 20px;
+    border-spacing: 0;
 }
 
 .table-container th,
 .table-container td {
     padding: 12px 15px;
     text-align: left;
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 4px solid #ffffff;     
 }
 
 .table-container th {
-    background-color: #007bff;
+    background-color: #3282B8;
     color: #ffffff;
 }
 
+.table-container tr {
+    background-color: #f2f2f2; 
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table-container tr:first-child {
+    background-color: #3282B8; 
+    color: #ffffff; 
+}
+
+.table-container th:first-child, .table-container td:first-child  {
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+  }
+  
+.table-container th:nth-last-child(1), .table-container td:nth-last-child(1){
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+  }
+  
 .table-container tr:hover {
-    background-color: #f2f2f2;
+    background-color: #e0e0e0;
 }
 
 .pagination {
@@ -190,12 +247,12 @@ h1 {
 .pagination span {
     margin: 0 5px;
     cursor: pointer;
-    color: #007bff;
+    color: #16486a;
     font-weight: 600;
 }
 
 .pagination span:hover {
-    color: #0056b3;
+    color: #22638e;
 }
 
 .pagination {
@@ -208,18 +265,18 @@ h1 {
 .page-number, .page-arrow {
     margin: 0 5px;
     cursor: pointer;
-    color: #007bff;
+    color: #1b5e8b;
     font-weight: 600;
 }
 
 .page-number.active {
     color: #ffffff;
-    background-color: #007bff;
+    background-color: #4f90bc;
     padding: 5px 10px;
     border-radius: 50%;
 }
 
 .page-arrow:hover,
 .page-number:hover {
-    color: #0056b3;
+    color: #568cc6;
 }

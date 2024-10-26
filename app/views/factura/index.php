@@ -1,9 +1,18 @@
+<div class="user-info">
+    <span class="user-role"><?= htmlspecialchars($rol); ?></span> 
+    <span class="user-name"><?= htmlspecialchars($_SESSION['nombre'] ?? 'Usuario'); ?></span> 
+</div>
+
 <div class="table-container">
-    <h1>Facturación <?= $rol === 'Tesorero' ? 'TESORERÍA' : ''; ?></h1>
-    <button class="export-btn">Exportar datos</button>
-    <?php if ($rol === 'Administrador'): ?>
-        <button class="add-btn">Agregar nueva Factura</button>
-    <?php endif; ?>
+    <div class="header-buttons">
+        <h1>Facturación <?= $rol === 'Tesorero' ? 'TESORERÍA' : ''; ?></h1>
+    </div>
+    <div class="buttons">
+        <button class="export-btn">Exportar datos</button>
+        <?php if ($rol === 'Administrador'): ?>
+            <button class="add-btn">Agregar nueva Factura</button>
+        <?php endif; ?>
+    </div>
 
     <table>
         <tr>
@@ -25,8 +34,8 @@
                     <td><?= htmlspecialchars($factura['detalle']) ?></td>
                     <?php if ($rol === 'Administrador'): ?>
                         <td>
-                            <a href="/app/controllers/FacturaController.php?action=edit&id=<?= $factura['id'] ?>">✏️</a>
-                            <a href="/app/controllers/FacturaController.php?action=delete&id=<?= $factura['id'] ?>">🗑️</a>
+                            <a href="/app/controllers/FacturaController.php?action=edit&id=<?= 88 ?>">✏️</a>
+                            <a href="/app/controllers/FacturaController.php?action=delete&id=<?= 88 ?>">🗑️</a>
                         </td>
                     <?php endif; ?>
                 </tr>
