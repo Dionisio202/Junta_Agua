@@ -29,7 +29,7 @@
                 <!-- Mensaje de error si las credenciales son incorrectas -->
                 <?php
                 if (isset($_GET['error']) && $_GET['error'] == 'invalid') {
-                    echo "<p style='color:red; text-align: center;'>Usuario o contraseña incorrectos.</p>";
+                    echo "<p style='color:red; text-align: center;'>Cédula o contraseña incorrectos.</p>";
                 }
                 ?>
             </div>

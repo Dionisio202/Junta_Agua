@@ -10,15 +10,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['ac
     
     // Llamada al método login en AuthController
     if (!$authController->login($username, $password)) {
-        // Este redireccionamiento ya se hace en el AuthController, pero es importante asegurarse
+        // Redirige al formulario de login si falla la autenticación
         header("Location: index.php?action=login&error=invalid");
         exit();
     }
 } elseif (isset($_GET['action']) && $_GET['action'] === 'logout') {
     $authController->logout();
-} elseif (isset($_SESSION['Nombre'])) {
+} elseif (isset($_SESSION['Cedula'])) {
     // Usuario autenticado, muestra la página principal
-    echo "Bienvenido, " . htmlspecialchars($_SESSION['Nombre']) . " (" . htmlspecialchars($_SESSION['Rol']) . ")";
+    echo "Bienvenido, " . htmlspecialchars($_SESSION['Cedula']) . " (" . htmlspecialchars($_SESSION['Rol']) . ")";
     echo '<br><a href="index.php?action=logout">Cerrar sesión</a>';
     
     // Cargar landing page o contenido según el rol

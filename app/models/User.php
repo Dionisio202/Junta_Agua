@@ -20,19 +20,20 @@ class User {
         return $stmt->execute();
     }
 
-    public function authenticateUser($nombre, $password) {
-        $query = "SELECT rol FROM " . $this->table_name . " WHERE nombre = :nombre AND password = :password LIMIT 1";
+    public function authenticateUser($cedula, $password) {
+        $query = "SELECT rol FROM " . $this->table_name . " WHERE cedula = :cedula AND password = :password LIMIT 1";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":nombre", $nombre);
+        $stmt->bindParam(":cedula", $cedula);
         $stmt->bindParam(":password", $password); // Contraseña sin cifrar
         $stmt->execute();
-    
+        
         if ($stmt->rowCount() > 0) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             return $row['rol']; // Devuelve el rol si la autenticación es exitosa
         }
         return false;
     }
+    
     
     
     
