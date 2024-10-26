@@ -1,0 +1,79 @@
+body {
+  background-image: url("../img/backgroundLogin.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.login-section {
+  position: relative; /* Asegurarse de que el contenedor padre tenga posición relativa */
+  height: 100vh; /* Asegurar que ocupe toda la altura de la vista */
+}
+
+.login-container {
+  position: absolute; /* Hacer que el contenedor esté absolutamente posicionado */
+  right: 1; /* Pegado a la derecha */
+  top: 50%; /* Centrar verticalmente */
+  transform: translateY(-50%); /* Ajustar para que esté centrado */
+  display: flex;
+  width: 300px; /* Puedes ajustar el ancho según sea necesario */
+}
+
+.login-card {
+  background-color: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para un efecto de tarjeta */
+  max-width: 400px; /* Limitar el ancho máximo de la tarjeta */
+  width: 100%; /* Ancho total del card */
+  text-align: center;
+  color: #333;
+}
+
+.login-card h2 {
+  margin-bottom: 1.5rem; /* Aumentar el margen inferior para más espacio */
+  font-size: 1.8rem; /* Ajustar el tamaño de la fuente */
+  color: #333;
+}
+.login-card input[type="text"],
+.login-card input[type="password"] {
+  width: 100%;
+  padding: 0.75rem; /* Aumentar el padding para un mejor toque */
+  margin-bottom: 1.5rem; /* Ajustar margen inferior para un mejor espaciado */
+  border-radius: 4px; /* Aumentar el radio de borde para suavidad */
+  border: 1px solid #ccc; /* Mantener el borde gris claro */
+  font-size: 1rem;
+}
+
+.login-card button {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 4px;
+  background-color: #4caf50; /* Color de fondo del botón */
+  color: white; /* Color del texto del botón */
+  border: none; /* Sin borde para un aspecto más limpio */
+  font-size: 1.2rem; /* Tamaño de fuente del botón */
+  font-weight: bold; /* Peso de fuente en negrita */
+  cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
+  transition: background-color 0.3s; /* Efecto de transición suave */
+}
+
+.login-card button:hover {
+  background-color: #45a049; /* Color al pasar el mouse sobre el botón */
+}
+.logo {
+  width: 50px; /* Ajusta el tamaño del logo según tus necesidades */
+  height: 50px; /* Ajusta la altura para mantener la proporción */
+  background-image: url("../img/LOGO.png"); /* Ruta de la imagen del logo */
+  background-size: cover; /* Asegura que la imagen cubra el área */
+  background-position: center; /* Centra la imagen */
+  display: inline-block; /* Permite que el tamaño de la caja se ajuste al contenido */
+  vertical-align: middle; /* Alinea el logo verticalmente con el texto */
+  margin-right: 10px; /* Espacio entre el logo y el texto */
+}
