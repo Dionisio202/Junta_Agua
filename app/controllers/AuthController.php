@@ -12,12 +12,12 @@ class AuthController {
         $this->userModel = new User($this->db);
     }
 
-    public function login($username, $password) {
-        $role = $this->userModel->authenticateUser($username, $password);
+    public function login($cedula, $password) {
+        $role = $this->userModel->authenticateUser($cedula, $password);
         
         if ($role) {
             session_start();
-            $_SESSION['Nombre'] = $username;
+            $_SESSION['Cedula'] = $cedula;
             $_SESSION['Rol'] = $role;
             header("Location: /Junta_Agua/public/index.php?action=home");
             exit();
@@ -27,6 +27,7 @@ class AuthController {
             exit();
         }
     }
+    
     
     
     
