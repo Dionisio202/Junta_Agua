@@ -41,6 +41,7 @@ body {
   font-size: 1.8rem; /* Ajustar el tamaño de la fuente */
   color: #333;
 }
+
 .login-card input[type="text"],
 .login-card input[type="password"] {
   width: 100%;
