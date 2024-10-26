@@ -15,7 +15,7 @@
     <section class="login-section">
         <div class="login-container">
             <div class="login-card">
-                <h1><img class="logo"></h1>
+                <<img class="logo" alt="logo">
                 <h2>Bienvenid@</h2>
                 <h5>Inicie sesión para acceder a los beneficios del sistema</h5>
                 
