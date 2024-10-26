@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Junta Administradora de Agua Potable</title>
-    <link rel="stylesheet" href="/public/styles/landpage.css">
+    <link rel="stylesheet" href="../../public/styles/landpage.css">
+
 </head>
 <body>
     <header>
         <div class="logo">
-            <img src="/public/img/LOGO.png" alt="Logo de la Junta">
+            <img src="../../public/img/LOGO.png" alt="Logo de la Junta">
         </div>
         <nav>
             <ul>    
@@ -25,15 +26,6 @@
             <p>Bienvenidos a mi página web, espero que les guste amiguitos, bendiciones.<br>
             Spoiler: no acabamos<br>
             Spoiler2: ¿les gusta?</p>
-        </div>
-    </section>
-
-    <section class="more-info">
-        <h3>Más Información</h3>
-        <div class="slider">
-            <div class="slide">Contenido del Slide 1</div>
-            <div class="slide">Contenido del Slide 2</div>
-            <div class="slide">Contenido del Slide 3</div>
         </div>
     </section>
 </body>
