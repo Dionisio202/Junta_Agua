@@ -18,10 +18,11 @@
             <a href="login.php">Login</a>
         </nav>
     </header>
-    <section>
-        <p>Bienvenidos a mi página web, espero que les guste amiguitos, bendiciones.</p>
-        <p>Spoiler: no acabamos</p>
-        <p>Spoiler2: ¿les gusta?</p>
+    
+    <section class="welcome-section">
+        <p>Bienvenidos a nuestra página web. Nos esforzamos por brindar un servicio de calidad para nuestra comunidad.</p>
+        <p class="spoiler">Spoiler: no acabamos</p>
+        <p class="spoiler2">Spoiler2: ¿les gusta?</p>
     </section>
 </body>
 </html>
