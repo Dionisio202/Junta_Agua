@@ -1,85 +1,96 @@
-/* General reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
 }
 
-/* Background color for the entire body */
 body {
-    background-color: #f3f4f6;
-    color: #333;
+    font-family: Arial, sans-serif;
+    color: #fff;
+    background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+    overflow-x: hidden;
+}
+
+header {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 50px;
+}
+
+.logo img {
+    width: 50px; /* Ajusta el tamaño del logo según prefieras */
+    height: auto;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-button {
+    border: 1px solid #fff;
+    padding: 5px 15px;
+    border-radius: 15px;
+    transition: background-color 0.3s;
+}
+
+.login-button:hover {
+    background-color: #fff;
+    color: #203a43;
+}
+
+.hero {
+    display: flex;
     align-items: center;
     justify-content: center;
+    height: 90vh;
+    background-image: url('/public/img/FONDO.jpg'); /* Cambia 'path/to/your-image.jpg' por la ruta de tu imagen */
+    background-size: cover;
+    background-position: center;
+    position: relative;
 }
 
-/* Header styling */
-header {
-    text-align: center;
-    background-color: #2d6a4f;
-    color: #f1faee;
-    padding: 20px;
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    height: 100%;
+    background-color: rgba(1, 75, 90, 0.607); /* Ajusta la opacidad según prefieras */
 }
 
-header h1 {
-    font-size: 2rem;
+.hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+.hero-content h1 {
+    font-size: 2.5em;
+    font-weight: bold;
     margin-bottom: 10px;
 }
 
-header h2 {
-    font-size: 1.2rem;
-    font-weight: lighter;
-    opacity: 0.9;
-}
-
-/* Navigation bar styling */
-nav {
-    margin-top: 15px;
-}
-
-nav a {
-    color: #f1faee;
-    text-decoration: none;
-    font-weight: bold;
-    margin: 0 15px;
-    padding: 5px 10px;
-    transition: color 0.3s, border-bottom 0.3s;
-}
-
-nav a:hover {
-    color: #9a8c98;
-    border-bottom: 2px solid #f1faee;
-}
-
-/* Main section styling */
-.welcome-section {
-    padding: 40px;
-    text-align: center;
-    max-width: 800px;
-    background-color: #fefae0;
-    border-radius: 8px;
-    margin-top: 20px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.welcome-section p {
-    margin-bottom: 15px;
-    font-size: 1.1rem;
-    line-height: 1.6;
-}
-
-.spoiler {
-    color: #2d6a4f;
-    font-weight: bold;
+.hero-content h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
     font-style: italic;
 }
 
-.spoiler2 {
-    color: #606c38;
-    font-style: italic;
+.hero-content p {
+    font-size: 1.2em;
+    line-height: 1.5;
 }
