@@ -3,13 +3,23 @@
 
 session_start();
 require_once __DIR__ . '/../models/Factura.php';
+require_once __DIR__ . '/../../config/databas.php';
 
 class FacturaController {
+    private $factura;
+
+    public function __construct() {
+        // Crear la conexión a la base de datos y pasarla al modelo Factura
+        $database = new Database();
+        $db = $database->getConnection();
+        $this->factura = new Factura($db);
+    }
+
     public function index() {
         $rol = $_SESSION['rol'] ?? 'Administrador';
         
-        // Obtenemos todas las facturas
-        $facturas = Factura::getAll();
+        // Obtenemos todas las facturas a través del modelo
+        $facturas = $this->factura->getAll();
         $totalFacturas = count($facturas);
         $itemsPerPage = 5;
         $totalPages = ceil($totalFacturas / $itemsPerPage);
