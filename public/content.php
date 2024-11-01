@@ -23,6 +23,9 @@ switch ($view) {
             $controller->index(); // Llama al método que cargará la vista correspondiente
         }
         break;
+    case 'pagos':
+        require_once __DIR__ . '/../app/views/pagos.php';
+        break;
     // Aquí puedes añadir otros casos para otros controladores y métodos
     default:
         echo "<p>Vista no encontrada.</p>";
