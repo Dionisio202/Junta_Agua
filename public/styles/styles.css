@@ -280,3 +280,152 @@ h1 {
 .page-number:hover {
     color: #568cc6;
 }
+
+
+/*Payments styles*/
+
+.payment-container {
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.payment-container h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.user-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.user-logo {
+    width: 80px;
+    height: 80px;
+    background-color: #ccc;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+.user-log-details{
+    display: flex;
+    flex-direction: row;
+}
+
+.user-details {
+    margin-left: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.user-details span {
+    font-size: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.invoice-number{
+    margin-top: 50px;
+}
+
+.user-dates {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.dates-user-details {
+    padding-top: 30px;
+    display: flex;
+    flex-direction: column; 
+}
+
+.dates-user-details > div {
+    display: flex; 
+    align-items: center; 
+    margin-bottom: 15px; 
+}
+
+.dates-user-details label {
+    margin-right: 10px; 
+    width: 100px; 
+}
+
+.dates-user-details input {
+    flex: 1; 
+}
+
+.user-dates > div {
+    margin-bottom: 10px;
+}
+
+.user-dates label {
+    
+    font-weight: bold;
+}
+
+
+.invoice-details {
+    margin-top: 20px;
+}
+.invoice-details-main{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.invoice-details-main > div {
+    margin-bottom: 15px; 
+}
+
+
+.invoice-dates label {
+    display: block;
+    margin-top: 5px;
+}
+
+.back-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #0F4C75;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background-color: #145e90;
+}
+
+.input-payment{
+    flex: 1; 
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    font-size: 14px; 
+    outline: none; 
+    transition: border-color 0.3s;
+}
+
+.input-payment:focus{
+    border-color: #007bff; 
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
