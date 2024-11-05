@@ -16,7 +16,6 @@ class Factura {
         $query = "SELECT f.idfactura, c.nombre, c.cedula, c.telefono, f.fecha_emision AS detalle, f.total, f.estado_pago 
                   FROM factura f
                   JOIN Cliente c ON f.idcliente = c.idcliente";
-                  
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

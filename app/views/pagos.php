@@ -30,7 +30,6 @@
             </div>
             <div class="invoice-details">
                 <div class="invoice-details-main">
-
                     <div class="invoice-date-one">
                         <label>Fecha:</label>
                         <input type="date" value="2020-07-01" class="input-payment">
@@ -42,7 +41,6 @@
                 </div>
             </div>
         </div>
-        
     </div>
 
     <div class="table-container">
@@ -62,10 +60,24 @@
                     <td>Christopher Santamaria</td>
                     <td>0969019125</td>
                     <td>Observación</td>
-                    <td><button>+ Ticket</button></td>
+                    <td><button id="myBtn">Ver Factura</button></td>
                 </tr>
             </tbody>
         </table>
+    </div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h1>Junta administradora de agua potable</h1>
+            <h4>“San Vicente Yaculoma y Bellavista El Rosario”</h4><br>
+            <span>Cuenta:</span><br>
+            <span>Nombre:</span><br>
+            <span>Cédula:</span><br>
+            <span>Fecha-Hora:</span>
+        </div>
     </div>
 
     <button class="back-button">Regresar</button>

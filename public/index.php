@@ -37,5 +37,6 @@
             <?php include 'content.php'; ?>
         </main>
     </div>
+    <script src="scripts/modal.js"></script>
 </body>
 </html>
