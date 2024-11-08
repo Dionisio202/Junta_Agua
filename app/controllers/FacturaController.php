@@ -43,6 +43,7 @@ class FacturaController {
         }
     }
     public function nuevafactura() {
+        $rol = $_SESSION['Rol'] ?? 'Administrador';
         require_once __DIR__ . '/../views/factura/nuevafactura.php';
     }
 }
