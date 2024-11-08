@@ -23,6 +23,7 @@
             <nav class="sidebar-nav">
                 <a href="?view=factura/landing" class="sidebar-link"><i class="fas fa-home"></i> <span>Landing</span></a>
                 <a href="?view=factura/index" class="sidebar-link"><i class="fas fa-file-invoice"></i> <span>Facturas</span></a>
+                <a href="?view=autorizaciones" class="sidebar-link"><i class="fas fa-users"></i> <span>Autorizaciones</span></a>
                 <a href="?view=pagos" class="sidebar-link"><i class="fas fa-credit-card"></i> <span>Pagos</span></a>
                 <a href="?view=reporte" class="sidebar-link"><i class="fas fa-chart-line"></i> <span>Reportería</span></a>
                 <a href="?view=gestion_usuarios" class="sidebar-link"><i class="fas fa-users"></i> <span>Gestión de Usuarios</span></a>

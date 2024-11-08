@@ -27,8 +27,13 @@ switch ($view) {
             $controller = new FacturaController();
             $controller->nuevafactura(); // Cargar la vista para crear una nueva factura
             break;
+        case 'autorizaciones':
+                $controller = new AutorizacionController();
+                $controller->vista(); // Cargar la vista para crear una nueva factura
+                break;
     // Aquí puedes añadir otros casos para otros controladores y métodos
     default:
         echo "<p>Vista no encontrada.</p>";
         break;
 }
+
