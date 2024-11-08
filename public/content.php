@@ -19,6 +19,10 @@ switch ($view) {
             } else {
                 echo "<p>Error: ID de factura no proporcionado.</p>";
             }
+        } else if ($action === "add") {
+            $controller->nuevafactura();
+            header("Location: /Junta_Agua/public/index.php?view=factura/nuevafactura");
+            exit();
         } else {
             $controller->index(); // Llama al método que cargará la vista correspondiente
         }

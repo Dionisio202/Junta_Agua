@@ -42,4 +42,7 @@ class FacturaController {
             echo "Error al eliminar la factura.";
         }
     }
+    public function nuevafactura() {
+        require_once __DIR__ . '/../views/factura/nuevafactura.php';
+    }
 }

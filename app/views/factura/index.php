@@ -10,7 +10,7 @@
     <div class="buttons">
         <button class="export-btn">Exportar datos</button>
         <?php if ($rol === 'Administrador'): ?>
-            <button class="add-btn">Agregar nueva Factura</button>
+            <button type="button" class="add-btn" onclick="window.location.href='/Junta_Agua/public/?view=factura/index&action=add';">Agregar nueva Factura</button>
         <?php endif; ?>
     </div>
 
