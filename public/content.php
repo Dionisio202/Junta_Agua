@@ -21,12 +21,16 @@ switch ($view) {
             }
         } else if ($action === "add") {
             $controller->nuevafactura();
-            header("Location: /Junta_Agua/public/index.php?view=factura/nuevafactura");
+            header(header: "Location: /Junta_Agua/public/index.php?view=factura/nuevafactura");
             exit();
         } else {
             $controller->index(); // Llama al método que cargará la vista correspondiente
         }
         break;
+        case 'factura/nuevafactura':
+            $controller = new FacturaController();
+            $controller->nuevafactura(); // Cargar la vista para crear una nueva factura
+            break;
     // Aquí puedes añadir otros casos para otros controladores y métodos
     default:
         echo "<p>Vista no encontrada.</p>";
