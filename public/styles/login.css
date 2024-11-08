@@ -1,3 +1,10 @@
+/* Estilos globales */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   background-image: url("../img/backgroundLogin.jpeg");
   background-size: cover;
@@ -11,44 +18,92 @@ body {
   margin: 0;
 }
 
+/* Header */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Asegura que el header quede al frente */
+}
+
+.header-logo .logo {
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+}
+
+.header-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
+
+.header-nav ul li a {
+  text-decoration: none;
+  color: #fff;
+  padding: 5px 10px;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.header-nav ul li a:hover {
+  background-color: #e4e2e2;
+}
+
+/* Login Section */
 .login-section {
-  position: relative; /* Asegurarse de que el contenedor padre tenga posición relativa */
-  height: 100vh; /* Asegurar que ocupe toda la altura de la vista */
+  position: relative;
+  height: 100vh;
 }
 
 .login-container {
-  position: absolute; /* Hacer que el contenedor esté absolutamente posicionado */
-  right: 1; /* Pegado a la derecha */
-  top: 50%; /* Centrar verticalmente */
-  transform: translateY(-50%); /* Ajustar para que esté centrado */
+  position: absolute;
+  right: 1;
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
-  width: 300px; /* Puedes ajustar el ancho según sea necesario */
+  width: 300px;
 }
 
 .login-card {
-  background-color: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
+  background-color: rgba(255, 255, 255, 0.9);
   padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para un efecto de tarjeta */
-  max-width: 400px; /* Limitar el ancho máximo de la tarjeta */
-  width: 100%; /* Ancho total del card */
+  border-radius: 15px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 100%;
   text-align: center;
   color: #333;
 }
 
 .login-card h2 {
-  margin-bottom: 1.5rem; /* Aumentar el margen inferior para más espacio */
-  font-size: 1.8rem; /* Ajustar el tamaño de la fuente */
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: #333;
+}
+.login-card h5 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  text-align: right;
   color: #333;
 }
 
 .login-card input[type="text"],
 .login-card input[type="password"] {
   width: 100%;
-  padding: 0.75rem; /* Aumentar el padding para un mejor toque */
-  margin-bottom: 1.5rem; /* Ajustar margen inferior para un mejor espaciado */
-  border-radius: 4px; /* Aumentar el radio de borde para suavidad */
-  border: 1px solid #ccc; /* Mantener el borde gris claro */
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: 15px;
+  border: 1px solid #ccc;
   font-size: 1rem;
 }
 
@@ -56,25 +111,50 @@ body {
   width: 100%;
   padding: 0.75rem;
   border-radius: 4px;
-  background-color: #4caf50; /* Color de fondo del botón */
-  color: white; /* Color del texto del botón */
-  border: none; /* Sin borde para un aspecto más limpio */
-  font-size: 1.2rem; /* Tamaño de fuente del botón */
-  font-weight: bold; /* Peso de fuente en negrita */
-  cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
-  transition: background-color 0.3s; /* Efecto de transición suave */
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .login-card button:hover {
-  background-color: #45a049; /* Color al pasar el mouse sobre el botón */
+  background-color: #45a049;
 }
+
 .logo {
-  width: 50px; /* Ajusta el tamaño del logo según tus necesidades */
-  height: 50px; /* Ajusta la altura para mantener la proporción */
-  background-image: url("../img/LOGO.png"); /* Ruta de la imagen del logo */
-  background-size: cover; /* Asegura que la imagen cubra el área */
-  background-position: center; /* Centra la imagen */
-  display: inline-block; /* Permite que el tamaño de la caja se ajuste al contenido */
-  vertical-align: middle; /* Alinea el logo verticalmente con el texto */
-  margin-right: 10px; /* Espacio entre el logo y el texto */
+  width: 50px;
+  height: 50px;
+  background-image: url("../img/LOGO.png");
+  background-size: cover;
+  background-position: center;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.login-button:hover {
+  background-color: #fff;
+  color: #203a43;
+}
+
+.login-button {
+  border: 1px solid #fff;
+  padding: 5px 15px;
+  border-radius: 15px;
+  transition: background-color 0.3s;
+}
+
+h1 {
+  font-size: 1.8em;
+  color: #333;
+  margin-bottom: 20px;
+  font-family: 'Arial', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 600;
+  border-bottom: 2px solid #4CAF50;
+  padding-bottom: 10px;
 }
