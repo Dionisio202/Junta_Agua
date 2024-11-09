@@ -15,8 +15,8 @@ class FacturaController {
     }
 
     public function index() {
-        $rol = $_SESSION['Rol'] ?? 'Administrador';
-        
+        $rol = $_SESSION['Rol'] ?? 'Desconocido';
+        $nombre = $_SESSION['Nombre'] ??'Invitado';
         // Obtenemos todas las facturas a través del modelo
         $facturas = $this->factura->getAll();
         $totalFacturas = count($facturas);
@@ -47,6 +47,8 @@ class FacturaController {
     }
     public function autorizaciones() {
         $rol = $_SESSION['Rol'] ?? 'Administrador';
+        $nombre = $_SESSION['Nombre'] ??'Invitado';
+
         require_once __DIR__ . '/../views/autorizaciones/index.php';
     }
 }

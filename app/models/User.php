@@ -21,7 +21,7 @@ class User {
     }
 
     public function authenticateUser($cedula, $password) {
-        $query = "SELECT rol FROM " . $this->table_name . " WHERE cedula = :cedula AND password = :password LIMIT 1";
+        $query = "SELECT nombre, rol FROM " . $this->table_name . " WHERE cedula = :cedula AND password = :password LIMIT 1";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":cedula", $cedula);
         $stmt->bindParam(":password", $password); // Contraseña sin cifrar
@@ -29,10 +29,11 @@ class User {
         
         if ($stmt->rowCount() > 0) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $row['rol']; // Devuelve el rol si la autenticación es exitosa
+            return $row; // Devuelve un array con el nombre y rol si la autenticación es exitosa
         }
         return false;
     }
+    
     
     
     

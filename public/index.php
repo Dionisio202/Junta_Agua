@@ -18,9 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['ac
     $authController->logout();
 } elseif (isset($_SESSION['Cedula'])) {
     // Usuario autenticado, muestra la página principal
-    echo "Bienvenido, " . htmlspecialchars($_SESSION['Cedula']) . " (" . htmlspecialchars($_SESSION['Rol']) . ")";
-    echo '<br><a href="index.php?action=logout">Cerrar sesión</a>';
-    
+ 
+   
     // Cargar landing page o contenido según el rol
     include '../app/views/index.php';
 } else {

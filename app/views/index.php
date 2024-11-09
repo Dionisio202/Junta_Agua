@@ -1,3 +1,8 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start(); // Inicia la sesión solo si no está activa
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -17,8 +22,9 @@
         <!-- Menú Lateral -->
         <aside id="sidebar" class="sidebar">
             <div class="sidebar-header">
-                <h2 class="sidebar-rol"><?= htmlspecialchars($_SESSION['rol'] ?? 'Invitado'); ?></h2>
-                <h2 class="sidebar-nombre"><?= htmlspecialchars($_SESSION['nombre'] ?? 'Usuario'); ?></h2>
+                        <!-- Esto no se esta usando corregir se esta usando el index dentro de factura -->
+                <h2 class="sidebar-rol"><?= htmlspecialchars($_SESSION['Rol'] ?? 'Invitado'); ?></h2>
+                <h2 class="sidebar-nombre"><?= htmlspecialchars($_SESSION['Cedula'] ?? 'edison'); ?></h2>
             </div>
             <nav class="sidebar-nav">
                 <a href="?view=factura/landing" class="sidebar-link"><i class="fas fa-home"></i> <span>Landing</span></a>
@@ -29,7 +35,7 @@
                 <a href="?view=gestion_usuarios" class="sidebar-link"><i class="fas fa-users"></i> <span>Gestión de Usuarios</span></a>
             </nav>
             <div class="sidebar-footer">
-                <a href="logout.php" class="sidebar-link"><i class="fas fa-sign-out-alt"></i> <span>Salir</span></a>
+                <a href="index.php?action=logout" class="sidebar-link"><i class="fas fa-sign-out-alt"></i> <span>Salir</span></a>
             </div>
         </aside>
 

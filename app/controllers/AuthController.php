@@ -13,12 +13,14 @@ class AuthController {
     }
 
     public function login($cedula, $password) {
-        $role = $this->userModel->authenticateUser($cedula, $password);
+        $userData = $this->userModel->authenticateUser($cedula, $password);
         
-        if ($role) {
+        if ($userData) {
             session_start();
             $_SESSION['Cedula'] = $cedula;
-            $_SESSION['Rol'] = $role;
+            $_SESSION['Rol'] = $userData['rol'];
+            $_SESSION['Nombre'] = $userData['nombre']; // Guarda el nombre en la sesión
+            session_write_close();
             header("Location: /Junta_Agua/public/index.php?action=home");
             exit();
         } else {
