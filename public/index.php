@@ -22,9 +22,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['ac
     echo '<br><a href="index.php?action=logout">Cerrar sesión</a>';
     
     // Cargar landing page o contenido según el rol
-    include '../app/views/landing.php';
+    include '../app/views/index.php';
 } else {
     // Mostrar el formulario de login si no está autenticado
     include '../app/views/login.php';
 }
 ?>
+

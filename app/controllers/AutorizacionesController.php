@@ -5,7 +5,7 @@ session_start();
 require_once __DIR__ . '/../models/Factura.php';
 require_once __DIR__ . '/../../config/databas.php';
 
-class FacturaController {
+class AutorizacionController {
     private $factura;
 
     public function __construct() {
@@ -42,12 +42,9 @@ class FacturaController {
             echo "Error al eliminar la factura.";
         }
     }
-    public function nuevafactura() {
-        $rol = $_SESSION['Rol'] ?? 'Administrador';
-        require_once __DIR__ . '/../views/factura/nuevafactura.php';
-    }
-    public function autorizaciones() {
+    public function vista() {
         $rol = $_SESSION['Rol'] ?? 'Administrador';
         require_once __DIR__ . '/../views/autorizaciones/index.php';
     }
+  
 }
