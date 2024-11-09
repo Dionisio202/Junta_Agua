@@ -1,9 +1,8 @@
 <?php
 // app/controllers/FacturaController.php
 
-session_start();
 require_once __DIR__ . '/../models/Factura.php';
-require_once __DIR__ . '/../../config/databas.php';
+require_once __DIR__ . '/../../config/database.php';
 
 class FacturaController {
     private $factura;

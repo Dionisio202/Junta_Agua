@@ -1,6 +1,6 @@
 <?php
 // app/models/Factura.php
-require_once __DIR__ ."/../../config/databas.php";
+require_once __DIR__ ."/../../config/database.php";
 
 class Factura {
     private $conn;
