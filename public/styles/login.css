@@ -1,0 +1,160 @@
+/* Estilos globales */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url("../img/backgroundLogin.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+/* Header */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Asegura que el header quede al frente */
+}
+
+.header-logo .logo {
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+}
+
+.header-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
+
+.header-nav ul li a {
+  text-decoration: none;
+  color: #fff;
+  padding: 5px 10px;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.header-nav ul li a:hover {
+  background-color: #e4e2e2;
+}
+
+/* Login Section */
+.login-section {
+  position: relative;
+  height: 100vh;
+}
+
+.login-container {
+  position: absolute;
+  right: 1;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  width: 300px;
+}
+
+.login-card {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  color: #333;
+}
+
+.login-card h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: #333;
+}
+.login-card h5 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  text-align: right;
+  color: #333;
+}
+
+.login-card input[type="text"],
+.login-card input[type="password"] {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: 15px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.login-card button {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 4px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-card button:hover {
+  background-color: #45a049;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  background-image: url("../img/LOGO.png");
+  background-size: cover;
+  background-position: center;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.login-button:hover {
+  background-color: #fff;
+  color: #203a43;
+}
+
+.login-button {
+  border: 1px solid #fff;
+  padding: 5px 15px;
+  border-radius: 15px;
+  transition: background-color 0.3s;
+}
+
+h1 {
+  font-size: 1.8em;
+  color: #333;
+  margin-bottom: 20px;
+  font-family: 'Arial', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 600;
+  border-bottom: 2px solid #4CAF50;
+  padding-bottom: 10px;
+}
