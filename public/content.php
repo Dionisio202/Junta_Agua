@@ -1,5 +1,6 @@
 <?php
 require_once '../app/controllers/FacturaController.php';
+require_once '../app/controllers/AutorizacionesController.php';
 
 $view = $_GET['view'] ?? 'factura/index';
 $action = $_GET['action'] ?? null; // Obtiene la acción, si existe
