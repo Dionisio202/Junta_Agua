@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="app/public/styles/landpage.css">
+
 <div class="user-info">
   
 <span class="user-role"><?= htmlspecialchars($rol); ?></span>
@@ -17,72 +19,91 @@
         <button class="delete-btn">Eliminar</button>
     </div>
 
-    <!-- Integración de la nueva sección con campos de formulario -->
+   <!-- Integración de la nueva sección con campos de formulario -->
     <div class="seccion-factura">
+        <h2>Mantenimiento</h2>
         <form>
-            <div class="pestana-mantenimiento">
-                <h2>Mantenimiento</h2>
+            <div class="columna-izquierda">
+                <!-- Pestaña Mantenimiento -->
+                <div class="pestana-mantenimiento">
 
-                <label for="fecha-emision">Emisión:</label>
-                <input type="date" id="fecha-emision" value="2024-10-28">
+                    <div class="grupo">
+                        <div>
+                            <label for="fecha-emision">Emisión:</label>
+                            <input type="date" id="fecha-emision" value="2024-10-28">
+                        </div>
+                        <div>
+                            <label for="fecha-vencimiento">Vence:</label>
+                            <input type="date" id="fecha-vencimiento" value="2024-10-28">
+                        </div>
+                    </div>
 
-                <label for="fecha-vencimiento">Vence:</label>
-                <input type="date" id="fecha-vencimiento" value="2024-10-28">
+                    <div class="grupo">
+                        <div>
+                            <label for="serie">Serie:</label>
+                            <input type="text" id="serie" value="001">
+                        </div>
+                        <div>
+                            <label for="numero">Número:</label>
+                            <input type="text" id="numero" value="200">
+                        </div>
+                        <div>
+                            <label for="secuencia">Secuencia:</label>
+                            <input type="text" id="secuencia" value="000006001" readonly>
+                        </div>
+                        <div>
+                            <label for="concepto">Concepto:</label>
+                            <input type="text" id="concepto" value="M186">
+                        </div>
+                    </div>
 
-                <label for="serie">Serie:</label>
-                <input type="text" id="serie" value="001">
+                    <div class="grupo">
+                        <div>
+                            <label for="ci-ruc">C.I./RUC:</label>
+                            <div class="input-group">
+                                <input type="text" id="ci-ruc" value="1803110517">
+                                <button type="button" class="btn-busqueda" onclick="buscarCIRUC()">🔍</button>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="nombre-cliente">Cliente:</label>
+                            <input type="text" id="nombre-cliente" value="GALARZA GALARZA NANCY ROCIO">
+                        </div>
+                        <div>
+                            <label for="codigo">Código:</label>
+                            <div class="input-group">
+                                <input type="text" id="codigo">
+                                <button type="button" class="btn-busqueda" onclick="buscarCodigo()">🔍</button>
+                            </div>
+                        </div>
+                    </div>
 
-                <label for="numero">Número:</label>
-                <input type="text" id="numero" value="200">
-
-                <label for="secuencia">Secuencia:</label>
-                <input type="text" id="secuencia" value="000006001" readonly>
-
-                <label for="concepto">Concepto:</label>
-                <input type="text" id="concepto" value="M186">
-
-                <label for="ci-ruc">C.I./RUC:</label>
-                <div class="input-group">
-                    <input type="text" id="ci-ruc" value="1803110517">
-                    <button type="button" class="btn-busqueda" onclick="buscarCIRUC()">
-                        🔍
-                    </button>
-                </div>
-
-                <label for="nombre-cliente">Cliente:</label>
-                <input type="text" id="nombre-cliente" value="GALARZA GALARZA NANCY ROCIO">
-
-                <label for="codigo">Código:</label>
-                <div class="input-group">
-                    <input type="text" id="codigo">
-                    <button type="button" class="btn-busqueda" onclick="buscarCodigo()">
-                        🔍
-                    </button>
-                </div>
-
-                <div class="botones">
-                    <button type="button" class="btn-informacion">Información</button>
-                    <button type="button" class="btn-observacion">Observación</button>
-                    <button type="button" class="btn-existencias">Existencias</button>
+                    <div class="buttons">
+                        <button type="button" class="btn-informacion">Información</button>
+                        <button type="button" class="btn-observacion">Observación</button>
+                        <button type="button" class="btn-existencias">Existencias</button>
+                    </div>
                 </div>
             </div>
 
-            <div class="pestana-datos-adicionales">
-                <label for="facturador">Facturador:</label>
-                <input type="text" id="nombre-facturador" value="usuario logueado" readonly>
+            <!-- Pestaña Datos Adicionales -->
+            <div class="columna-derecha">
+                <div class="pestana-datos-adicionales">
+                    <label for="facturador">Facturador:</label>
+                    <input type="text" id="nombre-facturador" value="usuario logueado" readonly>
 
-                <label for="sucursal">Sucursal:</label>
-                <select id="sucursal">
-                    <option selected>MATRIZ / SANTA ROSA</option>
-                    <!-- Agregar más opciones si es necesario -->
-                </select>
+                    <label for="sucursal">Sucursal:</label>
+                    <select id="sucursal">
+                        <option selected>MATRIZ / SANTA ROSA</option>
+                    </select>
+                </div>
             </div>
         </form>
     </div>
-
     <!-- Botones existentes y tabla -->
     <div class="buttons">
-        <button class="export-btn">Exportar datos</button>
+        <button class="export-btn">Guardar sin autorizar</button>
+        <button class="export-btn">Autorizar y obtener factura</button>
     </div>
 
     <div class="table-container">
@@ -137,33 +158,40 @@
         <input type="text" id="autorizacion" value="281020240118918094490012001200000060011234567816" readonly>
     </div>
     -->
-        <!-- Sección de Datos Documento Relacionado -->
-        <div class="datos-documento-relacionado">
-            <h3>Datos Documento Relacionado</h3>
-            <label for="emision-relacionado">Emisión:</label>
-            <input type="text" id="emision-relacionado">
 
-            <label for="secuencia-relacionado">Secuencia:</label>
-            <input type="text" id="secuencia-relacionado">
-        </div>
+        <div class="datos-resumen">
+            <!-- Sección de Datos Documento Relacionado -->
+            <div class="datos-documento-relacionado">
+                <h3>Datos Documento Relacionado</h3>
+                <div class="field-group">
+                    <label for="emision-relacionado">Emisión:</label>
+                    <input type="text" id="emision-relacionado" value="2024-11-15" readonly>
+                    
+                    <label for="secuencia-relacionado">Secuencia:</label>
+                    <input type="text" id="secuencia-relacionado" value="000123456" readonly>
+                </div>
+            </div>
 
-        <!-- Resumen de Totales -->
-        <div class="resumen-totales">
-            <p>Sub Total: <span>6,0000</span></p>
-            <p>Descuento %: <span>0,00</span></p>
-            <p>Descuento $: <span>0,00</span></p>
-            <p>Sub Total Neto: <span>6,0000</span></p>
-            <p>Sub Total Con IVA: <span>0,0000</span></p>
-            <p>Sub Total IVA 5%: <span>0,0000</span></p>
-            <p>Sub Total IVA 0%: <span>6,0000</span></p>
-            <p>Sub Total No Obj.: <span>0,0000</span></p>
-            <p>Sub Total Exento: <span>0,0000</span></p>
-            <p>Total ICE: <span>0,00</span></p>
-            <p>Total IVA: <span>0,00</span></p>
-            <p>Total IVA 5%: <span>0,00</span></p>
-            <p>Propina: <span>0,00</span></p>
-            <h3>Total: <span>6,00</span></h3>
-            <h3>Neto: <span>6,00</span></h3>
+            <!-- Resumen de Totales -->
+            <div class="resumen-totales">
+                <h3>Resumen de valores</h3>
+                <p>Sub Total: <span>6,0000</span></p>
+                <p>Descuento %: <span>0,00</span></p>
+                <p>Descuento $: <span>0,00</span></p>
+                <p>Sub Total Neto: <span>6,0000</span></p>
+                <p>Sub Total Con IVA: <span>0,0000</span></p>
+                <p>Sub Total IVA 5%: <span>0,0000</span></p>
+                <p>Sub Total IVA 0%: <span>6,0000</span></p>
+                <p>Sub Total No Obj.: <span>0,0000</span></p>
+                <p>Sub Total Exento: <span>0,0000</span></p>
+                <p>Total ICE: <span>0,00</span></p>
+                <p>Total IVA: <span>0,00</span></p>
+                <p>Total IVA 5%: <span>0,00</span></p>
+                <p>Propina: <span>0,00</span></p>
+                <h3>Total: <span>6,00</span></h3>
+                <h3>Neto: <span>6,00</span></h3>
+            </div>
         </div>
     </div>
+
 </div>

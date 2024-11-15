@@ -171,6 +171,11 @@ h1 {
 .buttons {
     display: flex;
     justify-content: flex-end;
+    margin: 2%;
+}
+.button-bar {
+    display: flex;
+    margin: 2%;
 }
 
 .table-container {
@@ -280,3 +285,216 @@ h1 {
 .page-number:hover {
     color: #568cc6;
 }
+
+/* Integración de la nueva sección con campos de formulario */
+.seccion-factura {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #333;
+    max-width: 900px;
+    margin: auto;
+}
+
+.seccion-factura h2 {
+    font-size: 20px;
+    color: #16486a;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.seccion-factura form {
+    display: flex;
+    gap: 20px;
+}
+
+.seccion-factura .columna-izquierda {
+    flex: 3;  
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.seccion-factura .columna-derecha {
+    flex: 1;  
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-left: 2px solid #ccc; 
+    padding-left: 20px; 
+}
+
+.seccion-factura label {
+    display: block;
+    font-size: 14px;
+    color: #16486a;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.seccion-factura input,
+.seccion-factura select {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    color: #555;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.seccion-factura input:focus,
+.seccion-factura select:focus {
+    border-color: #3282b8;
+    outline: none;
+    box-shadow: 0 0 5px rgba(50, 130, 184, 0.3);
+}
+
+.seccion-factura .input-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.seccion-factura .input-group input {
+    flex: 1;
+}
+
+.seccion-factura .btn-busqueda {
+    padding: 8px 10px;
+    border: none;
+    background-color: #3282b8;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.seccion-factura .btn-busqueda:hover {
+    background-color: #16486a;
+}
+
+.seccion-factura .grupo {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.seccion-factura .grupo > div {
+    flex: 1 1 calc(25% - 10px); 
+}
+
+.seccion-factura .grupo-2 > div {
+    flex: 1 1 calc(50% - 10px);
+}
+
+.seccion-factura .grupo-3 > div {
+    flex: 1 1 calc(33.333% - 10px);
+}
+
+.seccion-factura .botones {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.seccion-factura .btn-informacion,
+.seccion-factura .btn-observacion,
+.seccion-factura .btn-existencias {
+    padding: 10px 15px;
+    border: none;
+    background-color: #3282b8;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.seccion-factura .btn-informacion:hover,
+.seccion-factura .btn-observacion:hover,
+.seccion-factura .btn-existencias:hover {
+    background-color: #16486a;
+}
+
+
+/* Sección de Datos Documento Relacionado */
+.datos-resumen {
+    display: flex;
+    gap: 20px; 
+    align-items: flex-start; 
+}
+
+.datos-documento-relacionado {
+    flex: 2; 
+    margin: 1%; 
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+}
+
+.datos-documento-relacionado h3, .resumen-totales h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #16486a;
+    margin-bottom: 15px;
+}
+
+.field-group {
+    display: flex;
+    flex-direction: column; 
+    gap: 10px; 
+}
+
+.datos-documento-relacionado label {
+    font-weight: 600;
+    color: #16486a;
+}
+
+.datos-documento-relacionado input {
+    width: 30%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f2f2f2;
+    color: #555;
+    pointer-events: none; 
+}
+
+.datos-documento-relacionado input:focus {
+    outline: none;
+    border-color: #ccc;
+    box-shadow: none;
+}
+
+/* Resumen de Totales */
+.resumen-totales {
+    flex: 1; 
+    text-align: right;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin-block-start: 1%;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.resumen-totales p {
+    margin: 1px 0; 
+}
+
+.resumen-totales span {
+    font-weight: bold; 
+}
+
