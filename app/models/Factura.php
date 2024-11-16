@@ -13,7 +13,7 @@ class Factura {
     // Método para obtener todas las facturas
     public function getAll() {
         // Consulta para obtener las facturas junto con la información del cliente
-        $query = "SELECT f.id, c.nombre_comercial, c.identificacion, c.telefono1, c.telefono2, m.nro_medidor, f.fecha_emision AS detalle, f.total, f.estado_factura 
+        $query = "SELECT f.id, c.nombre_comercial, c.identificacion, m.nro_medidor, f.fecha_emision , f.total , f.estado_factura 
                   FROM facturas f
                   JOIN clientes c ON f.cliente = c.id
                   JOIN medidores m ON c.id = m.id_cliente AND f.medidor_id = m.id";
