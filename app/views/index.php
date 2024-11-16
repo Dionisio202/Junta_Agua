@@ -33,6 +33,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 <a href="?view=pagos" class="sidebar-link"><i class="fas fa-credit-card"></i> <span>Pagos</span></a>
                 <a href="?view=reporte" class="sidebar-link"><i class="fas fa-chart-line"></i> <span>Reportería</span></a>
                 <a href="?view=gestion_usuarios" class="sidebar-link"><i class="fas fa-users"></i> <span>Gestión de Usuarios</span></a>
+                <a href="?view=perfil" class="sidebar-link"><i class="fas fa-user-circle "></i> <span>Perfil</span></a>
             </nav>
             <div class="sidebar-footer">
                 <a href="index.php?action=logout" class="sidebar-link"><i class="fas fa-sign-out-alt"></i> <span>Salir</span></a>

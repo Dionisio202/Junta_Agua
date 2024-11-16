@@ -32,6 +32,13 @@ switch ($view) {
                 $controller = new AutorizacionController();
                 $controller->vista(); // Cargar la vista para crear una nueva factura
                 break;
+       case 'perfil':
+                    include '../app/views/perfil.php'; // Incluye el archivo de la vista
+                    $controller = new PerfilController(); // Asegúrate de que estás usando el controlador adecuado
+                    $controller->perfil();
+                    break;
+                    
+                
     // Aquí puedes añadir otros casos para otros controladores y métodos
     default:
         echo "<p>Vista no encontrada.</p>";
