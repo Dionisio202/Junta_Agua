@@ -1,9 +1,9 @@
 <?php
 class Database {
-    private $host = "localhost";
-    private $db_name = "junta_agua";
-    private $username = "root";
-    private $password = "";
+    private $host = "facturaqua.com";
+    private $db_name = "faqua2085_junta_agua";
+    private $username = "faqua2085_junta_agua";
+    private $password = "kfP9x8hCtCY9TxsPxkpe";
     public $conn;
 
     public function getConnection() {

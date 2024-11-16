@@ -18,7 +18,9 @@
         <tr>
             <th>Nombre</th>
             <th>Cédula</th>
-            <th>Teléfono</th>
+            <th>Teléfono 1</th>
+            <th>Teléfono 2</th>
+            <th>Nro. medidor</th>
             <th>Detalle Factura</th>
             <?php if ($rol === 'Administrador'): ?>
                 <th>Acciones</th>
@@ -27,15 +29,17 @@
         
         <?php if (!empty($currentFacturas)): ?>
             <?php foreach ($currentFacturas as $factura): ?>
-    <tr class="clickable-row" data-href="?view=factura/nuevafactura&id=<?= $factura['idfactura'] ?>">
-        <td><?= htmlspecialchars($factura['nombre']) ?></td>
-        <td><?= htmlspecialchars($factura['cedula']) ?></td>
-        <td><?= htmlspecialchars($factura['telefono']) ?></td>
+    <tr class="clickable-row" data-href="?view=factura/nuevafactura&id=<?= $factura['id'] ?>">
+        <td><?= htmlspecialchars($factura['nombre_comercial']) ?></td>
+        <td><?= htmlspecialchars($factura['identificacion']) ?></td>
+        <td><?= htmlspecialchars($factura['telefono1']) ?></td>
+        <td><?= htmlspecialchars($factura['telefono2']) ?></td>
+        <td><?= htmlspecialchars($factura['nro_medidor']) ?></td>
         <td><?= htmlspecialchars($factura['detalle']) ?></td>
         <?php if ($rol === 'Administrador'): ?>
             <td>
-                <a href="?view=factura/edit&id=<?= $factura['idfactura'] ?>">✏️</a>
-                <a href="?view=factura/index&action=delete&id=<?= $factura['idfactura'] ?>" onclick="return confirm('¿Estás seguro de eliminar esta factura?')">🗑️</a>
+                <a href="?view=factura/edit&id=<?= $factura['id'] ?>">✏️</a>
+                <a href="?view=factura/index&action=delete&id=<?= $factura['id'] ?>" onclick="return confirm('¿Estás seguro de eliminar esta factura?')">🗑️</a>
             </td>
         <?php endif; ?>
     </tr>
