@@ -3,7 +3,7 @@ require_once '../config/database.php';
 
 class User {
     private $conn;
-    private $table_name = "usuario";
+    private $table_name = "usuarios";
 
     public function __construct($db) {
         $this->conn = $db;
@@ -21,7 +21,7 @@ class User {
     }
 
     public function authenticateUser($cedula, $password) {
-        $query = "SELECT nombre, rol FROM " . $this->table_name . " WHERE cedula = :cedula AND password = :password LIMIT 1";
+        $query = "SELECT nombre, rol FROM " . $this->table_name . " WHERE cedula = :cedula AND clave = :password LIMIT 1";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":cedula", $cedula);
         $stmt->bindParam(":password", $password); // Contraseña sin cifrar

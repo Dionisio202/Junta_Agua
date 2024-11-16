@@ -12,15 +12,19 @@ class Factura {
 
     // Método para obtener todas las facturas
     public function getAll() {
-        // Consulta para obtener las facturas junto con la información del cliente
-        $query = "SELECT f.idfactura, c.nombre, c.cedula, c.telefono, f.fecha_emision AS detalle, f.total, f.estado_pago 
-                  FROM factura f
-                  JOIN Cliente c ON f.idcliente = c.idcliente";
-                  
+        // Consulta para obtener las facturas junto con el cliente y el medidor
+        $query = "SELECT f.id AS id_factura, c.razon_social AS cliente, 
+                         m.id AS id_medidor, f.fecha_emision AS detalle, 
+                         f.total, f.estado_factura 
+                  FROM facturas f
+                  JOIN clientes c ON f.cliente = c.id
+                  JOIN medidores m ON m.id_cliente = c.id";
+    
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
     public function getById($id) {
         // Consulta para obtener una factura por su ID
         $stmt = $this->conn->prepare('SELECT * FROM factura WHERE idfactura = :id');
