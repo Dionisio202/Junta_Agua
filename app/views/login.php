@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,12 +10,12 @@
 
 <body>
     <header>
-    <div class="header-logo">
+        <div class="header-logo">
             <img src="../img/LOGO.png" alt="j" class="logo">
         </div>
         <nav class="header-nav">
             <ul>
-                
+
                 <li><a href="#help" class="login-button">Ayuda</a></li>
             </ul>
         </nav>
@@ -34,7 +35,7 @@
                     <h5>Recuperar Contraseña</h5>
                     <button type="submit">Iniciar Sesión</button>
                 </form>
-                
+
                 <!-- Mensaje de error si las credenciales son incorrectas -->
                 <?php
                 if (isset($_GET['error']) && $_GET['error'] == 'invalid') {
@@ -45,4 +46,5 @@
         </div>
     </section>
 </body>
+
 </html>
