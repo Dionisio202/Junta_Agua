@@ -95,14 +95,19 @@
 
             <!-- Pestaña Datos Adicionales -->
             <div class="columna-derecha">
-                                <!-- Barra de botones -->
-                                <div class="buttons-vertical">
+                <!-- Barra de botones -->
+                <div class="buttons-vertical">
                     <button class="add-btn">Agregar nueva Factura</button>
                     <button class="save-btn">Guardar</button>
                     <button class="edit-btn">Modificar</button>
                     <button class="delete-btn">Eliminar</button>
-                </div>
-
+                    <div class="select-container">
+                        <select id="sucursal">
+                            <option value="ticket">Generar Ticket</option>
+                            <option value="pdf">Generar PDF</option>
+                        </select>
+                    </div>
+               </div>
             </div>
         </form>
     </div>
