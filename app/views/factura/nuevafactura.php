@@ -17,15 +17,16 @@
         <form>
             <!-- Pestaña Datos Adicionales -->
             <div class="columna-izquierda">
+            <div class="pestana-datos-adicionales">
+                    <label for="facturador">Facturador:</label>
+                    <input type="text" id="nombre-facturador" value="usuario logueado" readonly>
 
-                <!-- Barra de botones -->
-
-                <div class="buttons-vertical">
-                    <button class="add-btn">Agregar nueva Factura</button>
-                    <button class="save-btn">Guardar</button>
-                    <button class="edit-btn">Modificar</button>
-                    <button class="delete-btn">Eliminar</button>
+                    <label for="sucursal">Sucursal:</label>
+                    <select id="sucursal">
+                        <option selected>MATRIZ / SANTA ROSA</option>
+                    </select>
                 </div>
+
 
             </div>
 
@@ -94,24 +95,17 @@
 
             <!-- Pestaña Datos Adicionales -->
             <div class="columna-derecha">
-                <div class="pestana-datos-adicionales">
-                    <label for="facturador">Facturador:</label>
-                    <input type="text" id="nombre-facturador" value="usuario logueado" readonly>
-
-                    <label for="sucursal">Sucursal:</label>
-                    <select id="sucursal">
-                        <option selected>MATRIZ / SANTA ROSA</option>
-                    </select>
+                                <!-- Barra de botones -->
+                                <div class="buttons-vertical">
+                    <button class="add-btn">Agregar nueva Factura</button>
+                    <button class="save-btn">Guardar</button>
+                    <button class="edit-btn">Modificar</button>
+                    <button class="delete-btn">Eliminar</button>
                 </div>
+
             </div>
         </form>
     </div>
-    <!-- Botones existentes y tabla -->
-    <div class="buttons">
-        <button class="export-btn">Guardar sin autorizar</button>
-        <button class="export-btn">Autorizar y obtener factura</button>
-    </div>
-
     <div class="table-container">
         <!-- Integración de la sección de detalle de facturas -->
         <div class="factura-detalle">
