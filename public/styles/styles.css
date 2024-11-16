@@ -24,7 +24,7 @@ body {
     height: 100vh;
     transition: width 0.3s ease-in-out;
     position: fixed;
-    z-index: 2;
+    z-index: 2; 
 }
 
 #toggler:checked ~ #sidebar {
@@ -181,7 +181,6 @@ button {
     cursor: pointer;
 }
 
-
 .buttons {
     display: flex;
     justify-content: flex-end;
@@ -235,11 +234,6 @@ button {
     background-color: #f2f2f2; 
     border-radius: 8px;
     overflow: hidden;
-}
-
-.table-container tr:first-child {
-    background-color: #3282B8; 
-    color: #ffffff; 
 }
 
 .table-container th:first-child, .table-container td:first-child  {
@@ -300,8 +294,165 @@ button {
     color: #568cc6;
 }
 
+/*
+    Columnas index autorizacion
+*/
+.columna1, .columna2{
+    padding-left: 2%; 
+    padding-right: 2%;
+    flex: 1;
+}
+
+.columna2{
+    border-left: 2px solid #ccc; 
+    border-right: 2px solid #ccc; 
+    padding-left: 2%; 
+    padding-right: 2%;
+    
+}
+
+.columna3{
+    padding-left: 2%; 
+    flex: 2;
+    align-content: center;
+}
+
+/**checkbox */
+.checkboxCustom {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.checkboxCustom input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.checkboxCustom:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.checkboxCustom input:checked ~ .checkmark {
+    background-color: #2196F3;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.checkboxCustom input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.checkboxCustom .checkmark:after {
+    top: 9px;
+    left: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}/**checkbox */
+.checkboxCustom {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.checkboxCustom input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.checkboxCustom:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.checkboxCustom input:checked ~ .checkmark {
+    background-color: #2196F3;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.checkboxCustom input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.checkboxCustom .checkmark:after {
+    top: 9px;
+    left: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+
+/* 
+    Módulo de Nueva Factura
+ */
+
 /* Integración de la nueva sección con campos de formulario */
-.seccion-factura {
+.seccion-factura, .encabezado-autorizacion {
     font-family: 'Poppins', sans-serif;
     background-color: #f9f9f9;
     padding: 20px;
