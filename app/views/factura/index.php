@@ -1,20 +1,24 @@
 <div class="user-info">
     <span class="user-role"><?= htmlspecialchars($rol); ?></span> 
-    <span class="user-name"><?= htmlspecialchars($_SESSION['nombre'] ?? 'Usuario'); ?></span> 
+    <span class="user-name"><?= htmlspecialchars($nombre ?? 'Usuario'); ?></span> 
 </div>
 
 <div class="table-container">
     <div class="header-buttons">
         <h1>Facturación <?= $rol === 'Tesorero' ? 'TESORERÍA' : ''; ?></h1>
     </div>
-    <div class="buttons">
-        <button class="export-btn">Exportar datos</button>
+    <div class="buttons" style="display: flex; align-items: center; gap: 15px;">
+        <input 
+            type="text" 
+            id="filter-input" 
+            placeholder="Filtrar por cédula o número de medidor" 
+            class="filter-input"
+        >
         <?php if ($rol === 'Administrador'): ?>
             <button type="button" class="add-btn" onclick="window.location.href='/Junta_Agua/public/?view=factura/index&action=add';">Agregar nueva Factura</button>
         <?php endif; ?>
     </div>
-
-    <table>
+    <table id="factura-table">
     <tr>
         <th>Nombre Comercial</th>
         <th>Cédula</th>
@@ -51,15 +55,35 @@
     <?php endif; ?>
 </table>
 
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const rows = document.querySelectorAll(".clickable-row");
-        rows.forEach(row => {
-            row.addEventListener("click", function() {
-                window.location.href = this.dataset.href;
-            });
-        });
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const filterInput = document.getElementById("filter-input"); // Campo de texto para filtrar
+    const table = document.getElementById("factura-table"); // Tabla de facturas
+    const rows = table.getElementsByTagName("tr"); // Filas de la tabla
+
+    // Evento para escuchar cambios en el campo de texto
+    filterInput.addEventListener("input", function () {
+        const filterValue = this.value.toLowerCase(); // Texto ingresado, convertido a minúsculas
+
+        for (let i = 1; i < rows.length; i++) { // Itera desde la fila 1 (ignora encabezado)
+            const nombreCell = rows[i].getElementsByTagName("td")[0]; // Celda de nombre comercial
+            const idMedidorCell = rows[i].getElementsByTagName("td")[2]; // Celda de ID de medidor
+
+            if (nombreCell && idMedidorCell) {
+                const nombreText = nombreCell.textContent.toLowerCase();
+                const idMedidorText = idMedidorCell.textContent.toLowerCase();
+
+                // Comprueba si el texto ingresado coincide con el nombre comercial o número de medidor
+                if (nombreText.includes(filterValue) || idMedidorText.includes(filterValue)) {
+                    rows[i].style.display = ""; // Muestra la fila si coincide
+                } else {
+                    rows[i].style.display = "none"; // Oculta la fila si no coincide
+                }
+            }
+        }
     });
+});
+
 </script>
 
 
