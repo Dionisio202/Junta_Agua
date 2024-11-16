@@ -1,8 +1,8 @@
-<link rel="stylesheet" href="app/public/styles/landpage.css">
+<link rel="stylesheet" href="app/public/styles/styles.css">
 
 <div class="user-info">
-  
-<span class="user-role"><?= htmlspecialchars($rol); ?></span>
+
+    <span class="user-role"><?= htmlspecialchars($rol); ?></span>
     <span class="user-name"><?= htmlspecialchars($nombre ?? 'Usuario'); ?></span>
 </div>
 
@@ -11,20 +11,26 @@
         <h1>Facturación <?= $rol === 'Tesorero' ? 'TESORERÍA' : ''; ?></h1>
     </div>
 
-    <!-- Barra de botones -->
-    <div class="button-bar">
-        <button class="add-btn">Agregar nueva Factura</button>
-        <button class="save-btn">Guardar</button>
-        <button class="edit-btn">Modificar</button>
-        <button class="delete-btn">Eliminar</button>
-    </div>
-
-   <!-- Integración de la nueva sección con campos de formulario -->
+    <!-- Integración de la nueva sección con campos de formulario -->
     <div class="seccion-factura">
         <h2>Mantenimiento</h2>
         <form>
+            <!-- Pestaña Datos Adicionales -->
             <div class="columna-izquierda">
-                <!-- Pestaña Mantenimiento -->
+
+                <!-- Barra de botones -->
+
+                <div class="buttons-vertical">
+                    <button class="add-btn">Agregar nueva Factura</button>
+                    <button class="save-btn">Guardar</button>
+                    <button class="edit-btn">Modificar</button>
+                    <button class="delete-btn">Eliminar</button>
+                </div>
+
+            </div>
+
+            <div class="columna-centro">
+
                 <div class="pestana-mantenimiento">
 
                     <div class="grupo">
@@ -166,7 +172,7 @@
                 <div class="field-group">
                     <label for="emision-relacionado">Emisión:</label>
                     <input type="text" id="emision-relacionado" value="2024-11-15" readonly>
-                    
+
                     <label for="secuencia-relacionado">Secuencia:</label>
                     <input type="text" id="secuencia-relacionado" value="000123456" readonly>
                 </div>
