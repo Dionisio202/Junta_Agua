@@ -1,20 +1,23 @@
-<?php
+<?php 
 // Solo incluir el archivo de index.php sin ejecutar su código
 ob_start(); // Iniciar la captura de salida
 include 'prefacturaTicket.php'; // Incluye el archivo
 ob_end_clean(); // Limpiar la salida y no mostrarla
 
 // Ahora puedes usar la variable $datos
-$medidaTicket = 180;
+$medidaTicket = 233;
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- Incluir la fuente Open Sans desde Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
     <style>
         * {
-            font-size: 12px;
-            font-family: 'DejaVu Sans', serif;
+            font-size: 11px;
+            font-family: 'Open Sans', sans-serif; /* Cambiar a Open Sans */
         }
 
         h1 {
@@ -49,7 +52,7 @@ $medidaTicket = 180;
 
         th, td {
             border: 1px solid #888;
-            padding: 8px;
+            padding: 5px;
             text-align: center;
         }
 
@@ -60,15 +63,35 @@ $medidaTicket = 180;
         }
 
         .tabla-container > div {
-            margin: 0 10px; /* Espaciado entre tablas */
+            margin: 0 0px; /* Espaciado entre tablas */
         }
 
         .info-item {
             display: flex; 
             justify-content: space-between; 
-            margin: 10px 0; 
+            margin-top: 1px;  /* Margen de 1px arriba */
+            margin-bottom: 1px; /* Margen de 1px abajo */
+        }
+
+        /* Estilos específicos para impresión */
+        @media print {
+            /* Elimina márgenes y encabezado del navegador */
+            @page {
+                margin: 0;
+            }
+            body {
+                visibility: hidden; /* Oculta todo el contenido */
+            }
+            .ticket {
+                visibility: visible; /* Muestra solo el contenido de la clase ticket */
+                position: absolute;
+                top: 0;
+                left: 0;
+                margin-left: 24px; /* Espacio de 7px entre el borde izquierdo y el contenido */
+            }
         }
     </style>
+
     <script>
         // Función que se ejecuta al cargar la página
         window.onload = function() {
@@ -141,4 +164,3 @@ $medidaTicket = 180;
     </div>
 </body>
 </html>
- 
