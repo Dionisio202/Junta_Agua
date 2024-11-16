@@ -38,8 +38,8 @@
                 <td><?= htmlspecialchars($factura['estado_factura']) ?></td>
                 <?php if ($rol === 'Administrador'): ?>
                     <td>
-                        <a href="?view=factura/edit&id=<?= $factura['id'] ?>">✏️</a>
-                        <a href="?view=factura/index&action=delete&id=<?= $factura['id'] ?>" onclick="return confirm('¿Estás seguro de eliminar esta factura?')">🗑️</a>
+                        <a class="disabled-action" href="?view=factura/edit&id=<?= $factura['id'] ?>">✏️</a>
+                        <a class="disabled-action" href="?view=factura/index&action=delete&id=<?= $factura['id'] ?>" onclick="return confirm('¿Estás seguro de eliminar esta factura?')">🗑️</a>
                     </td>
                 <?php endif; ?>
             </tr>
@@ -62,6 +62,42 @@
     });
 </script>
 
+
+
+
+
+<style>
+        .filter-input {
+            width: 100%;
+            max-width: 300px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .add-btn {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .add-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .disabled-action {
+            pointer-events: none; /* Deshabilita los clics */
+            opacity: 0.5; /* Hace que se vean desactivados */
+            cursor: not-allowed; /* Cambia el cursor a una señal de prohibido */
+        }
+
+        .buttons {
+            margin-bottom: 15px; /* Separación entre botones y tabla */
+        }
+    </style>
     <!-- Paginación -->
     <div class="pagination">
         <span id="prev-page" class="page-arrow">
