@@ -15,42 +15,42 @@
     </div>
 
     <table>
-        <tr>
-            <th>Nombre</th>
-            <th>Cédula</th>
-            <th>Teléfono 1</th>
-            <th>Teléfono 2</th>
-            <th>Nro. medidor</th>
-            <th>Detalle Factura</th>
-            <?php if ($rol === 'Administrador'): ?>
-                <th>Acciones</th>
-            <?php endif; ?>
-        </tr>
-        
-        <?php if (!empty($currentFacturas)): ?>
-            <?php foreach ($currentFacturas as $factura): ?>
-    <tr class="clickable-row" data-href="?view=factura/nuevafactura&id=<?= $factura['id'] ?>">
-        <td><?= htmlspecialchars($factura['nombre_comercial']) ?></td>
-        <td><?= htmlspecialchars($factura['identificacion']) ?></td>
-        <td><?= htmlspecialchars($factura['telefono1']) ?></td>
-        <td><?= htmlspecialchars($factura['telefono2']) ?></td>
-        <td><?= htmlspecialchars($factura['nro_medidor']) ?></td>
-        <td><?= htmlspecialchars($factura['detalle']) ?></td>
+    <tr>
+        <th>Nombre Comercial</th>
+        <th>Cédula</th>
+        <th>Nro. Medidor</th>
+        <th>Fecha Emisión</th>
+        <th>Total</th>
+        <th>Estado</th>
         <?php if ($rol === 'Administrador'): ?>
-            <td>
-                <a href="?view=factura/edit&id=<?= $factura['id'] ?>">✏️</a>
-                <a href="?view=factura/index&action=delete&id=<?= $factura['id'] ?>" onclick="return confirm('¿Estás seguro de eliminar esta factura?')">🗑️</a>
-            </td>
+            <th>Acciones</th>
         <?php endif; ?>
     </tr>
-<?php endforeach; ?>
 
-        <?php else: ?>
-            <tr>
-                <td colspan="5">No hay facturas disponibles.</td>
+    <?php if (!empty($currentFacturas)): ?>
+        <?php foreach ($currentFacturas as $factura): ?>
+            <tr class="clickable-row" data-href="?view=factura/nuevafactura&id=<?= $factura['id'] ?>">
+                <td><?= htmlspecialchars($factura['nombre_comercial']) ?></td>
+                <td><?= htmlspecialchars($factura['identificacion']) ?></td>
+                <td><?= htmlspecialchars($factura['nro_medidor']) ?></td>
+                <td><?= htmlspecialchars($factura['fecha_emision']) ?></td>
+                <td><?= htmlspecialchars($factura['total']) ?></td>
+                <td><?= htmlspecialchars($factura['estado_factura']) ?></td>
+                <?php if ($rol === 'Administrador'): ?>
+                    <td>
+                        <a href="?view=factura/edit&id=<?= $factura['id'] ?>">✏️</a>
+                        <a href="?view=factura/index&action=delete&id=<?= $factura['id'] ?>" onclick="return confirm('¿Estás seguro de eliminar esta factura?')">🗑️</a>
+                    </td>
+                <?php endif; ?>
             </tr>
-        <?php endif; ?>
-    </table>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <tr>
+            <td colspan="7">No hay facturas disponibles.</td>
+        </tr>
+    <?php endif; ?>
+</table>
+
     <script>
     document.addEventListener("DOMContentLoaded", function() {
         const rows = document.querySelectorAll(".clickable-row");
