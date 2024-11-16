@@ -48,7 +48,6 @@ class FacturaController {
     public function autorizaciones() {
         $rol = $_SESSION['Rol'] ?? 'Administrador';
         $nombre = $_SESSION['Nombre'] ??'Invitado';
-
         require_once __DIR__ . '/../views/autorizaciones/index.php';
     }
 }
