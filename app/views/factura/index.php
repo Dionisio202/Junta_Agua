@@ -1,7 +1,6 @@
-
 <div class="user-info">
     <span class="user-role"><?= htmlspecialchars($rol); ?></span> 
-    <span class="user-name"><?= htmlspecialchars($nombre ?? 'Usuario'); ?></span> 
+    <span class="user-name"><?= htmlspecialchars($_SESSION['nombre'] ?? 'Usuario'); ?></span> 
 </div>
 
 <div class="table-container">
