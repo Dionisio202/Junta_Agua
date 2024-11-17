@@ -1,6 +1,8 @@
 <div class="user-info">
     <span class="user-role"><?= htmlspecialchars($rol); ?></span> 
-    <span class="user-name"><?= htmlspecialchars($_SESSION['nombre'] ?? 'Usuario'); ?></span> 
+    <span class="user-name"><?= htmlspecialchars($_SESSION['Nombre'] ?? 'Usuario'); ?></span>
+    <span class="user-apellido"><?= htmlspecialchars($_SESSION['Apellido'] ??'Sin apellido'); ?></span>
+    <span class="user-id"><?= htmlspecialchars($_SESSION['idUser'] ?? 'Sin ID'); ?></span> 
 </div>
 
 <div class="table-container">
@@ -9,8 +11,8 @@
     </div>
     <div class="buttons">
         <button class="export-btn">Exportar datos</button>
-        <?php if ($rol === 'Administrador'): ?>
-            <button type="button" class="add-btn" onclick="window.location.href='/Junta_Agua/public/?view=factura/index&action=add';">Agregar nueva Factura</button>
+        <?php if ($rol === 'administrador'): ?>
+            <button type="button" class="add-btn" onclick="window.location.href='/Junta_Agua/public/?view=factura/nuevafactura'">Agregar nueva Factura</button>
         <?php endif; ?>
     </div>
 
@@ -20,7 +22,7 @@
             <th>Cédula</th>
             <th>Teléfono</th>
             <th>Detalle Factura</th>
-            <?php if ($rol === 'Administrador'): ?>
+            <?php if ($rol === 'administrador'): ?>
                 <th>Acciones</th>
             <?php endif; ?>
         </tr>
@@ -32,7 +34,7 @@
         <td><?= htmlspecialchars($factura['cedula']) ?></td>
         <td><?= htmlspecialchars($factura['telefono']) ?></td>
         <td><?= htmlspecialchars($factura['detalle']) ?></td>
-        <?php if ($rol === 'Administrador'): ?>
+        <?php if ($rol === 'administrador'): ?>
             <td>
                 <a href="?view=factura/edit&id=<?= $factura['idfactura'] ?>">✏️</a>
                 <a href="?view=factura/index&action=delete&id=<?= $factura['idfactura'] ?>" onclick="return confirm('¿Estás seguro de eliminar esta factura?')">🗑️</a>

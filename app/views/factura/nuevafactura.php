@@ -1,7 +1,8 @@
 <div class="user-info">
-  
-<span class="user-role"><?= htmlspecialchars($rol); ?></span>
-    <span class="user-name"><?= htmlspecialchars($nombre ?? 'Usuario'); ?></span>
+    <span class="user-role"><?= htmlspecialchars($rol); ?></span>
+    <span class="user-name"><?= htmlspecialchars($_SESSION['Nombre'] ?? 'Usuario'); ?></span>
+    <span class="user-apellido"><?= htmlspecialchars($_SESSION['Apellido'] ?? 'Sin apellido'); ?></span>
+    <span class="user-id"><?= htmlspecialchars($_SESSION['idUser'] ?? 'Sin ID'); ?></span>
 </div>
 
 <div class="table-container">
@@ -39,26 +40,30 @@
                 <input type="text" id="secuencia" value="000006001" readonly>
 
                 <label for="concepto">Concepto:</label>
-                <input type="text" id="concepto" value="M186">
+                <select id="concepto">
+                    <option value="1">Ninguno</option>
+                </select>
 
                 <label for="ci-ruc">C.I./RUC:</label>
                 <div class="input-group">
-                    <input type="text" id="ci-ruc" value="1803110517">
-                    <button type="button" class="btn-busqueda" onclick="buscarCIRUC()">
+                    <input type="text" id="ci-ruc" value="18">
+                    <button type="button" class="btn-busqueda">
                         🔍
                     </button>
                 </div>
 
                 <label for="nombre-cliente">Cliente:</label>
-                <input type="text" id="nombre-cliente" value="GALARZA GALARZA NANCY ROCIO">
+                <input type="text" id="nombre-cliente" value="" readonly>
 
                 <label for="codigo">Código:</label>
                 <div class="input-group">
-                    <input type="text" id="codigo">
-                    <button type="button" class="btn-busqueda" onclick="buscarCodigo()">
+                    <input type="text" id="ci-ruc">
+                    <button type="button" class="btn-busqueda">
                         🔍
                     </button>
+
                 </div>
+
 
                 <div class="botones">
                     <button type="button" class="btn-informacion">Información</button>
@@ -66,17 +71,15 @@
                     <button type="button" class="btn-existencias">Existencias</button>
                 </div>
             </div>
-
             <div class="pestana-datos-adicionales">
                 <label for="facturador">Facturador:</label>
-                <input type="text" id="nombre-facturador" value="usuario logueado" readonly>
+                <input type="text" id="nombre-facturador" value="" readonly>
 
                 <label for="sucursal">Sucursal:</label>
-                <select id="sucursal">
-                    <option selected>MATRIZ / SANTA ROSA</option>
-                    <!-- Agregar más opciones si es necesario -->
-                </select>
+                <select id="sucursal"></select>
             </div>
+
+
         </form>
     </div>
 
@@ -167,3 +170,90 @@
         </div>
     </div>
 </div>
+
+<!-- Script inline para importar y usar la función -->
+<script type="module">
+    import { cargarDatos } from '/Junta_Agua/public/scripts/form_nueva_factura.js';
+
+    // Inicializar la función del script con el ID de usuario
+    document.addEventListener("DOMContentLoaded", function () {
+        const userId = "<?= htmlspecialchars($_SESSION['idUser'] ?? ''); ?>";
+        if (userId) {
+            cargarDatos(userId); // Llama a la función con el ID del usuario
+        }
+    });
+</script>
+<!-- Modal para mostrar los resultados -->
+<div id="modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <h2>Seleccionar Cliente</h2>
+        <div id="modal-content">
+            <!-- Filas dinámicas se generarán aquí -->
+        </div>
+        <button id="close-modal" class="close-modal">Cerrar</button>
+    </div>
+</div>
+
+<!-- Script inline para manejar la interacción -->
+<script type="module">
+    import { buscarCIRUC } from '/Junta_Agua/public/scripts/buscar_cliente.js';
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const searchButton = document.querySelector(".btn-busqueda");
+        searchButton.addEventListener("click", buscarCIRUC);
+
+        // Configuración del modal
+        const modal = document.getElementById("modal");
+        const closeModal = document.getElementById("close-modal");
+
+        closeModal.addEventListener("click", () => {
+            modal.style.display = "none";
+        });
+
+        window.addEventListener("click", (event) => {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    });
+</script>
+
+<!-- Estilos del Modal -->
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+        background-color: #fff;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 50%;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .close-modal {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 8px 16px;
+        background-color: #f44336;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+    .close-modal:hover {
+        background-color: #d32f2f;
+    }
+</style>
