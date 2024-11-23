@@ -22,7 +22,7 @@
     <tr>
         <th>Nombre Comercial</th>
         <th>Cédula</th>
-        <th>Nro. Medidor</th>
+        <th>Concepto</th>
         <th>Fecha Emisión</th>
         <th>Total</th>
         <th>Estado</th>
