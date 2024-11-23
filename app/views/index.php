@@ -22,17 +22,20 @@ if (session_status() === PHP_SESSION_NONE) {
         <!-- Menú Lateral -->
         <aside id="sidebar" class="sidebar">
             <div class="sidebar-header">
-                        <!-- Esto no se esta usando corregir se esta usando el index dentro de factura -->
                 <h2 class="sidebar-rol"><?= htmlspecialchars($_SESSION['Rol'] ?? 'Invitado'); ?></h2>
                 <h2 class="sidebar-nombre"><?= htmlspecialchars($_SESSION['Cedula'] ?? 'edison'); ?></h2>
             </div>
             <nav class="sidebar-nav">
-                <a href="?view=factura/landing" class="sidebar-link"><i class="fas fa-home"></i> <span>Landing</span></a>
-                <a href="?view=factura/index" class="sidebar-link"><i class="fas fa-file-invoice"></i> <span>Facturas</span></a>
-                <a href="?view=autorizaciones" class="sidebar-link"><i class="fas fa-users"></i> <span>Autorizaciones</span></a>
-                <a href="?view=pagos" class="sidebar-link"><i class="fas fa-credit-card"></i> <span>Pagos</span></a>
-                <a href="?view=reporte" class="sidebar-link"><i class="fas fa-chart-line"></i> <span>Reportería</span></a>
-                <a href="?view=gestion_usuarios" class="sidebar-link"><i class="fas fa-users"></i> <span>Gestión de Usuarios</span></a>
+                <?php if ($_SESSION['Rol'] === 'presidente'): ?>
+                    <a href="?view=factura/index" class="sidebar-link"><i class="fas fa-file-invoice"></i> <span>Facturas</span></a>
+                <?php else: ?>
+                    <a href="?view=factura/landing" class="sidebar-link"><i class="fas fa-home"></i> <span>Landing</span></a>
+                    <a href="?view=factura/index" class="sidebar-link"><i class="fas fa-file-invoice"></i> <span>Facturas</span></a>
+                    <a href="?view=autorizaciones" class="sidebar-link"><i class="fas fa-users"></i> <span>Autorizaciones</span></a>
+                    <a href="?view=pagos" class="sidebar-link"><i class="fas fa-credit-card"></i> <span>Pagos</span></a>
+                    <a href="?view=reporte" class="sidebar-link"><i class="fas fa-chart-line"></i> <span>Reportería</span></a>
+                    <a href="?view=gestion_usuarios" class="sidebar-link"><i class="fas fa-users"></i> <span>Gestión de Usuarios</span></a>
+                <?php endif; ?>
             </nav>
             <div class="sidebar-footer">
                 <a href="index.php?action=logout" class="sidebar-link"><i class="fas fa-sign-out-alt"></i> <span>Salir</span></a>

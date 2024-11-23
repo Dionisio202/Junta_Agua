@@ -14,7 +14,7 @@
             placeholder="Filtrar por cédula o número de medidor" 
             class="filter-input"
         >
-        <?php if ($rol === 'administrador'): ?>
+        <?php if ($rol === 'Contador'): ?>
             <button type="button" class="add-btn" onclick="window.location.href='/Junta_Agua/public/?view=factura/nuevafactura'">Agregar nueva Factura</button>
         <?php endif; ?>
     </div>
@@ -26,7 +26,7 @@
             <th>Fecha Emisión</th>
             <th>Total</th>
             <th>Estado</th>
-            <?php if ($rol === 'Administrador'): ?>
+            <?php if ($rol === 'Contador'): ?>
                 <th>Acciones</th>
             <?php endif; ?>
         </tr>
@@ -40,7 +40,7 @@
                     <td><?= htmlspecialchars($factura['detalle']) ?></td>
                     <td><?= htmlspecialchars($factura['total']) ?></td>
                     <td><?= htmlspecialchars($factura['estado_factura']) ?></td>
-                    <?php if ($rol === 'Administrador'): ?>
+                    <?php if ($rol === 'Contador'): ?>
                         <td>
                             <a class="disabled-action" href="?view=factura/edit&id=<?= $factura['id'] ?>">✏️</a>
                             <a class="disabled-action" href="?view=factura/index&action=delete&id=<?= $factura['id'] ?>" onclick="return confirm('¿Estás seguro de eliminar esta factura?')">🗑️</a>
