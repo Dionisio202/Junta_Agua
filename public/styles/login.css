@@ -1,4 +1,4 @@
-/* Estilos globales */
+/* Reset */
 * {
   margin: 0;
   padding: 0;
@@ -6,16 +6,12 @@
 }
 
 body {
-  background-image: url("../img/backgroundLogin.jpeg");
+  background-image: url("../img/fondoLogin.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  margin: 0;
+  font-family: 'Arial', sans-serif;
 }
 
 /* Header */
@@ -28,16 +24,14 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #333;
+  background-color: rgba(51, 51, 51, 0.9);
   color: #fff;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  z-index: 1000; /* Asegura que el header quede al frente */
+  z-index: 1000;
 }
 
 .header-logo .logo {
-  width: 60px;
-  height: 60px;
-  margin-right: 10px;
+  width: 50px;
+  height: 50px;
 }
 
 .header-nav ul {
@@ -49,52 +43,57 @@ header {
 .header-nav ul li a {
   text-decoration: none;
   color: #fff;
-  padding: 5px 10px;
+  font-size: 1rem;
   font-weight: bold;
-  border-radius: 4px;
-  transition: background-color 0.3s;
+  padding: 5px 15px;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  transition: 0.3s;
 }
 
 .header-nav ul li a:hover {
-  background-color: #e4e2e2;
+  background-color: #fff;
+  color: #333;
+  border-color: #333;
 }
 
 /* Login Section */
 .login-section {
-  position: relative;
-  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
 .login-container {
-  position: absolute;
-  right: 1;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  width: 300px;
+  width: 100%;
+  max-width: 400px;
 }
 
 .login-card {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.95);
   padding: 2rem;
   border-radius: 15px;
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-  max-width: 400px;
-  width: 100%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   text-align: center;
-  color: #333;
+}
+
+.login-card .form-logo {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 1rem;
 }
 
 .login-card h2 {
-  margin-bottom: 1.5rem;
   font-size: 1.8rem;
+  margin-bottom: 1rem;
   color: #333;
 }
-.login-card h5 {
-  margin-bottom: 1.5rem;
-  font-size: 1.8rem;
-  text-align: right;
-  color: #333;
+
+.login-card p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 2rem;
 }
 
 .login-card input[type="text"],
@@ -102,59 +101,48 @@ header {
   width: 100%;
   padding: 0.75rem;
   margin-bottom: 1rem;
-  border-radius: 15px;
+  border-radius: 10px;
   border: 1px solid #ccc;
   font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.login-card input:focus {
+  border-color: #614caf;
+  outline: none;
 }
 
 .login-card button {
   width: 100%;
   padding: 0.75rem;
-  border-radius: 4px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
+  border-radius: 10px;
+  background-color: #1d18a8;
+  color: #fff;
   font-size: 1.2rem;
-  font-weight: bold;
+  border: none;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .login-card button:hover {
-  background-color: #45a049;
+  background-color: #1681ac;
 }
 
-.logo {
-  width: 50px;
-  height: 50px;
-  background-image: url("../img/LOGO.png");
-  background-size: cover;
-  background-position: center;
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 10px;
+.forgot-password {
+  display: block;
+  margin: 1rem 0;
+  color: #514caf;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s;
 }
 
-.login-button:hover {
-  background-color: #fff;
-  color: #203a43;
-}
-
-.login-button {
-  border: 1px solid #fff;
-  padding: 5px 15px;
-  border-radius: 15px;
-  transition: background-color 0.3s;
-}
-
-h1 {
-  font-size: 1.8em;
+.forgot-password:hover {
   color: #333;
-  margin-bottom: 20px;
-  font-family: 'Arial', sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-weight: 600;
-  border-bottom: 2px solid #4CAF50;
-  padding-bottom: 10px;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 1rem;
 }
