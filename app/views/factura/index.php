@@ -37,7 +37,7 @@
                     <td><?= htmlspecialchars($factura['nombre_comercial']) ?></td>
                     <td><?= htmlspecialchars($factura['identificacion']) ?></td>
                     <td><?= htmlspecialchars($factura['nro_medidor']) ?></td>
-                    <td><?= htmlspecialchars($factura['fecha_emision']) ?></td>
+                    <td><?= htmlspecialchars($factura['detalle']) ?></td>
                     <td><?= htmlspecialchars($factura['total']) ?></td>
                     <td><?= htmlspecialchars($factura['estado_factura']) ?></td>
                     <?php if ($rol === 'Administrador'): ?>
