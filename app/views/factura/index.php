@@ -14,8 +14,8 @@
             placeholder="Filtrar por cédula o número de medidor" 
             class="filter-input"
         >
-        <?php if ($rol === 'Administrador'): ?>
-            <button type="button" class="add-btn" onclick="window.location.href='/Junta_Agua/public/?view=factura/index&action=add';">Agregar nueva Factura</button>
+        <?php if ($rol === 'administrador'): ?>
+            <button type="button" class="add-btn" onclick="window.location.href='/Junta_Agua/public/?view=factura/nuevafactura'">Agregar nueva Factura</button>
         <?php endif; ?>
     </div>
     <table id="factura-table">
