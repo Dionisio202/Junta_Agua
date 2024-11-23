@@ -42,11 +42,11 @@ class FacturaController {
         }
     }
     public function nuevafactura() {
-        $rol = $_SESSION['Rol'] ?? 'Administrador';
+        $rol = $_SESSION['Rol'] ?? 'administrador';
         require_once __DIR__ . '/../views/factura/nuevafactura.php';
     }
     public function autorizaciones() {
-        $rol = $_SESSION['Rol'] ?? 'Administrador';
+        $rol = $_SESSION['Rol'] ?? 'administrador';
         $nombre = $_SESSION['Nombre'] ??'Invitado';
 
         require_once __DIR__ . '/../views/autorizaciones/index.php';
