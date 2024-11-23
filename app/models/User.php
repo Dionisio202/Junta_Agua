@@ -5,16 +5,12 @@ class User
 {
     private $conn;
     private $table_name = "usuarios";
-    private $table_name = "usuarios";
 
     public function __construct($db)
     {
         $this->conn = $db;
     }
 
-    public function createUser($nombre, $password, $rol = 'usuario')
-    {
-        $query = "INSERT INTO " . $this->table_name . " (nombre, password, rol) VALUES (:nombre, :password, :rol)";
     public function createUser($nombre, $password, $rol = 'Admin') {
         $query = "INSERT INTO " . $this->table_name . " (nombre, clave, rol) VALUES (:nombre, :clave, :rol)";
         $stmt = $this->conn->prepare($query);
@@ -26,9 +22,6 @@ class User
         return $stmt->execute();
     }
 
-    public function authenticateUser($cedula, $password)
-    {
-        $query = "SELECT id, nombre, apellido, rol FROM " . $this->table_name . " WHERE cedula = :cedula AND clave = :clave LIMIT 1";
     public function authenticateUser($cedula, $password) {
         $query = "SELECT nombre, rol FROM " . $this->table_name . " WHERE cedula = :cedula AND clave = :clave LIMIT 1";
         $stmt = $this->conn->prepare($query);
@@ -56,7 +49,6 @@ class User
         }
         return false; // Retorna false si no encuentra resultados
     }
-    
     
 }
 ?>
