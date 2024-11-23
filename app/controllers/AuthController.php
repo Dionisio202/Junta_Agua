@@ -19,9 +19,8 @@ class AuthController {
             session_start();
             $_SESSION['Cedula'] = $cedula;
             $_SESSION['Rol'] = $userData['rol'];
+            $_SESSION['Correo'] = $userData['correo'];
             $_SESSION['Nombre'] = $userData['nombre']; // Guarda el nombre en la sesión
-            $_SESSION['Apellido'] = $userData['apellido']; // Guarda el apellido en la sesión
-            $_SESSION['Correo'] = $userData['correo']; 
             session_write_close();
             header("Location: /Junta_Agua/public/index.php?action=home");
             exit();
