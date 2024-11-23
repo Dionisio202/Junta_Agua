@@ -1,11 +1,13 @@
 <?php
-require_once '../config/database.php';
+require_once __DIR__ . '/../../config/database.php';
 
-class User {
+class User
+{
     private $conn;
     private $table_name = "usuarios";
 
-    public function __construct($db) {
+    public function __construct($db)
+    {
         $this->conn = $db;
     }
 
@@ -25,18 +27,28 @@ class User {
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":cedula", $cedula);
         $stmt->bindParam(":clave", $password); // Contraseña sin cifrar
+        $stmt->bindParam(":clave", $password); // Contraseña sin cifrar
         $stmt->execute();
-        
+
         if ($stmt->rowCount() > 0) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             return $row; // Devuelve un array con el nombre y rol si la autenticación es exitosa
         }
         return false;
     }
+    public function getUserData($id)
+    {
+        $query = "SELECT id, nombre, apellido, rol FROM " . $this->table_name . " WHERE id = :id LIMIT 1";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT); // Forzar el ID como entero
+        $stmt->execute();
     
-    
-    
-    
+        // Retornar los datos si existen
+        if ($stmt->rowCount() > 0) {
+            return $stmt->fetch(PDO::FETCH_ASSOC); // Retorna como array asociativo
+        }
+        return false; // Retorna false si no encuentra resultados
+    }
     
 }
 ?>
