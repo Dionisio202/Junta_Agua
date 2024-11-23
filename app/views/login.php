@@ -6,15 +6,13 @@
     <link rel="stylesheet" href="../public/styles/login.css">
     <title>Inicio de Sesión</title>
 </head>
-
 <body>
     <header>
-    <div class="header-logo">
-            <img src="../img/LOGO.png" alt="j" class="logo">
+        <div class="header-logo">
+            <img src="../img/LOGO.png" class="logo" alt="Logo">
         </div>
         <nav class="header-nav">
             <ul>
-                
                 <li><a href="#help" class="login-button">Ayuda</a></li>
             </ul>
         </nav>
@@ -23,22 +21,18 @@
     <section class="login-section">
         <div class="login-container">
             <div class="login-card">
-                <img class="logo" alt="">
+                <img src="../img/Logo1.png" class="form-logo" alt="Logo del sistema">
                 <h2>Bienvenid@</h2>
-                <h5>Inicie sesión para acceder a los beneficios del sistema</h5>
-                <br>
-                <!-- Formulario de inicio de sesión -->
+                <p>Inicie sesión para acceder a los beneficios del sistema</p>
                 <form action="index.php?action=login" method="post">
                     <input type="text" id="username" name="username" placeholder="Cédula de Identidad" required>
                     <input type="password" id="password" name="password" placeholder="Contraseña" required>
-                    <h5>Recuperar Contraseña</h5>
+                    <a href="#" class="forgot-password">Recuperar Contraseña</a>
                     <button type="submit">Iniciar Sesión</button>
                 </form>
-                
-                <!-- Mensaje de error si las credenciales son incorrectas -->
                 <?php
                 if (isset($_GET['error']) && $_GET['error'] == 'invalid') {
-                    echo "<p style='color:red; text-align: center;'>Cédula o contraseña incorrectos.</p>";
+                    echo "<p class='error-message'>Cédula o contraseña incorrectos.</p>";
                 }
                 ?>
             </div>
