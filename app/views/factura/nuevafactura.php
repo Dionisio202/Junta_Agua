@@ -13,6 +13,7 @@
     </div>
 
     <div class="seccion-factura">
+        <h2>Mantenimiento</h2>
         <form>
             <!-- Columna Izquierda -->
             <div class="columna-izquierda">
@@ -30,45 +31,57 @@
             <!-- Columna Central -->
             <div class="columna-centro">
                 <div class="pestana-mantenimiento">
-                    <h2>Mantenimiento</h2>
                     <div class="grupo">
+                    <div>
                         <label for="fecha-emision">Emisión:</label>
                         <input type="date" id="fecha-emision" value="2024-10-28">
-
+                    </div>
+                    
+                    <div>
                         <label for="fecha-vencimiento">Vence:</label>
                         <input type="date" id="fecha-vencimiento" value="2024-10-28">
                     </div>
-
-                    <div class="grupo">
-                        <label for="serie">Serie:</label>
-                        <input type="text" id="serie" value="001">
-
-                        <label for="numero">Número:</label>
-                        <input type="text" id="numero" value="200">
-
-                        <label for="secuencia">Secuencia:</label>
-                        <input type="text" id="secuencia" value="000006001" readonly>
-
-                        <label for="concepto">Concepto:</label>
-                        <select id="concepto">
-                            <option value="1">Ninguno</option>
-                        </select>
                     </div>
-
+                    <br>
                     <div class="grupo">
-                        <label for="ci-ruc">C.I./RUC:</label>
-                        <div class="input-group">
-                            <input type="text" id="ci-ruc" value="1803110517">
-                            <button type="button" class="btn-busqueda">🔍</button>
+                        <div>
+                            <label for="serie">Serie:</label>
+                            <input type="text" id="serie" value="001">
                         </div>
-
-                        <label for="nombre-cliente">Cliente:</label>
-                        <input type="text" id="nombre-cliente" value="GALARZA GALARZA NANCY ROCIO" readonly>
-
-                        <label for="codigo">Código:</label>
-                        <div class="input-group">
-                            <input type="text" id="codigo">
-                            <button type="button" class="btn-busqueda">🔍</button>
+                        <div>
+                            <label for="numero">Número:</label>
+                            <input type="text" id="numero" value="200">
+                        </div>
+                        <div>
+                            <label for="secuencia">Secuencia:</label>
+                            <input type="text" id="secuencia" value="000006001" readonly>
+                        </div>
+                        <div>
+                            <label for="concepto">Concepto:</label>
+                            <select id="concepto">
+                                <option value="1">Ninguno</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="grupo">
+                        <div>
+                            <label for="ci-ruc">C.I./RUC:</label>
+                            <div class="input-group">
+                                <input type="text" id="ci-ruc" value="1803110517">
+                                <button type="button" class="btn-busqueda">🔍</button>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="nombre-cliente">Cliente:</label>
+                            <input type="text" id="nombre-cliente" value="GALARZA GALARZA NANCY ROCIO" readonly>
+                        </div>
+                        <div>                            
+                            <label for="codigo">Código:</label>
+                            <div class="input-group">
+                                <input type="text" id="codigo">
+                                <button type="button" class="btn-busqueda">🔍</button>
+                            </div>
                         </div>
                     </div>
 
@@ -83,12 +96,10 @@
             <!-- Columna Derecha -->
             <div class="columna-derecha">
                 <div class="buttons-vertical">
-                    <button class="add-btn">Agregar nueva Factura</button>
                     <button class="save-btn">Guardar</button>
-                    <button class="edit-btn">Modificar</button>
-                    <button class="delete-btn">Eliminar</button>
-                    <div class="select-container">
-                        <select id="sucursal">
+                    <button class="cancel-btn">Cancelar</button>
+                    <div class="generar-select-container">
+                        <select id="generar">
                             <option value="ticket">Generar Ticket</option>
                             <option value="pdf">Generar PDF</option>
                         </select>
@@ -204,43 +215,3 @@
         });
     });
 </script>
-
-<!-- Estilos del Modal -->
-<style>
-    .modal {
-        display: none; /* Oculto por defecto */
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.4);
-    }
-
-    .modal-content {
-        background-color: #fff;
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 50%;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .close-modal {
-        display: inline-block;
-        margin-top: 10px;
-        padding: 8px 16px;
-        background-color: #f44336;
-        color: white;
-        border: none;
-        cursor: pointer;
-        border-radius: 4px;
-    }
-
-    .close-modal:hover {
-        background-color: #d32f2f;
-    }
-</style>
