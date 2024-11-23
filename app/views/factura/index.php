@@ -14,7 +14,7 @@
             placeholder="Filtrar por cédula o número de medidor" 
             class="filter-input"
         >
-        <?php if ($rol === 'administrador'): ?>
+        <?php if ($rol === 'Contador'): ?>
             <button type="button" class="add-btn" onclick="window.location.href='/Junta_Agua/public/?view=factura/nuevafactura'">Agregar nueva Factura</button>
         <?php endif; ?>
     </div>
@@ -26,7 +26,7 @@
             <th>Fecha Emisión</th>
             <th>Total</th>
             <th>Estado</th>
-            <?php if ($rol === 'Administrador'): ?>
+            <?php if ($rol === 'Contador'): ?>
                 <th>Acciones</th>
             <?php endif; ?>
         </tr>
@@ -40,7 +40,7 @@
                     <td><?= htmlspecialchars($factura['detalle']) ?></td>
                     <td><?= htmlspecialchars($factura['total']) ?></td>
                     <td><?= htmlspecialchars($factura['estado_factura']) ?></td>
-                    <?php if ($rol === 'Administrador'): ?>
+                    <?php if ($rol === 'Contador'): ?>
                         <td>
                             <a class="disabled-action" href="?view=factura/edit&id=<?= $factura['id'] ?>">✏️</a>
                             <a class="disabled-action" href="?view=factura/index&action=delete&id=<?= $factura['id'] ?>" onclick="return confirm('¿Estás seguro de eliminar esta factura?')">🗑️</a>
@@ -58,46 +58,50 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    // Selecciona todas las filas que tienen la clase 'clickable-row'
     const rows = document.querySelectorAll(".clickable-row");
+    const userRole = "<?= $rol ?>"; // Pasar el rol desde PHP a JavaScript
 
     rows.forEach(row => {
-        row.addEventListener("click", function () {
-            const href = this.getAttribute("data-href"); // Obtén el valor de 'data-href'
-            if (href) {
-                console.log("Redirigiendo a:", href); // Depuración opcional
-                window.location.href = href; // Redirige a la URL especificada
-            }
-        });
+        if (userRole === "Presidente") {
+            // Si el rol es Presidente, desactiva el clic en las filas
+            row.style.pointerEvents = "none"; // Desactiva los eventos de clic
+            row.style.opacity = "0.6"; // Cambia la opacidad para indicar que está desactivado
+            row.style.cursor = "not-allowed"; // Cambia el cursor al pasar sobre la fila
+        } else {
+            // Si no es Presidente, habilita el clic
+            row.addEventListener("click", function () {
+                const href = this.getAttribute("data-href");
+                if (href) {
+                    window.location.href = href;
+                }
+            });
+        }
     });
 
     // Filtro de búsqueda
-    const filterInput = document.getElementById("filter-input"); // Campo de texto para filtrar
-    const table = document.getElementById("factura-table"); // Tabla de facturas
-    const rowsArray = table.getElementsByTagName("tr"); // Filas de la tabla
+    const filterInput = document.getElementById("filter-input");
+    const table = document.getElementById("factura-table");
+    const rowsArray = table.getElementsByTagName("tr");
 
     filterInput.addEventListener("input", function () {
-        const filterValue = this.value.toLowerCase(); // Texto ingresado, convertido a minúsculas
-
-        for (let i = 1; i < rowsArray.length; i++) { // Itera desde la fila 1 (ignora encabezado)
-            const nombreCell = rowsArray[i].getElementsByTagName("td")[0]; // Celda de nombre comercial
-            const idMedidorCell = rowsArray[i].getElementsByTagName("td")[2]; // Celda de ID de medidor
-
+        const filterValue = this.value.toLowerCase();
+        for (let i = 1; i < rowsArray.length; i++) {
+            const nombreCell = rowsArray[i].getElementsByTagName("td")[0];
+            const idMedidorCell = rowsArray[i].getElementsByTagName("td")[2];
             if (nombreCell && idMedidorCell) {
                 const nombreText = nombreCell.textContent.toLowerCase();
                 const idMedidorText = idMedidorCell.textContent.toLowerCase();
-
-                // Comprueba si el texto ingresado coincide con el nombre comercial o número de medidor
                 if (nombreText.includes(filterValue) || idMedidorText.includes(filterValue)) {
-                    rowsArray[i].style.display = ""; // Muestra la fila si coincide
+                    rowsArray[i].style.display = "";
                 } else {
-                    rowsArray[i].style.display = "none"; // Oculta la fila si no coincide
+                    rowsArray[i].style.display = "none";
                 }
             }
         }
     });
 });
 </script>
+
 
 <style>
 .filter-input {

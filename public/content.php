@@ -2,15 +2,31 @@
 require_once '../app/controllers/FacturaController.php';
 require_once '../app/controllers/AutorizacionesController.php';
 
+
+// Función para verificar el acceso según el rol del usuario
+function checkAccess($requiredRoles) {
+    $userRole = $_SESSION['Rol'] ?? 'Invitado'; // Obtén el rol del usuario o asigna 'Invitado' por defecto
+    return in_array($userRole, $requiredRoles); // Verifica si el rol del usuario está permitido
+}
+
 $view = $_GET['view'] ?? 'factura/index';
 $action = $_GET['action'] ?? null; // Obtiene la acción, si existe
 
 // Inicializa el controlador según la vista solicitada
 switch ($view) {
     case 'factura/index':
+        // Permitir acceso a Contador y Presidente
+        if (!checkAccess(['Contador', 'Presidente'])) {
+            echo "<p>Acceso denegado. No tienes permiso para acceder a esta vista.</p>";
+            exit();
+        }
         $controller = new FacturaController();
         if ($action === 'delete') {
-            // Si la acción es eliminar, obtén el ID de la factura y llama a deleteFactura
+            // Restringir eliminar facturas solo a Contador
+            if (!checkAccess(['Contador'])) {
+                echo "<p>Acceso denegado. No tienes permiso para eliminar facturas.</p>";
+                exit();
+            }
             $id = $_GET['id'] ?? null;
             if ($id) {
                 $controller->deleteFactura($id);
@@ -21,20 +37,32 @@ switch ($view) {
                 echo "<p>Error: ID de factura no proporcionado.</p>";
             }
         } else {
-            $controller->index(); // Llama al método que cargará la vista correspondiente
+            $controller->index(); // Carga la vista de facturas
         }
         break;
-        case 'factura/nuevafactura':
-            $controller = new FacturaController();
-            $controller->nuevafactura(); // Cargar la vista para crear una nueva factura
-            break;
-        case 'autorizaciones':
-                $controller = new AutorizacionController();
-                $controller->vista(); // Cargar la vista para crear una nueva factura
-                break;
+
+    case 'factura/nuevafactura':
+        // Permitir acceso a Contador y Tesorero
+        if (!checkAccess(['Contador', 'Tesorero'])) {
+            echo "<p>Acceso denegado. No tienes permiso para acceder a esta vista.</p>";
+            exit();
+        }
+        $controller = new FacturaController();
+        $controller->nuevafactura(); // Cargar la vista para crear una nueva factura
+        break;
+
+    case 'autorizaciones':
+        // Solo "Contador" puede acceder
+        if (!checkAccess(['Contador'])) {
+            echo "<p>Acceso denegado. No tienes permiso para acceder a esta vista.</p>";
+            exit();
+        }
+        $controller = new AutorizacionController();
+        $controller->vista(); // Cargar la vista de autorizaciones
+        break;
+
     // Aquí puedes añadir otros casos para otros controladores y métodos
     default:
         echo "<p>Vista no encontrada.</p>";
         break;
 }
-
