@@ -9,7 +9,7 @@
 <body>
     <header>
         <div class="logo">
-            <img src="../public/img/LOGO.png" alt="Logo de la Junta">
+            <img src="../public/img/Logo1.png" alt="Logo de la Junta">
         </div>
         <nav>
             <ul>    
