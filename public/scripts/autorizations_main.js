@@ -1,13 +1,12 @@
 import { getData } from './data.js';
 import { applyFilters, getFilters } from './filters_autorization.js';
-import { renderPagination } from './pagination_utils.js';
+import { renderPagination } from './pagination.js';
 
-let data = []; // Datos originales
-let filteredData = []; // Datos filtrados
+let data = [];
+let filteredData = [];
 let currentPage = 1;
 const rowsPerPage = 5;
 
-// Renderiza la tabla
 function renderTable(page = 1) {
   const startIndex = (page - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
@@ -27,45 +26,34 @@ function renderTable(page = 1) {
     </tr>
   `).join("");
 
-  renderPagination(filteredData, currentPage, rowsPerPage, changePage);
-}
-
-// Cambia de página
-function changePage(page) {
-  const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-  if (page < 1 || page > totalPages) return;
-  currentPage = page;
-  renderTable(currentPage);
-}
-
-// Aplica los filtros y actualiza la tabla
-function updateFilteredData() {
-  const filters = getFilters(); // Obtiene los valores de los filtros
-  filteredData = applyFilters(data, filters); // Aplica los filtros a los datos originales
-  currentPage = 1; // Reinicia a la primera página
-  renderTable(currentPage);
-}
-
-// Inicializa los eventos de los filtros
-function initializeFilters() {
-  document.querySelector(".styled-button.consultar").addEventListener("click", updateFilteredData);
-
-  document.querySelector(".styled-button.todos").addEventListener("click", () => {
-    document.querySelectorAll(".checkboxCustom input").forEach((checkbox) => (checkbox.checked = false));
-    document.querySelectorAll("input[type='date']").forEach((input) => (input.value = ""));
-    filteredData = [...data]; // Restablece los datos originales
-    currentPage = 1; // Reinicia la paginación
+  renderPagination(filteredData, currentPage, rowsPerPage, (page) => {
+    currentPage = page;
     renderTable(currentPage);
   });
 }
 
-// Inicializa la tabla y los filtros
-async function initializeTable() {
+function initializeFilters() {
+  document.querySelector(".styled-button.consultar").addEventListener("click", () => {
+    const filters = getFilters();
+    filteredData = applyFilters(data, filters);
+    currentPage = 1;
+    renderTable(currentPage);
+  });
+
+  document.querySelector(".styled-button.todos").addEventListener("click", () => {
+    document.querySelectorAll(".checkboxCustom input").forEach((checkbox) => (checkbox.checked = false));
+    document.querySelectorAll("input[type='date']").forEach((input) => (input.value = ""));
+    filteredData = [...data];
+    currentPage = 1;
+    renderTable(currentPage);
+  });
+}
+
+async function initializeApp() {
   data = await getData();
-  filteredData = [...data]; // Inicia con todos los datos
+  filteredData = [...data];
   renderTable(currentPage);
   initializeFilters();
 }
 
-// Ejecutar al cargar
-initializeTable();
+initializeApp();
