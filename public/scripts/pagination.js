@@ -8,7 +8,7 @@ let currentPage = 1;
 const rowsPerPage = 5;
 
 // Renderiza la tabla
-function renderTable(page = 1) {
+export function renderTable(page = 1) {
   const startIndex = (page - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
   const pageData = filteredData.slice(startIndex, endIndex);
@@ -31,7 +31,7 @@ function renderTable(page = 1) {
 }
 
 // Cambia de página
-function changePage(page) {
+export function changePage(page) {
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
   if (page < 1 || page > totalPages) return;
   currentPage = page;

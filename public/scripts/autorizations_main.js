@@ -1,59 +1,31 @@
 import { getData } from './data.js';
-import { applyFilters, getFilters } from './filters_autorization.js';
-import { renderPagination } from './pagination.js';
+import { applyFilters, getFilters, initializeDocumentStateFilter, initializeFilterButtons, initializeDocumentTypeFilter } from './filters_autorization.js';
+import { renderTable } from './pagination.js';
 
-let data = [];
-let filteredData = [];
+let data = []; // Datos originales
+let filteredData = []; // Datos filtrados
 let currentPage = 1;
-const rowsPerPage = 5;
-
-function renderTable(page = 1) {
-  const startIndex = (page - 1) * rowsPerPage;
-  const endIndex = startIndex + rowsPerPage;
-  const pageData = filteredData.slice(startIndex, endIndex);
-
-  const tableBody = document.getElementById("table-body");
-  tableBody.innerHTML = pageData.map((factura) => `
-    <tr>
-      <td><input type="checkbox"></td>
-      <td>${factura.autorizado ? "Sí" : "No"}</td>
-      <td>${factura.emision}</td>
-      <td>${factura.serie}</td>
-      <td>${factura.secuencia}</td>
-      <td>${factura.cliente}</td>
-      <td>${factura.importe}</td>
-      <td>${factura.mensajeError}</td>
-    </tr>
-  `).join("");
-
-  renderPagination(filteredData, currentPage, rowsPerPage, (page) => {
-    currentPage = page;
-    renderTable(currentPage);
-  });
-}
-
-function initializeFilters() {
-  document.querySelector(".styled-button.consultar").addEventListener("click", () => {
-    const filters = getFilters();
-    filteredData = applyFilters(data, filters);
-    currentPage = 1;
-    renderTable(currentPage);
-  });
-
-  document.querySelector(".styled-button.todos").addEventListener("click", () => {
-    document.querySelectorAll(".checkboxCustom input").forEach((checkbox) => (checkbox.checked = false));
-    document.querySelectorAll("input[type='date']").forEach((input) => (input.value = ""));
-    filteredData = [...data];
-    currentPage = 1;
-    renderTable(currentPage);
-  });
-}
 
 async function initializeApp() {
-  data = await getData();
-  filteredData = [...data];
-  renderTable(currentPage);
-  initializeFilters();
+  try {
+    data = await getData(); // Obtiene los datos desde la API
+    filteredData = [...data]; // Inicializa los datos filtrados
+    renderTable(currentPage); // Renderiza la tabla inicial
+
+    // Inicializa los filtros
+    initializeFilterButtons(() => {
+      const filters = getFilters();
+      filteredData = applyFilters(data, filters);
+      currentPage = 1;
+      renderTable(currentPage);
+    });
+
+    initializeDocumentTypeFilter(); // Inicializa el filtro de tipos de documentos
+    initializeDocumentStateFilter(); // Inicializa el filtro de estado de documentos
+  } catch (error) {
+    console.error("Error al inicializar la aplicación:", error);
+  }
 }
 
-initializeApp();
+// Ejecutar al cargar el DOM
+document.addEventListener("DOMContentLoaded", initializeApp);

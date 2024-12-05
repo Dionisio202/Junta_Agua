@@ -9,89 +9,88 @@
 </head>
 
 <body>
-    <div class="table-container">
+    <div class="header-container">
         <h1>Autorización de Facturas</h1>
+    </div>
 
-        <!-- Sección de Filtros -->
-        <div class="seccion-factura">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                <!-- Tipos de Documentos -->
-                <div class="columna1">
+    <!-- Sección de Filtros -->
+    <div class="seccion-factura">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <!-- Tipos de Documentos -->
+            <div class="columna1">
                 <h2>Tipos de Documentos</h2>
-                <label class="checkboxCustom" name="facturas">Facturas
-                    <input type="checkbox" > 
+                <label class="checkboxCustom">Facturas
+                    <input type="checkbox" name="facturas"> 
                     <span class="checkmark"></span>
                 </label>
 
-                <label class="checkboxCustom" name="otros">Otros
-                    <input type="checkbox" >
+                <label class="checkboxCustom">Otros
+                    <input type="checkbox" name="otros"> 
                     <span class="checkmark"></span>
                 </label>
 
-                <label class="checkboxCustom" name="todos">Todos
-                    <input type="checkbox" >
+                <label class="checkboxCustom">Todos
+                    <input type="checkbox" name="todos"> 
                     <span class="checkmark"></span>
                 </label>
                 <br>
             </div>
 
-                <!-- Estado de Factura -->
-                <div class="columna2">
-                    <h2>Estado de Factura</h2>
-                    <label class="checkboxCustom" name="noAutorizado">
-                        No Autorizado
-                        <input type="checkbox" name="noAutorizado">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="checkboxCustom" name="autorizado">
-                        Autorizado
-                        <input type="checkbox" name="autorizado">
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
-
-                <!-- Filtro por Fecha -->
-                <div class="columna3">
-                    <h2>Filtro por Fecha</h2>
-                    <div style="display: flex; gap: 10px;">
-                        <label>Desde: <input type="date" name="fechaDesde" value="2023-07-01"></label>
-                        <label>Hasta: <input type="date" name="fechaHasta" value="2023-07-01"></label>
-                    </div><br>
-                </div>
+            <!-- Estado de Factura -->
+            <div class="columna2">
+                <h2>Estado de Factura</h2>
+                <label class="checkboxCustom">No Autorizado
+                    <input type="checkbox" name="noAutorizado">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="checkboxCustom">Autorizado
+                    <input type="checkbox" name="autorizado">
+                    <span class="checkmark"></span>
+                </label>
             </div>
-            <div class="botones-autorizacion">
-                <button>Consultar</button>
-                <button>Todos</button>
-                <button>Opciones</button>
-                <button>Actualizar</button>
-                <button>Autorizar</button>
+
+            <!-- Filtro por Fecha -->
+            <div class="columna3">
+                <h2>Filtro por Fecha</h2>
+                <div style="display: flex; gap: 10px;">
+                    <label>Desde: <input type="date" name="fechaDesde" value="2023-07-01"></label>
+                    <label>Hasta: <input type="date" name="fechaHasta" value="2023-07-01"></label>
+                </div>
+                <br>
             </div>
         </div>
-
-        <!-- Tabla -->
-        <div class="table-container">
-            <table  width="100%" style="border-collapse: collapse;">
-                <thead>
-                    <tr>
-                        <th>Selección</th>
-                        <th>¿Autorizado?</th>
-                        <th>Emisión</th>
-                        <th>Serie</th>
-                        <th>Secuencia</th>
-                        <th>Nombre del Cliente</th>
-                        <th>Importe</th>
-                        <th>Mensaje Error</th>
-                    </tr>
-                </thead>
-                <tbody id="table-body"></tbody>
-            </table>
+        <div class="botones-autorizacion">
+            <button class="styled-button consultar">Consultar</button>
+            <button class="styled-button todos">Todos</button>
+            <button class="styled-button opciones">Opciones</button>
+            <button class="styled-button actualizar">Actualizar</button>
+            <button class="styled-button autorizar">Autorizar</button>
         </div>
-
-        <!-- Controles de Paginación -->
-        <div id="pagination" class="pagination"></div>
     </div>
 
-    <script src="http://localhost/Junta_Agua/public/scripts/pagination.js" type="module"></script>
+    <!-- Tabla -->
+    <div class="table-container">
+        <table width="100%" style="border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th>Selección</th>
+                    <th>¿Autorizado?</th>
+                    <th>Emisión</th>
+                    <th>Serie</th>
+                    <th>Secuencia</th>
+                    <th>Nombre del Cliente</th>
+                    <th>Importe</th>
+                    <th>Mensaje Error</th>
+                </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+        </table>
+    </div>
+
+    <!-- Controles de Paginación -->
+    <div id="pagination" class="pagination"></div>
+
+    <script src="http://localhost/Junta_Agua/public/scripts/autorizations_main.js" type="module"></script>
 </body>
 
 </html>

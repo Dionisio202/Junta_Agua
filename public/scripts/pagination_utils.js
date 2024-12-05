@@ -24,4 +24,3 @@ export function renderPagination(data, currentPage, rowsPerPage, onPageChange) {
       }
     });
   }
-  

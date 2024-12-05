@@ -9,7 +9,7 @@ export async function getData() {
 
     if (Array.isArray(apiData)) {
       return apiData.map((factura) => ({
-        autorizado: factura.estado_factura === "autorizado",
+        autorizado: factura.fecha_autorizacion ? true : false, // Basado en fecha_autorizacion
         emision: factura.fecha_emision || "Fecha no disponible",
         serie: factura.id || "No disponible",
         secuencia: factura.id || "No disponible",
