@@ -381,7 +381,8 @@ button {
     height: 8px;
     border-radius: 50%;
     background: white;
-}/**checkbox */
+}
+/**checkbox */
 .checkboxCustom {
     display: block;
     position: relative;
@@ -445,6 +446,13 @@ button {
     height: 8px;
     border-radius: 50%;
     background: white;
+}
+
+.botones-autorizacion {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px; 
+    margin-top: 10px; 
 }
 
 /* 
