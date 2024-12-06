@@ -70,6 +70,7 @@
 
     <!-- Tabla -->
     <div class="table-container">
+        <table width="100%" style="border-collapse: collapse;">
             <thead>
                 <tr>
                     <th>Selección</th>
@@ -83,6 +84,7 @@
                 </tr>
             </thead>
             <tbody id="table-body"></tbody>
+        </table>
     </div>
 
     <!-- Controles de Paginación -->
