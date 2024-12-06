@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="app/public/styles/styles.css">
+
 <div class="user-info">
     <span class="user-role"><?= htmlspecialchars($rol); ?></span> 
     <span class="user-name"><?= htmlspecialchars($nombre ?? 'Usuario'); ?></span> 
@@ -98,40 +100,3 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 </script>
-
-<style>
-.filter-input {
-    width: 100%;
-    max-width: 300px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.add-btn {
-    padding: 10px 15px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.add-btn:hover {
-    background-color: #0056b3;
-}
-
-.disabled-action {
-    pointer-events: none;
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.buttons {
-    margin-bottom: 15px;
-}
-
-.clickable-row {
-    cursor: pointer; /* Cambia el cursor al pasar sobre la fila */
-}
-</style>
