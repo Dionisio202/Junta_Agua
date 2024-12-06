@@ -20,7 +20,6 @@
                 <div class="pestana-datos-adicionales">
                     <label for="facturador">Facturador:</label>
                     <input type="text" id="nombre-facturador" value="usuario logueado" readonly>
-
                     <label for="sucursal">Sucursal:</label>
                     <select id="sucursal">
                         <option selected>MATRIZ / SANTA ROSA</option>
@@ -86,9 +85,9 @@
                     </div>
 
                     <div class="buttons">
-                        <button type="button" class="btn-informacion">Información</button>
-                        <button type="button" class="btn-observacion">Observación</button>
-                        <button type="button" class="btn-existencias">Existencias</button>
+                        <button type="button" class="customized-button">Información</button>
+                        <button type="button" class="customized-button">Observación</button>
+                        <button type="button" class="customized-button">Existencias</button>
                     </div>
                 </div>
             </div>

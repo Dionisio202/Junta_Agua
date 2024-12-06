@@ -59,12 +59,12 @@
                 <br>
             </div>
         </div>
-        <div class="botones-autorizacion">
-            <button class="styled-button consultar">Consultar</button>
-            <button class="styled-button todos">Todos</button>
-            <button class="styled-button opciones">Opciones</button>
-            <button class="styled-button actualizar">Actualizar</button>
-            <button class="styled-button autorizar">Autorizar</button>
+        <div class="buttons">
+            <button type="button" class="customized-button">Consultar</button>
+            <button type="button" class="customized-button">Todos</button>
+            <button type="button" class="customized-button">Opciones</button>
+            <button type="button" class="customized-button">Actualizar</button>
+            <button type="button" class="customized-button">Autorizar</button>
         </div>
     </div>
 

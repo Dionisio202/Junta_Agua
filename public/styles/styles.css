@@ -297,24 +297,29 @@ button {
 /*
     Columnas index autorizacion
 */
-.columna1, .columna2{
+.columna1{
+    padding-top: 2%;
+    padding-left: 2%; 
+    padding-right: 2%;
+    flex: 1;
+    border-right: 2px solid #ccc; 
+}
+
+.columna2{
+    padding-top: 2%;
     padding-left: 2%; 
     padding-right: 2%;
     flex: 1;
 }
 
-.columna2{
-    border-left: 2px solid #ccc; 
-    border-right: 2px solid #ccc; 
-    padding-left: 2%; 
-    padding-right: 2%;
-    
-}
-
 .columna3{
+    padding-top: 2%;
     padding-left: 2%; 
+    border-left: 2px solid #ccc; 
     flex: 2;
     align-content: center;
+    line-height: 190%;
+
 }
 
 /**checkbox */
@@ -447,14 +452,6 @@ button {
     border-radius: 50%;
     background: white;
 }
-
-.botones-autorizacion {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px; 
-    margin-top: 10px; 
-}
-
 /* 
     Módulo de Nueva Factura
  */
@@ -573,15 +570,13 @@ button {
     flex: 1 1 calc(33.333% - 10px);
 }
 
-.seccion-factura .botones {
+.seccion-factura .buttons {
     display: flex;
     gap: 10px;
     justify-content: center;
 }
 
-.seccion-factura .btn-informacion,
-.seccion-factura .btn-observacion,
-.seccion-factura .btn-existencias {
+.seccion-factura .customized-button {
     padding: 10px 15px;
     border: none;
     background-color: #3282b8;
@@ -592,9 +587,7 @@ button {
     transition: background-color 0.3s;
 }
 
-.seccion-factura .btn-informacion:hover,
-.seccion-factura .btn-observacion:hover,
-.seccion-factura .btn-existencias:hover {
+.seccion-factura .customized-button:hover {
     background-color: #16486a;
 }
 
