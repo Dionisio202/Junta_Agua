@@ -1,60 +1,71 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const itemsPerPage = 5; // Número de elementos por página
-    const items = document.querySelectorAll(".table-container tr"); // Todos los elementos a paginar
-    const totalPages = Math.ceil(items.length / itemsPerPage); // Total de páginas
-    
-    let currentPage = 1;
+import { getData } from './data.js';
+import { applyFilters, getFilters } from './filters_autorization.js';
+import { renderPagination } from './pagination_utils.js';
 
-    // Función para mostrar los elementos de la página actual
-    function showPage(page) {
-        // Oculta todos los elementos
-        items.forEach((item, index) => {
-            item.style.display = "none";
-        });
+let data = []; // Datos originales
+let filteredData = []; // Datos filtrados
+let currentPage = 1;
+const rowsPerPage = 5;
 
-        // Calcula el índice inicial y final de los elementos a mostrar
-        const start = (page - 1) * itemsPerPage;
-        const end = start + itemsPerPage;
+// Renderiza la tabla
+export function renderTable(page = 1) {
+  const startIndex = (page - 1) * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
+  const pageData = filteredData.slice(startIndex, endIndex);
 
-        // Muestra solo los elementos de la página actual
-        for (let i = start; i < end; i++) {
-            if (items[i]) {
-                items[i].style.display = "table-row";
-            }
-        }
+  const tableBody = document.getElementById("table-body");
+  tableBody.innerHTML = pageData.map((factura) => `
+    <tr>
+      <td><input type="checkbox"></td>
+      <td>${factura.autorizado ? "Sí" : "No"}</td>
+      <td>${factura.emision}</td>
+      <td>${factura.serie}</td>
+      <td>${factura.secuencia}</td>
+      <td>${factura.cliente}</td>
+      <td>${factura.importe}</td>
+      <td>${factura.mensajeError}</td>
+    </tr>
+  `).join("");
 
-        // Actualiza la clase activa de la paginación
-        document.querySelectorAll(".page-number").forEach((pageElem) => {
-            pageElem.classList.remove("active");
-        });
-        document.getElementById(`page-${page}`).classList.add("active");
-    }
+  renderPagination(filteredData, currentPage, rowsPerPage, changePage);
+}
 
-    // Función para cambiar de página
-    function goToPage(page) {
-        if (page < 1) page = 1;
-        if (page > totalPages) page = totalPages;
-        currentPage = page;
-        showPage(page);
-    }
+// Cambia de página
+export function changePage(page) {
+  const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+  if (page < 1 || page > totalPages) return;
+  currentPage = page;
+  renderTable(currentPage);
+}
 
-    // Evento para cada número de página
-    document.querySelectorAll(".page-number").forEach((pageElem) => {
-        pageElem.addEventListener("click", function () {
-            const page = parseInt(this.id.replace("page-", ""));
-            goToPage(page);
-        });
-    });
+// Aplica los filtros y actualiza la tabla
+function updateFilteredData() {
+  const filters = getFilters(); // Obtiene los valores de los filtros
+  filteredData = applyFilters(data, filters); // Aplica los filtros a los datos originales
+  currentPage = 1; // Reinicia a la primera página
+  renderTable(currentPage);
+}
 
-    // Evento para los botones de siguiente y anterior
-    document.getElementById("prev-page").addEventListener("click", function () {
-        goToPage(currentPage - 1);
-    });
+// Inicializa los eventos de los filtros
+function initializeFilters() {
+  document.querySelector(".styled-button.consultar").addEventListener("click", updateFilteredData);
 
-    document.getElementById("next-page").addEventListener("click", function () {
-        goToPage(currentPage + 1);
-    });
+  document.querySelector(".styled-button.todos").addEventListener("click", () => {
+    document.querySelectorAll(".checkboxCustom input").forEach((checkbox) => (checkbox.checked = false));
+    document.querySelectorAll("input[type='date']").forEach((input) => (input.value = ""));
+    filteredData = [...data]; // Restablece los datos originales
+    currentPage = 1; // Reinicia la paginación
+    renderTable(currentPage);
+  });
+}
 
-    // Muestra la primera página al cargar la página
-    showPage(1);
-});
+// Inicializa la tabla y los filtros
+async function initializeTable() {
+  data = await getData();
+  filteredData = [...data]; // Inicia con todos los datos
+  renderTable(currentPage);
+  initializeFilters();
+}
+
+// Ejecutar al cargar
+initializeTable();
