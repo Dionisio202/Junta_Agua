@@ -1,4 +1,5 @@
 export function applyFilters(data, filters) {
+  console.log("Datos originales:", data);
   return data.filter((factura) => {
     // Filtrar por estado de autorización
     const cumpleAutorizacion =
@@ -54,7 +55,7 @@ export function getFilters() {
 export function initializeFilterButtons(onApplyFilters) {
   const consultarButton = document.querySelector(".styled-button.consultar");
   const todosButton = document.querySelector(".styled-button.todos");
-
+  const todosCheckbox = document.querySelector("input[name='todos']");
   if (!consultarButton || !todosButton) {
     console.error("Botones 'Consultar' o 'Todos' no encontrados en el DOM");
     return;
@@ -69,6 +70,7 @@ export function initializeFilterButtons(onApplyFilters) {
     document
       .querySelectorAll("input[type='date']")
       .forEach((input) => (input.value = ""));
+    todosCheckbox.checked = true;
     onApplyFilters();
   });
 }
@@ -78,7 +80,9 @@ export function initializeDocumentTypeFilter() {
   const facturasCheckbox = document.querySelector("input[name='facturas']");
   const otrosCheckbox = document.querySelector("input[name='otros']");
   const todosCheckbox = document.querySelector("input[name='todos']");
-
+  if (todosCheckbox) {
+    todosCheckbox.checked = true; // Marca el checkbox "Todos" al cargar la página
+  }
   if (!facturasCheckbox || !otrosCheckbox || !todosCheckbox) {
     console.error("No se encontraron los checkboxes de tipos de documentos.");
     return;
@@ -120,7 +124,9 @@ export function initializeDocumentTypeFilter() {
 // Inicializa el filtro de estado de documentos (Autorizado/No autorizado)
 export function initializeDocumentStateFilter() {
   const autorizadoCheckbox = document.querySelector("input[name='autorizado']");
-  const noAutorizadoCheckbox = document.querySelector("input[name='noAutorizado']");
+  const noAutorizadoCheckbox = document.querySelector(
+    "input[name='noAutorizado']"
+  );
 
   if (!autorizadoCheckbox || !noAutorizadoCheckbox) {
     console.error("No se encontraron los checkboxes de estado de documentos.");

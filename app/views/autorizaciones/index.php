@@ -20,17 +20,17 @@
             <div class="columna1">
                 <h2>Tipos de Documentos</h2>
                 <label class="checkboxCustom">Facturas
-                    <input type="checkbox" name="facturas"> 
+                    <input type="checkbox" name="facturas">
                     <span class="checkmark"></span>
                 </label>
 
                 <label class="checkboxCustom">Otros
-                    <input type="checkbox" name="otros"> 
+                    <input type="checkbox" name="otros">
                     <span class="checkmark"></span>
                 </label>
 
                 <label class="checkboxCustom">Todos
-                    <input type="checkbox" name="todos"> 
+                    <input type="checkbox" name="todos">
                     <span class="checkmark"></span>
                 </label>
                 <br>
@@ -60,12 +60,13 @@
             </div>
         </div>
         <div class="buttons">
-            <button type="button" class="customized-button">Consultar</button>
-            <button type="button" class="customized-button">Todos</button>
-            <button type="button" class="customized-button">Opciones</button>
-            <button type="button" class="customized-button">Actualizar</button>
-            <button type="button" class="customized-button">Autorizar</button>
+            <button type="button" class="styled-button consultar">Consultar</button>
+            <button type="button" class="styled-button todos">Todos</button>
+            <button type="button" class="styled-button opciones">Opciones</button>
+            <button type="button" class="styled-button actualizar">Actualizar</button>
+            <button type="button" class="styled-button autorizar">Autorizar</button>
         </div>
+
     </div>
 
     <!-- Tabla -->

@@ -576,7 +576,7 @@ button {
     justify-content: center;
 }
 
-.seccion-factura .customized-button {
+.seccion-factura .buttons button {
     padding: 10px 15px;
     border: none;
     background-color: #3282b8;
@@ -587,7 +587,8 @@ button {
     transition: background-color 0.3s;
 }
 
-.seccion-factura .customized-button:hover {
+
+.seccion-factura .buttons button:hover {
     background-color: #16486a;
 }
 

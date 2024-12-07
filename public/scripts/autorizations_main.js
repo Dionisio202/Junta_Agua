@@ -22,6 +22,26 @@ async function initializeApp() {
 
     initializeDocumentTypeFilter(); // Inicializa el filtro de tipos de documentos
     initializeDocumentStateFilter(); // Inicializa el filtro de estado de documentos
+
+    // Añade un evento para el botón "Actualizar"
+    document.querySelector(".styled-button.actualizar").addEventListener("click", async () => {
+      try {
+        console.log("Recargando datos...");
+        data = await getData(); // Obtiene los datos actualizados desde la API
+        filteredData = [...data]; // Resetea los datos filtrados con los nuevos datos
+        currentPage = 1; // Reinicia a la primera página
+        renderTable(currentPage); // Renderiza la tabla con los nuevos datos
+        console.log("Datos actualizados correctamente.");
+      } catch (error) {
+        console.error("Error al actualizar los datos:", error);
+        alert("No se pudieron actualizar los datos. Intenta nuevamente.");
+      }
+    });
+    
+    document.querySelector(".styled-button.autorizar").addEventListener("click", async () => {
+      //Evento para autorizar los datos
+    });
+
   } catch (error) {
     console.error("Error al inicializar la aplicación:", error);
   }
