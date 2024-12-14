@@ -146,3 +146,11 @@ header {
   font-size: 0.9rem;
   margin-top: 1rem;
 }
+
+.form-logo {
+  width: 100px; /* Ajusta el tamaño según tus necesidades */
+  height: auto; /* Mantén las proporciones originales */
+ 
+  transition: transform 0.3s, box-shadow 0.3s; /* Animación suave */
+}
+

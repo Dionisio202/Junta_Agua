@@ -9,7 +9,7 @@
 <body>
     <header>
         <div class="header-logo">
-            <img src="../img/LOGO.png" class="logo" alt="Logo">
+            <img src="../public/img/LOGO.png" class="logo" alt="Logo">
         </div>
         <nav class="header-nav">
             <ul>
@@ -21,7 +21,7 @@
     <section class="login-section">
         <div class="login-container">
             <div class="login-card">
-                <img src="../img/Logo1.png" class="form-logo" alt="Logo del sistema">
+                <img src="../public/img/Asset 5@3x.png" class="form-logo" alt="Logo del sistema" style="width: 200px; height: auto;">
                 <h2>Bienvenid@</h2>
                 <p>Inicie sesión para acceder a los beneficios del sistema</p>
                 <form action="index.php?action=login" method="post">
