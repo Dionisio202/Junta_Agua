@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="app/public/styles/styles.css">
+<link rel="stylesheet" href="styles/styles.css">
 
 <div class="user-info">
     <span class="user-role"><?= htmlspecialchars($rol); ?></span>
@@ -19,7 +19,7 @@
             <div class="columna-izquierda">
                 <div class="pestana-datos-adicionales">
                     <label for="facturador">Facturador:</label>
-                    <input type="text" id="nombre-facturador" value="usuario logueado" readonly>
+                    <input type="text" id="nombre-facturador" readonly>
                     <label for="sucursal">Sucursal:</label>
                     <select id="sucursal">
                         <option selected>MATRIZ / SANTA ROSA</option>
@@ -33,19 +33,19 @@
                     <div class="grupo">
                     <div>
                         <label for="fecha-emision">Emisión:</label>
-                        <input type="date" id="fecha-emision" value="2024-10-28">
+                        <input type="date" id="fecha-emision">
                     </div>
                     
                     <div>
                         <label for="fecha-vencimiento">Vence:</label>
-                        <input type="date" id="fecha-vencimiento" value="2024-10-28">
+                        <input type="date" id="fecha-vencimiento">
                     </div>
                     </div>
                     <br>
                     <div class="grupo">
                         <div>
                             <label for="serie">Serie:</label>
-                            <input type="text" id="serie" value="001">
+                            <input type="text" id="serie" readonly>
                         </div>
                         <div>
                             <label for="numero">Número:</label>
@@ -53,7 +53,7 @@
                         </div>
                         <div>
                             <label for="secuencia">Secuencia:</label>
-                            <input type="text" id="secuencia" value="000006001" readonly>
+                            <input type="text" id="secuencia" readonly>
                         </div>
                         <div>
                             <label for="concepto">Concepto:</label>
@@ -67,13 +67,13 @@
                         <div>
                             <label for="ci-ruc">C.I./RUC:</label>
                             <div class="input-group">
-                                <input type="text" id="ci-ruc" value="1803110517">
+                                <input type="text" id="ci-ruc">
                                 <button type="button" class="btn-busqueda">🔍</button>
                             </div>
                         </div>
                         <div>
                             <label for="nombre-cliente">Cliente:</label>
-                            <input type="text" id="nombre-cliente" value="GALARZA GALARZA NANCY ROCIO" readonly>
+                            <input type="text" id="nombre-cliente" readonly>
                         </div>
                         <div>                            
                             <label for="codigo">Código:</label>

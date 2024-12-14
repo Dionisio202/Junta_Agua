@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="app/public/styles/styles.css">
+<link rel="stylesheet" href="styles/styles.css">
 
 <div class="user-info">
     <span class="user-role"><?= htmlspecialchars($rol); ?></span> 
