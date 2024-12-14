@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
+/* General Reset */
 *,
 ::after,
 ::before {
@@ -12,28 +13,32 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
+/* Container */
 .container {
     display: flex;
 }
 
+/* Sidebar Styles */
 #sidebar {
     width: 80px;
     background-color: #0F4C75;
     color: white;
     padding: 32px 10px 20px 15px;
     height: 100vh;
-    transition: width 0.3s ease-in-out;
     position: fixed;
-    z-index: 2; 
+    z-index: 2;
+    transition: width 0.3s ease-in-out;
 }
 
 #toggler:checked ~ #sidebar {
     width: 200px;
 }
 
+/* Sidebar Header */
 .sidebar-header {
+    padding-top: 30%;
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 10%;
 }
 
 .sidebar-header h2 {
@@ -45,6 +50,7 @@ body {
     display: block;
 }
 
+/* Sidebar Navigation */
 .sidebar-nav .sidebar-link {
     display: flex;
     align-items: center;
@@ -75,13 +81,29 @@ body {
     padding-left: 20px;
 }
 
+/* Sidebar Footer */
 .sidebar-footer {
     position: absolute;
     bottom: 20px;
     width: 100%;
     text-align: center;
+    color: #b9c7d0;
 }
 
+.sidebar-footer .sidebar-link {
+    transition: padding-left 0.3s, opacity 0.3s;
+}
+
+.sidebar-footer .sidebar-link span {
+    display: none;
+}
+
+.sidebar-footer .sidebar-link i {
+    font-size: 1.5rem;
+    margin-right: 10px;
+}
+
+/* Main Content */
 .main-content {
     flex: 1;
     padding: 20px;
@@ -93,6 +115,7 @@ body {
     margin-left: 200px;
 }
 
+/* Toggle Button */
 .toggle-btn {
     font-size: 1.5rem;
     cursor: pointer;
@@ -104,6 +127,7 @@ body {
     z-index: 3;
 }
 
+/* Media Queries */
 @media (max-width: 768px) {
     #sidebar {
         width: 0;
