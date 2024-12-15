@@ -98,8 +98,7 @@
                         <td>${factura.estado_factura}</td>
                         ${userRole === "Contador" ? `
                         <td>
-                            <a class="disabled-action" href="?view=factura/edit&id=${factura.id}">✏️</a>
-                            <a class="disabled-action" href="?view=factura/index&action=delete&id=${factura.id}" onclick="return confirm('¿Estás seguro de eliminar esta factura?')">🗑️</a>
+                           
                         </td>` : ""}
                     </tr>`;
                 tableBody.innerHTML += row;
