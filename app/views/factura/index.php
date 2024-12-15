@@ -89,7 +89,7 @@
 
             data.forEach(factura => {
                 const row = `
-                    <tr class="clickable-row" data-href="?view=factura/nuevafactura&id=${factura.id}">
+                    <tr class="clickable-row" data-href="?view=factura/viewfactura&id=${factura.id}">
                         <td>${factura.nombre_comercial}</td>
                         <td>${factura.identificacion}</td>
                         <td>${factura.nro_medidor}</td>
@@ -98,8 +98,7 @@
                         <td>${factura.estado_factura}</td>
                         ${userRole === "Contador" ? `
                         <td>
-                            <a class="disabled-action" href="?view=factura/edit&id=${factura.id}">✏️</a>
-                            <a class="disabled-action" href="?view=factura/index&action=delete&id=${factura.id}" onclick="return confirm('¿Estás seguro de eliminar esta factura?')">🗑️</a>
+                           
                         </td>` : ""}
                     </tr>`;
                 tableBody.innerHTML += row;

@@ -39,10 +39,28 @@ class FacturaController {
         $rol = $_SESSION['Rol'] ?? 'administrador';
         require_once __DIR__ . '/../views/factura/nuevafactura.php';
     }
+    public function viewfactura() {
+        $rol = $_SESSION['Rol'] ?? 'administrador';
+    
+        // Verificar si el ID está presente en la URL
+        $idFactura = $_GET['id'] ?? null;
+    
+        if ($idFactura) {
+            // Obtener los detalles de la factura
+            $facturaDetalles = $this->factura->getFacturaDetailsById($idFactura);
+        } else {
+            $facturaDetalles = null; // No se proporcionó un ID
+        }
+    
+        // Cargar la vista correspondiente y pasar los datos
+        require_once __DIR__ . '/../views/factura/viewFactura.php';
+    }
+    
     public function autorizaciones() {
         $rol = $_SESSION['Rol'] ?? 'administrador';
         $nombre = $_SESSION['Nombre'] ??'Invitado';
 
         require_once __DIR__ . '/../views/autorizaciones/index.php';
     }
+    
 }

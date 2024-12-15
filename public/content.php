@@ -50,6 +50,15 @@ switch ($view) {
         $controller = new FacturaController();
         $controller->nuevafactura(); // Cargar la vista para crear una nueva factura
         break;
+    case 'factura/viewfactura':
+            // Permitir acceso a Contador y Tesorero
+            if (!checkAccess(['Contador', 'Presidente'])) {
+                echo "<p>Acceso denegado. No tienes permiso para acceder a esta vista.</p>";
+                exit();
+            }
+            $controller = new FacturaController();
+            $controller->viewfactura(); // Cargar la vista para crear una nueva factura
+            break;
 
     case 'autorizaciones':
         // Solo "Contador" puede acceder
