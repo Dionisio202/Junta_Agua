@@ -1,4 +1,4 @@
-import { getData } from './data.js';
+import { getData } from '../data.js';
 import { applyFilters, getFilters } from './filters_autorization.js';
 import { renderPagination } from './pagination_utils.js';
 

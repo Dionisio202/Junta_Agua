@@ -13,27 +13,6 @@ class AutorizacionController {
         $db = $database->getConnection();
         $this->factura = new Factura($db);
     }
-
-    public function index() {
-        $rol = $_SESSION['Rol'] ?? 'Administrador';
-        
-        // Obtenemos todas las facturas a través del modelo
-        $facturas = $this->factura->getAll();
-        $totalFacturas = count($facturas);
-        $itemsPerPage = 5;
-        $totalPages = ceil($totalFacturas / $itemsPerPage);
-        
-        // Página actual y cálculo de índices
-        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        if ($currentPage < 1) $currentPage = 1;
-        if ($currentPage > $totalPages) $currentPage = $totalPages;
-
-        $startIndex = ($currentPage - 1) * $itemsPerPage;
-        $currentFacturas = array_slice($facturas, $startIndex, $itemsPerPage);
-
-        // Pasamos las variables necesarias a la vista
-        require_once __DIR__ . '/../views/factura/index.php';
-    }
     public function deleteFactura($id) {
         if ($this->factura->delete($id)) {
             echo "Factura eliminada correctamente.";
@@ -45,5 +24,4 @@ class AutorizacionController {
         $rol = $_SESSION['Rol'] ?? 'Administrador';
         require_once __DIR__ . '/../views/autorizaciones/index.php';
     }
-  
 }
