@@ -15,23 +15,17 @@ class FacturaController {
     }
 
     public function index() {
+        // Obtener el rol y nombre del usuario desde la sesión
         $rol = $_SESSION['Rol'] ?? 'Desconocido';
-        $nombre = $_SESSION['Nombre'] ??'Invitado';
+        $nombre = $_SESSION['Nombre'] ?? 'Invitado';
+    
         // Obtenemos todas las facturas a través del modelo
-        $facturas = $this->factura->getAll();
-        $totalFacturas = count($facturas);
-        $itemsPerPage = 5;
-        $totalPages = ceil($totalFacturas / $itemsPerPage);
-        
-        // Página actual y cálculo de índices
-        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        if ($currentPage < 1) $currentPage = 1;
-        if ($currentPage > $totalPages) $currentPage = $totalPages;
-
-        $startIndex = ($currentPage - 1) * $itemsPerPage;
-        $currentFacturas = array_slice($facturas, $startIndex, $itemsPerPage);
-
-        // Pasamos las variables necesarias a la vista
+        $facturas = $this->factura->getAll(); // Recupera todos los registros sin paginación
+    
+        // Enviar las facturas completas a la vista
+        $currentFacturas = $facturas; // Todas las facturas disponibles
+    
+        // Cargar la vista correspondiente
         require_once __DIR__ . '/../views/factura/index.php';
     }
     public function deleteFactura($id) {

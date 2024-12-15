@@ -1,105 +1,216 @@
-<link rel="stylesheet" href="styles/styles.css">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facturación</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <div class="user-info">
+        <span class="user-role"><?= htmlspecialchars($rol); ?></span>
+        <span class="user-name"><?= htmlspecialchars($nombre ?? 'Usuario'); ?></span>
+    </div>
 
-<div class="user-info">
-    <span class="user-role"><?= htmlspecialchars($rol); ?></span> 
-    <span class="user-name"><?= htmlspecialchars($nombre ?? 'Usuario'); ?></span> 
+    <div class="table-container">
+        <div class="header-buttons">
+            <h1>Facturación <?= $rol === 'Tesorero' ? 'TESORERÍA' : ''; ?></h1>
+        </div>
+        <div class="buttons" style="display: flex; flex-direction: column; gap: 15px;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <input
+                    type="text"
+                    id="filter-input"
+                    placeholder="Filtrar por cédula o número de medidor"
+                    class="filter-input"
+                >
+                <button type="button" id="reset-filters" class="reset-btn">Quitar Filtros</button>
+                <?php if ($rol === 'Contador'): ?>
+                    <button type="button" class="add-btn" onclick="window.location.href='/Junta_Agua/public/?view=factura/nuevafactura'">Agregar nueva Factura</button>
+                <?php endif; ?>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 5px; width: 150px;">
+    <label for="filter-date-from" style="text-align: center;">Desde:</label>
+    <input
+        type="date"
+        id="filter-date-from"
+        class="filter-input"
+        style="max-width: 100%;"
+    >
+    <label for="filter-date-to" style="text-align: center;">Hasta:</label>
+    <input
+        type="date"
+        id="filter-date-to"
+        class="filter-input"
+        style="max-width: 100%;"
+    >
 </div>
 
-<div class="table-container">
-    <div class="header-buttons">
-        <h1>Facturación <?= $rol === 'Tesorero' ? 'TESORERÍA' : ''; ?></h1>
-    </div>
-    <div class="buttons" style="display: flex; align-items: center; gap: 15px;">
-        <input 
-            type="text" 
-            id="filter-input" 
-            placeholder="Filtrar por cédula o número de medidor" 
-            class="filter-input"
-        >
-        <?php if ($rol === 'Contador'): ?>
-            <button type="button" class="add-btn" onclick="window.location.href='/Junta_Agua/public/?view=factura/nuevafactura'">Agregar nueva Factura</button>
-        <?php endif; ?>
-    </div>
-    <table id="factura-table">
-        <tr>
-            <th>Nombre Comercial</th>
-            <th>Cédula</th>
-            <th>Concepto</th>
-            <th>Fecha Emisión</th>
-            <th>Total</th>
-            <th>Estado</th>
-            <?php if ($rol === 'Contador'): ?>
-                <th>Acciones</th>
-            <?php endif; ?>
-        </tr>
+        </div>
 
-        <?php if (!empty($currentFacturas)): ?>
-            <?php foreach ($currentFacturas as $factura): ?>
-                <tr class="clickable-row" data-href="?view=factura/nuevafactura&id=<?= $factura['id'] ?>">
-                    <td><?= htmlspecialchars($factura['nombre_comercial']) ?></td>
-                    <td><?= htmlspecialchars($factura['identificacion']) ?></td>
-                    <td><?= htmlspecialchars($factura['nro_medidor']) ?></td>
-                    <td><?= htmlspecialchars($factura['fecha_emision']) ?></td>
-                    <td><?= htmlspecialchars($factura['total']) ?></td>
-                    <td><?= htmlspecialchars($factura['estado_factura']) ?></td>
+        <table id="factura-table">
+            <thead>
+                <tr>
+                    <th>Nombre Comercial</th>
+                    <th>Cédula</th>
+                    <th>Concepto</th>
+                    <th>Fecha Emisión</th>
+                    <th>Total</th>
+                    <th>Estado</th>
                     <?php if ($rol === 'Contador'): ?>
-                        <td>
-                            <a class="disabled-action" href="?view=factura/edit&id=<?= $factura['id'] ?>">✏️</a>
-                            <a class="disabled-action" href="?view=factura/index&action=delete&id=<?= $factura['id'] ?>" onclick="return confirm('¿Estás seguro de eliminar esta factura?')">🗑️</a>
-                        </td>
+                        <th>Acciones</th>
                     <?php endif; ?>
                 </tr>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <tr>
-                <td colspan="7">No hay facturas disponibles.</td>
-            </tr>
-        <?php endif; ?>
-    </table>
-</div>
+            </thead>
+            <tbody id="table-body">
+                <!-- Filas dinámicamente generadas -->
+            </tbody>
+        </table>
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const rows = document.querySelectorAll(".clickable-row");
-    const userRole = "<?= $rol ?>"; // Pasar el rol desde PHP a JavaScript
+        <div class="pagination">
+            <button id="prev-page">Anterior</button>
+            <span id="current-page">1</span>
+            <button id="next-page">Siguiente</button>
+        </div>
+    </div>
 
-    rows.forEach(row => {
-        if (userRole === "Presidente") {
-            // Si el rol es Presidente, desactiva el clic en las filas
-            row.style.pointerEvents = "none"; // Desactiva los eventos de clic
-            row.style.opacity = "0.6"; // Cambia la opacidad para indicar que está desactivado
-            row.style.cursor = "not-allowed"; // Cambia el cursor al pasar sobre la fila
-        } else {
-            // Si no es Presidente, habilita el clic
-            row.addEventListener("click", function () {
-                const href = this.getAttribute("data-href");
-                if (href) {
-                    window.location.href = href;
-                }
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const userRole = "<?= $rol ?>"; // Pasar el rol desde PHP a JavaScript
+        const facturas = <?= json_encode($currentFacturas); ?>; // Datos desde PHP
+
+        let currentPage = 1;
+        const itemsPerPage = 10;
+
+        // Función para renderizar la tabla
+        function renderTable(data) {
+            const tableBody = document.getElementById("table-body");
+            tableBody.innerHTML = "";
+
+            data.forEach(factura => {
+                const row = `
+                    <tr class="clickable-row" data-href="?view=factura/nuevafactura&id=${factura.id}">
+                        <td>${factura.nombre_comercial}</td>
+                        <td>${factura.identificacion}</td>
+                        <td>${factura.nro_medidor}</td>
+                        <td>${factura.fecha_emision}</td>
+                        <td>${factura.total}</td>
+                        <td>${factura.estado_factura}</td>
+                        ${userRole === "Contador" ? `
+                        <td>
+                            <a class="disabled-action" href="?view=factura/edit&id=${factura.id}">✏️</a>
+                            <a class="disabled-action" href="?view=factura/index&action=delete&id=${factura.id}" onclick="return confirm('¿Estás seguro de eliminar esta factura?')">🗑️</a>
+                        </td>` : ""}
+                    </tr>`;
+                tableBody.innerHTML += row;
+            });
+
+            setupClickableRows();
+        }
+
+        // Configurar clics en filas
+        function setupClickableRows() {
+            const rows = document.querySelectorAll(".clickable-row");
+            rows.forEach(row => {
+                row.addEventListener("click", function () {
+                    const href = this.getAttribute("data-href");
+                    if (href) {
+                        window.location.href = href;
+                    }
+                });
             });
         }
-    });
 
-    // Filtro de búsqueda
-    const filterInput = document.getElementById("filter-input");
-    const table = document.getElementById("factura-table");
-    const rowsArray = table.getElementsByTagName("tr");
+        // Aplicar filtros
+        function applyFilters() {
+            const filterValue = document.getElementById("filter-input").value.toLowerCase();
+            const dateFrom = document.getElementById("filter-date-from").value;
+            const dateTo = document.getElementById("filter-date-to").value;
 
-    filterInput.addEventListener("input", function () {
-        const filterValue = this.value.toLowerCase();
-        for (let i = 1; i < rowsArray.length; i++) {
-            const nombreCell = rowsArray[i].getElementsByTagName("td")[0];
-            const idMedidorCell = rowsArray[i].getElementsByTagName("td")[2];
-            if (nombreCell && idMedidorCell) {
-                const nombreText = nombreCell.textContent.toLowerCase();
-                const idMedidorText = idMedidorCell.textContent.toLowerCase();
-                if (nombreText.includes(filterValue) || idMedidorText.includes(filterValue)) {
-                    rowsArray[i].style.display = "";
-                } else {
-                    rowsArray[i].style.display = "none";
-                }
+            let filteredData = facturas;
+
+            // Filtrar por número de documento
+            if (filterValue) {
+                filteredData = filteredData.filter(factura =>
+                    factura.identificacion.toLowerCase().includes(filterValue) ||
+                    factura.nro_medidor.toLowerCase().includes(filterValue)
+                );
             }
+
+            // Filtrar por rango de fechas
+            if (dateFrom || dateTo) {
+                filteredData = filteredData.filter(factura => {
+                    const fecha = new Date(factura.fecha_emision);
+                    const desde = dateFrom ? new Date(dateFrom) : null;
+                    const hasta = dateTo ? new Date(dateTo) : null;
+
+                    return (!desde || fecha >= desde) && (!hasta || fecha <= hasta);
+                });
+            }
+
+            return filteredData;
         }
+
+        // Obtener datos paginados
+        function getPaginatedData(data) {
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            return data.slice(start, end);
+        }
+
+        // Actualizar la tabla
+        function updateTable() {
+            const filteredData = applyFilters();
+            const paginatedData = getPaginatedData(filteredData);
+            renderTable(paginatedData);
+
+            document.getElementById("current-page").textContent = currentPage;
+        }
+
+        // Eventos de filtros
+        document.getElementById("filter-input").addEventListener("input", () => {
+            currentPage = 1;
+            updateTable();
+        });
+
+        document.getElementById("filter-date-from").addEventListener("change", () => {
+            currentPage = 1;
+            updateTable();
+        });
+
+        document.getElementById("filter-date-to").addEventListener("change", () => {
+            currentPage = 1;
+            updateTable();
+        });
+
+        // Botón para quitar filtros
+        document.getElementById("reset-filters").addEventListener("click", () => {
+            document.getElementById("filter-input").value = '';
+            document.getElementById("filter-date-from").value = '';
+            document.getElementById("filter-date-to").value = '';
+            currentPage = 1;
+            updateTable();
+        });
+
+        // Eventos de paginación
+        document.getElementById("prev-page").addEventListener("click", () => {
+            if (currentPage > 1) {
+                currentPage--;
+                updateTable();
+            }
+        });
+
+        document.getElementById("next-page").addEventListener("click", () => {
+            const filteredData = applyFilters();
+            if (currentPage < Math.ceil(filteredData.length / itemsPerPage)) {
+                currentPage++;
+                updateTable();
+            }
+        });
+
+        // Renderizar la primera página al cargar
+        updateTable();
     });
-});
-</script>
+    </script>
+</body>
+</html>
