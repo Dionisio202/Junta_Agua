@@ -70,4 +70,38 @@ class Factura
         // Si no hay facturas registradas, devuelve 0
         return 0;
     }
+    public function getFacturaDetailsById($id)
+    {
+        $query = "
+        SELECT 
+            f.id AS secuencia,
+            f.fecha_emision,
+            f.fecha_vencimiento,
+            f.id_sucursal,
+            f.id_razon,
+            f.estado_factura,
+            f.tipo_pago,
+            f.valor_sin_impuesto,
+            f.iva,
+            f.total,
+            c.identificacion AS ci_ruc,
+            c.nombre_comercial AS cliente,
+            c.telefono1,
+            c.telefono2,
+            c.correo,
+            c.direccion
+        FROM 
+            facturas f
+        JOIN 
+            clientes c ON f.cliente = c.id
+        WHERE 
+            f.id = :id
+        ";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC); // Retorna una sola fila
+    }
 }
