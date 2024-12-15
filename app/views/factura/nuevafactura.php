@@ -45,11 +45,11 @@
                     <div class="grupo">
                         <div>
                             <label for="serie">Serie:</label>
-                            <input type="text" id="serie" readonly>
+                            <input type="text" id="serie" value="001" readonly>
                         </div>
                         <div>
                             <label for="numero">Número:</label>
-                            <input type="text" id="numero" value="200">
+                            <input type="text" id="numero" value="200" readonly>
                         </div>
                         <div>
                             <label for="secuencia">Secuencia:</label>
@@ -67,8 +67,7 @@
                         <div>
                             <label for="ci-ruc">C.I./RUC:</label>
                             <div class="input-group">
-                                <input type="text" id="ci-ruc">
-                                <button type="button" class="btn-busqueda">🔍</button>
+                                <input type="text" id="ci-ruc" placeholder="Ingrese CI/RUC">
                             </div>
                         </div>
                         <div>
@@ -79,7 +78,7 @@
                             <label for="codigo">Código:</label>
                             <div class="input-group">
                                 <input type="text" id="codigo">
-                                <button type="button" class="btn-busqueda">🔍</button>
+                                <button type="button" class="btn-busqueda-producto">🔍</button>
                             </div>
                         </div>
                     </div>
@@ -157,22 +156,6 @@
         </div>
     </div>
 </div>
-
-<!-- Scripts -->
-<script type="module">
-    import { cargarDatos } from '/Junta_Agua/public/scripts/form_nueva_factura.js';
-    import { buscarCIRUC } from '/Junta_Agua/public/scripts/buscar_cliente.js';
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const userId = "<?= htmlspecialchars($_SESSION['idUser'] ?? ''); ?>";
-        if (userId) cargarDatos(userId);
-
-        const searchButtons = document.querySelectorAll(".btn-busqueda");
-        searchButtons.forEach(button => {
-            button.addEventListener("click", buscarCIRUC);
-        });
-    });
-</script>
 <!-- Modal para mostrar los resultados -->
 <div id="modal" class="modal">
     <div class="modal-content">
@@ -186,19 +169,34 @@
 
 <!-- Scripts -->
 <script type="module">
+    import { cargarDatos } from '/Junta_Agua/public/scripts/form_nueva_factura.js';
     import { buscarCIRUC } from '/Junta_Agua/public/scripts/buscar_cliente.js';
 
     document.addEventListener("DOMContentLoaded", () => {
-        const searchButtons = document.querySelectorAll(".btn-busqueda");
+        // Cargar datos del usuario
+        const userId = "<?= htmlspecialchars($_SESSION['idUser'] ?? ''); ?>";
+        if (userId) cargarDatos(userId);
+
+        // Referencias a elementos del formulario
+        const form = document.querySelector("form");
+        const ciRucInput = document.getElementById("ci-ruc");
         const modal = document.getElementById("modal");
+        const modalContent = document.getElementById("modal-content");
         const closeModal = document.getElementById("close-modal");
 
-        // Mostrar el modal al buscar
-        searchButtons.forEach(button => {
-            button.addEventListener("click", () => {
-                buscarCIRUC(); // Llama la función para realizar la búsqueda
-                modal.style.display = "block"; // Muestra el modal
-            });
+        // Prevenir el envío automático del formulario
+        form.addEventListener("submit", (event) => {
+            event.preventDefault(); // Detener el envío del formulario
+        });
+
+        // Agregar evento "Enter" al input del cliente
+        ciRucInput.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") { // Detectar Enter
+                event.preventDefault(); // Prevenir envío del formulario
+                buscarCIRUC(); // Llamar la función de búsqueda
+                modalContent.innerHTML = "<p>Buscando cliente...</p>"; // Agregar contenido dinámico
+                modal.style.display = "block"; // Mostrar modal
+            }
         });
 
         // Cerrar el modal al hacer clic en el botón "Cerrar"
