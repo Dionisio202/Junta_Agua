@@ -161,15 +161,15 @@ if ($data) {
                         </tr>
                         <tr>
                             <th>Meses</th>
-                            <th id="mes1">5</th>
-                            <th id="mes2">5</th>
-                            <th id="mes3">5</th>
+                            <th id="mes1"><?php echo date('n', strtotime($vence)); ?></th>
+                            <th id="mes2"><?php echo date('n', strtotime('-1 month', strtotime($vence))); ?></th>
+                            <th id="mes3"><?php echo date('n', strtotime('-2 months', strtotime($vence))); ?></th>
                         </tr>
                         <tr>
                             <td>Valor</td>
-                            <td id="valor1">5</td>
-                            <td id="valor2">5</td>
-                            <td id="valor3">5</td>
+                            <td id="valor1">555.5</td>
+                            <td id="valor2">555.5</td>
+                            <td id="valor3">555.5</td>
                         </tr>
                     </table>
                 </div>
