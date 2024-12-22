@@ -28,9 +28,7 @@
     </div>
 </div>
 
-<div class="user-actions">
-    <a href="?view=perfil&action=edit" class="edit-profile-btn">Editar Perfil</a>
-</div>
+
 
         </div>
     </div>
