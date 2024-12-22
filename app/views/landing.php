@@ -8,20 +8,25 @@
 </head>
 <body>
     <header>
-        <h1>JUNTA ADMINISTRADORA DE AGUA POTABLE</h1>
-        <h2>"SAN VICENTE YACULOMA Y BELLAVISTA EL ROSARIO"</h2>
+        <div class="logo">
+            <img src="../public/img/LOGO.png" alt="Logo de la Junta">
+        </div>
         <nav>
-            <a href="#">Facturación</a>
-            <a href="#">Nosotros</a>
-            <a href="#">Tickets</a>
-            <a href="#">Contacto</a>
-            <a href="login.php">Login</a>
+            <ul>    
+                <li><a href="index.php?action=login" class="login-button">Iniciar Sesión</a></li>
+            </ul>
         </nav>
     </header>
-    <section>
-        <p>Bienvenidos a mi página web, espero que les guste amiguitos, bendiciones.</p>
-        <p>Spoiler: no acabamos</p>
-        <p>Spoiler2: ¿les gusta?</p>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>JUNTA ADMINISTRADORA DE AGUA POTABLE</h1>
+            <h2>"SAN VICENTE YACULOMA Y BELLAVISTA EL ROSARIO"</h2>
+            <p> 
+            Facturaqua ofrece reportes detallados y actualizados que respaldan la toma de decisiones y aseguran la transparencia en la administración de los recursos de la comunidad.<br>
+            Esta app facilita la administración eficiente de los servicios de agua.<br>
+            </p>
+        </div>
     </section>
 </body>
 </html>

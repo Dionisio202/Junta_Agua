@@ -4,7 +4,7 @@
 require_once __DIR__ . '/../models/Factura.php';
 require_once __DIR__ . '/../../config/database.php';
 
-class FacturaController {
+class AutorizacionController {
     private $factura;
 
     public function __construct() {
@@ -15,8 +15,8 @@ class FacturaController {
     }
 
     public function index() {
-        $rol = $_SESSION['Rol'] ?? 'Desconocido';
-        $nombre = $_SESSION['Nombre'] ??'Invitado';
+        $rol = $_SESSION['Rol'] ?? 'Administrador';
+        
         // Obtenemos todas las facturas a través del modelo
         $facturas = $this->factura->getAll();
         $totalFacturas = count($facturas);
@@ -41,13 +41,9 @@ class FacturaController {
             echo "Error al eliminar la factura.";
         }
     }
-    public function nuevafactura() {
+    public function vista() {
         $rol = $_SESSION['Rol'] ?? 'Administrador';
-        require_once __DIR__ . '/../views/factura/nuevafactura.php';
-    }
-    public function autorizaciones() {
-        $rol = $_SESSION['Rol'] ?? 'Administrador';
-        $nombre = $_SESSION['Nombre'] ??'Invitado';
         require_once __DIR__ . '/../views/autorizaciones/index.php';
     }
+  
 }
