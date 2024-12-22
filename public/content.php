@@ -87,6 +87,15 @@ switch ($view) {
                     include '../app/views/perfil.php';
                     break;
 
+                    case 'mediciones':
+                        // Permitir acceso a Contador y Presidente
+                        if (!checkAccess(['Contador', 'Presidente'])) {
+                            echo "<p>Acceso denegado. No tienes permiso para acceder a esta vista.</p>";
+                            exit();
+                        }
+                        include '../app/views/mediciones.php';
+                        break;
+                        
     // Aquí puedes añadir otros casos para otros controladores y métodos
     default:
         echo "<p>Vista no encontrada.</p>";

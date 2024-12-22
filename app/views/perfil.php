@@ -9,27 +9,27 @@
 <body>
     <div class="container">
         <div class="profile-card">
-        <div class="profile-header">
-    <div class="profile-image">
-        <img src="/Junta_Agua/public/img/user1.png" alt="Foto de Perfil" class="user-photo">
-    </div>
-    <h1>Bienvenido, <?= htmlspecialchars($usuario['nombre']); ?> <?= htmlspecialchars($usuario['apellido']); ?></h1>
-    <p class="user-role">Rol: <span><?= htmlspecialchars($usuario['rol']); ?></span></p>
-</div>
+            <div class="profile-header">
+                <div class="profile-image">
+                    <img src="/Junta_Agua/public/img/user1.png" alt="Foto de Perfil" class="user-photo">
+                </div>
+                <h1>Hola, <span><?= htmlspecialchars($usuario['nombre']); ?> <?= htmlspecialchars($usuario['apellido']); ?></span></h1>
+                <p class="user-role">Rol: <span><?= htmlspecialchars($usuario['rol']); ?></span></p>
+            </div>
 
-<div class="user-details">
-    <div class="user-info">
-        <div class="info-item">
-            <strong>Cédula:</strong> <span><?= htmlspecialchars($usuario['cedula']); ?></span>
-        </div>
-        <div class="info-item">
-            <strong>Correo:</strong> <span><?= htmlspecialchars($usuario['correo']); ?></span>
-        </div>
-    </div>
-</div>
-
-
-
+            <div class="user-details">
+                <div class="user-info">
+                    <div class="info-item">
+                        <strong>Cédula:</strong> <span><?= htmlspecialchars($usuario['cedula']); ?></span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Correo:</strong> <span><?= htmlspecialchars($usuario['correo']); ?></span>
+                    </div>
+                </div>
+                <div class="user-actions">
+                    
+                </div>
+            </div>
         </div>
     </div>
 </body>
