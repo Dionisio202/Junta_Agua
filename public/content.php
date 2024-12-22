@@ -33,10 +33,19 @@ switch ($view) {
         $controller->vista(); // Cargar la vista de autorizaciones
         break;
 
-    case 'mediciones/registro':
-        $controller = new MedicionController();
-        $controller->index(); // Llamar al método index() del controlador de Mediciones para cargar la vista
-        break;
+        case 'mediciones/registro':
+            $controller = new MedicionController();
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $controller->store();
+            } else {
+                $controller->index(); // Mostrar formulario para nueva medición
+            }
+            break;
+        
+            case 'mediciones/nuevamedicion':
+                $controller = new MedicionController();
+                $controller->create(); // Cargar formulario para nueva medición
+                break;
 
     case 'perfil':
         if (session_status() === PHP_SESSION_NONE) {

@@ -26,7 +26,6 @@ class MedicionController {
     // Registrar una nueva medición
     public function store() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Recibir los datos del formulario
             $data = [
                 'idmedidor' => $_POST['idmedidor'],
                 'fecha_lectura' => $_POST['fecha_lectura'],
@@ -35,12 +34,22 @@ class MedicionController {
                 'consumo_m3' => $_POST['consumo_m3'],
                 'mes_facturado' => $_POST['mes_facturado']
             ];
-
-            // Insertar la medición
-            $this->medicion->create($data);
-            header("Location: index.php?action=mediciones");
+    
+            if ($this->medicion->create($data)) {
+                header("Location: index.php?view=mediciones/registro");
+                exit();
+            } else {
+                echo "<p>Error al registrar la medición.</p>";
+            }
         }
     }
+    
+    
+    // Mostrar el formulario para una nueva medición
+public function create() {
+    include __DIR__ . '/../views/nueva_medicion.php'; // Crear este archivo si no existe
+}
+
 
 
 }
