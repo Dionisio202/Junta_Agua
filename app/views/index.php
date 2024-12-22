@@ -39,6 +39,8 @@ if (session_status() === PHP_SESSION_NONE) {
                     <a href="?view=pagos" class="sidebar-link"><i class="fas fa-credit-card"></i> <span>Pagos</span></a>
                     <a href="?view=reporte" class="sidebar-link"><i class="fas fa-chart-line"></i> <span>Reportería</span></a>
                     <a href="?view=gestion_usuarios" class="sidebar-link"><i class="fas fa-users"></i> <span>Gestión de Usuarios</span></a>
+                    <a href="?view=perfil" class="sidebar-link"><i class="fas fa-user-circle "></i> <span>Perfil</span></a>
+                    <a href="?view=mediciones" class="sidebar-link"><i class="fas fa-tachometer-alt"></i> <span>Nueva Medición</span>
                 <?php endif; ?>
                
             </nav>
