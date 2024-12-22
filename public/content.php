@@ -1,6 +1,7 @@
 <?php
 require_once '../app/controllers/FacturaController.php';
 require_once '../app/controllers/AutorizacionesController.php';
+require_once '../app/controllers/MedicionController.php';  
 
 $view = $_GET['view'] ?? 'factura/index';
 $action = $_GET['action'] ?? null;
@@ -21,55 +22,38 @@ switch ($view) {
             $controller->index();
         }
         break;
-<<<<<<< HEAD
 
     case 'factura/nuevafactura':
         $controller = new FacturaController();
-        $controller->nuevafactura();
+        $controller->nuevafactura(); // Cargar la vista para crear una nueva factura
         break;
 
     case 'autorizaciones':
         $controller = new AutorizacionController();
-        $controller->vista();
+        $controller->vista(); // Cargar la vista de autorizaciones
+        break;
+
+    case 'mediciones/registro':
+        $controller = new MedicionController();
+        $controller->index(); // Llamar al método index() del controlador de Mediciones para cargar la vista
         break;
 
     case 'perfil':
-        session_start();
-=======
-        case 'factura/nuevafactura':
-            $controller = new FacturaController();
-            $controller->nuevafactura(); // Cargar la vista para crear una nueva factura
-            break;
-        case 'autorizaciones':
-                $controller = new AutorizacionController();
-                $controller->vista(); // Cargar la vista para crear una nueva factura
-                break;
-       case 'perfil':
->>>>>>> 15e56dd60cbe22e89ed182252eed3593c093f1e5
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         $usuario = [
             'rol' => $_SESSION['Rol'] ?? 'Invitado',
             'nombre' => $_SESSION['Nombre'] ?? 'N/A',
             'apellido' => $_SESSION['Apellido'] ?? 'N/A',
             'cedula' => $_SESSION['Cedula'] ?? 'N/A',
-<<<<<<< HEAD
             'correo' => $_SESSION['Correo'] ?? 'N/A',
-            'telefono' => 'N/A',
-=======
-            'correo' => $_SESSION['Correo'] ?? 'test@example.com',
->>>>>>> 15e56dd60cbe22e89ed182252eed3593c093f1e5
         ];
         include '../app/views/perfil.php';
         break;
 
-<<<<<<< HEAD
-=======
-                    
-                
-    // Aquí puedes añadir otros casos para otros controladores y métodos
->>>>>>> 15e56dd60cbe22e89ed182252eed3593c093f1e5
     default:
         echo "<p>Vista no encontrada.</p>";
         break;
 }
-
-
+?>

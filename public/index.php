@@ -24,6 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['ac
 } elseif (isset($_GET['action']) && $_GET['action'] === 'login') {
     // Mostrar el formulario de login si se seleccionó "Login"
     include '../app/views/login.php';
+} elseif (isset($_GET['action']) && $_GET['action'] === 'registro_mediciones') {
+    // Mostrar el formulario de registro de mediciones
+    include '../app/views/registro_mediciones.php';
 } else {
     // Mostrar la página de aterrizaje (landing page) por defecto
     include '../app/views/landing.php';
