@@ -22,9 +22,7 @@ if (session_status() === PHP_SESSION_NONE) {
         <!-- Menú Lateral -->
         <aside id="sidebar" class="sidebar">
             <div class="sidebar-header">
-                        <!-- Esto no se esta usando corregir se esta usando el index dentro de factura -->
-                <h2 class="sidebar-rol"><?= htmlspecialchars($_SESSION['Rol'] ?? 'Invitado'); ?></h2>
-                <h2 class="sidebar-nombre"><?= htmlspecialchars($_SESSION['Cedula'] ?? 'edison'); ?></h2>
+                <h2>Bienvenid@</h2>
             </div>
             <nav class="sidebar-nav">
             <?php if ($_SESSION['Rol'] === 'Tesorero'): ?>
@@ -45,7 +43,8 @@ if (session_status() === PHP_SESSION_NONE) {
                
             </nav>
             <div class="sidebar-footer">
-                <a href="index.php?action=logout" class="sidebar-link"><i class="fas fa-sign-out-alt"></i> <span>Salir</span></a>
+                <a href="index.php?action=logout" class="sidebar-link">
+                    <i class="fas fa-sign-out-alt"></i> <span>Salir</span></a>
             </div>
         </aside>
 
