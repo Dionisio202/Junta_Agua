@@ -53,7 +53,7 @@ function mostrarResultadosEnModal(data) {
 
 // Función para seleccionar un cliente y cerrar el modal
 function seleccionarCliente(cliente) {
-    console.log(cliente);
+  facturaData.cliente = cliente.id; // Guardar el cliente seleccionado
   document.getElementById("nombre-cliente").value = cliente.nombre;
   document.getElementById("ci-ruc").value = cliente.cedula;
   getMedidores(cliente.id); // Cargar los medidores del cliente seleccionado
@@ -74,8 +74,8 @@ function getMedidores($input) {
         // Recorrer el objeto y agregar los medidores al <select>
         Object.entries(data).forEach(([id, medidor]) => {
           const option = document.createElement("option");
-          option.value = id; // Usar el ID como valor
-          option.textContent = `${medidor.marca} / ${medidor.modelo}`; // Mostrar número, marca y modelo
+          option.value = medidor.id; // Usar el ID como valor
+          option.textContent = `${medidor.id} / ${medidor.marca} / ${medidor.modelo}`; // Mostrar número, marca y modelo
           medidorSelect.appendChild(option);
         });
       } else {

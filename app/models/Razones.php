@@ -1,7 +1,4 @@
 <?php
-// app/models/Razones.php
-require_once __DIR__ . "/../../config/database.php";
-
 class Razon
 {
     private $conn;

@@ -68,11 +68,13 @@ export function cargarDatos(id) {
       // Recorrer el objeto y agregar los productos al modal
       Object.entries(data).forEach(([_, producto]) => {
         const li = document.createElement("li");
-        li.textContent = producto.razon;
         li.setAttribute("data-id", producto.id);
+        li.textContent = producto.razon;
         li.setAttribute("data-precio", producto.precio);
         li.setAttribute("data-iva", producto.iva);
         li.setAttribute("data-codigo", producto.codigo);
+        const requiereMes = producto.codigo === "EXC001" || producto.codigo === "TB0001";
+        li.setAttribute("data-requiere-mes", requiereMes ? "true" : "false");
         codigoList.appendChild(li);
       });
     } else {

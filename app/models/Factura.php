@@ -104,4 +104,106 @@ class Factura
 
         return $stmt->fetch(PDO::FETCH_ASSOC); // Retorna una sola fila
     }
+    public function saveFactura($factura) {
+        try {
+            // Consulta SQL corregida
+            $query = "INSERT INTO facturas (
+                fecha_emision, 
+                fecha_autorizacion, 
+                fecha_vencimiento,
+                id_sucursal, 
+                facturador, 
+                cliente, 
+                medidor_id, 
+                estado_factura, 
+                tipo_pago, 
+                valor_sin_impuesto, 
+                iva, 
+                total
+            ) VALUES (
+                :fecha_emision, 
+                :fecha_autorizacion,
+                :fecha_vencimiento, 
+                :id_sucursal, 
+                :facturador, 
+                :cliente, 
+                :medidor_id, 
+                :estado_factura, 
+                :tipo_pago, 
+                :valor_sin_impuesto, 
+                :iva, 
+                :total
+            )";
+    
+            // Preparar la consulta
+            $stmt = $this->conn->prepare($query);
+    
+            // Asociar parámetros
+            $stmt->bindValue(':fecha_emision', $factura['fecha_emision'], PDO::PARAM_STR);
+            $stmt->bindValue(':fecha_autorizacion', $factura['fecha_autorizacion'] ?? null, PDO::PARAM_STR); // Campo opcional
+            $stmt->bindValue(':fecha_vencimiento', $factura['fecha_vencimiento'], PDO::PARAM_STR);
+            $stmt->bindValue(':id_sucursal', $factura['id_sucursal'], PDO::PARAM_INT);
+            $stmt->bindValue(':facturador', $factura['facturador'], PDO::PARAM_INT);
+            $stmt->bindValue(':cliente', $factura['cliente'], PDO::PARAM_INT);
+            $stmt->bindValue(':medidor_id', $factura['medidor_id'], PDO::PARAM_INT);
+            $stmt->bindValue(':estado_factura','Sin autorizar', PDO::PARAM_STR);
+            $stmt->bindValue(':tipo_pago', $factura['tipo_pago'] ?? 'efectivo', PDO::PARAM_STR);
+            $stmt->bindValue(':valor_sin_impuesto', $factura['valor_sin_impuesto'], PDO::PARAM_STR);
+            $stmt->bindValue(':iva', $factura['iva'], PDO::PARAM_STR);
+            $stmt->bindValue(':total', $factura['total'], PDO::PARAM_STR);
+    
+            // Ejecutar la consulta
+            if ($stmt->execute()) {
+                return [
+                    "success" => true,
+                    "message" => "Factura guardada exitosamente",
+                    "id_factura" => $this->conn->lastInsertId()
+                ];
+            } else {
+                return [
+                    "success" => false,
+                    "message" => "Error al guardar la factura"
+                ];
+            }
+        } catch (PDOException $e) {
+            return [
+                "success" => false,
+                "message" => "Error en la base de datos: " . $e->getMessage()
+            ];
+        }
+    }
+    
+    
+    public function saveDetalleFactura($idFactura, $detalles) {
+        try {
+            // Convertir el array de detalles a JSON
+            $detallesJSON = json_encode($detalles);
+    
+            // Preparar la llamada al procedimiento almacenado
+            $query = "CALL InsertDetalleFactura(:idFactura, :detallesJSON)";
+            $stmt = $this->conn->prepare($query);
+    
+            // Vincular los parámetros
+            $stmt->bindParam(':idFactura', $idFactura, PDO::PARAM_INT);
+            $stmt->bindParam(':detallesJSON', $detallesJSON, PDO::PARAM_STR);
+    
+            // Ejecutar la consulta
+            if ($stmt->execute()) {
+                return [
+                    'status' => 'success',
+                    'message' => 'Detalles insertados correctamente.'
+                ];
+            } else {
+                return [
+                    'status' => 'error',
+                    'message' => 'Error al insertar detalles.'
+                ];
+            }
+        } catch (PDOException $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Excepción capturada: ' . $e->getMessage()
+            ];
+        }
+    }   
 }

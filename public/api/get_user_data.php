@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../app/models/User.php';
 
 // Establecer el encabezado de respuesta como JSON
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 
 // Verificar si el parámetro 'id' está presente en la solicitud GET
 if (isset($_GET['id'])) {

@@ -6,7 +6,21 @@
     <span class="user-apellido"><?= htmlspecialchars($_SESSION['Apellido'] ?? 'Sin apellido'); ?></span>
     <span class="user-id"><?= htmlspecialchars($_SESSION['idUser'] ?? 'Sin ID'); ?></span>
 </div>
-
+<script>
+    // Definir el objeto facturaData como una variable global
+    var facturaData = {
+        fecha_emision: "",
+        fecha_autorizacion: "",
+        fecha_vencimiento: "",
+        id_sucursal: null,
+        facturador: "<?= htmlspecialchars($_SESSION['idUser'] ?? '') ?>",
+        cliente: null,
+        medidor_id: null,
+        valor_sin_impuesto: 0,
+        iva: 0,
+        total: 0
+    };
+</script>
 <div class="table-container">
     <div class="header-buttons">
         <h1>Facturación <?= $rol === 'Tesorero' ? 'TESORERÍA' : ''; ?></h1>
@@ -126,21 +140,25 @@
                         <th>Desc.</th>
                         <th>IVA</th>
                         <th>Total</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- Filas dinámicas aquí -->
                 </tbody>
             </table>
+
         </div>
 
         <!-- Resumen de Totales -->
         <div class="datos-resumen">
             <div class="resumen-totales">
                 <h3>Resumen de valores</h3>
-                <p>Sub Total: <span>6,0000</span></p>
-                <p>Descuento %: <span>0,00</span></p>
-                <p id="total">Total: <span>6,00</span></p>
-                <p>Neto: <span>6,00</span></p>
+                <p>Sub Total: <span>0,0000</span></p>
+                <p>Descuento: <span>0,00</span></p>
+                <p id="netoResumen">Neto: <span>0,00</span></p>
+                <p id="ivaResumen">IVA: <span>0,00</span></p>
+                <p id="totalResumen">Total: <span>0,00</span></p>
             </div>
         </div>
     </div>
@@ -495,166 +513,175 @@
 
 </script>
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-    const modal = document.getElementById("codigoModal");
-    const btnCodigo = document.getElementById("btn-codigo");
-    const closeCodigoModal = document.getElementById("close-codigo-modal");
-    const codigoList = document.getElementById("codigo-list");
-    const mesSelector = document.getElementById("mes-selector");
-    const mesInput = document.getElementById("mes");
-    const tablaDatos = document.getElementById("tabla-datos").querySelector("tbody");
+    document.addEventListener("DOMContentLoaded", () => {
+        const modal = document.getElementById("codigoModal");
+        const btnCodigo = document.getElementById("btn-codigo");
+        const closeCodigoModal = document.getElementById("close-codigo-modal");
+        const codigoList = document.getElementById("codigo-list");
+        const mesSelector = document.getElementById("mes-selector");
+        const mesInput = document.getElementById("mes");
+        const tablaDatos = document.getElementById("tabla-datos").querySelector("tbody");
 
-    let selectedCodigo = null;
-    let contadorProductos = 1; // Contador para numerar los productos
+        let selectedCodigo = null;
 
-    // Abrir el modal
-    btnCodigo.addEventListener("click", () => {
-        modal.style.display = "block";
-    });
-
-    // Cerrar el modal
-    closeCodigoModal.addEventListener("click", () => {
-        modal.style.display = "none";
-        mesSelector.style.display = "none";
-        selectedCodigo = null;
-    });
-
-    // Seleccionar un código
-    codigoList.addEventListener("click", (event) => {
-        if (event.target.tagName === "LI") {
-            selectedCodigo = event.target;
-            const requiereMes = selectedCodigo.getAttribute("data-requiere-mes") === "true";
-
-            if (requiereMes) {
-                mesSelector.style.display = "block";
-            } else {
-                agregarFila(selectedCodigo.textContent, null);
-                modal.style.display = "none";
-            }
-        }
-    });
-
-    // Agregar fila al seleccionar un mes
-    mesInput.addEventListener("change", () => {
-        if (selectedCodigo) {
-            agregarFila(selectedCodigo.textContent, mesInput.value);
-            modal.style.display = "none";
-            mesSelector.style.display = "none";
-            mesInput.value = ""; // Reiniciar selección de mes
-        }
-    });
-
-    // Función para agregar una fila a la tabla
-    function agregarFila(descripcion, mes) {
-        const tipo = selectedCodigo.getAttribute("data-tipo");
-        const precio = parseFloat(selectedCodigo.getAttribute("data-precio"));
-        const cantidad = 1; // Valor inicial para la cantidad
-        const descuento = 0; // Asume descuento inicial en 0
-        const iva = precio * 0.12; // Calcula el IVA inicial
-        const total = cantidad * (precio + iva - descuento);
-
-        // Generar código con el formato personalizado
-        const codigo = "abc"
-        contadorProductos++; // Incrementar el contador para el siguiente producto
-
-        const fila = document.createElement("tr");
-        fila.innerHTML = `
-            <td>${codigo}</td>
-            <td>${descripcion}</td>
-            <td>${mes || "N/A"}</td>
-            <td><input type="number" value="${cantidad}" min="1" class="cantidad-input"></td>
-            <td><input type="number" value="${precio.toFixed(2)}" min="0" class="precio-input"></td>
-            <td><input type="number" value="${descuento.toFixed(2)}" min="0" class="descuento-input"></td>
-            <td class="iva">${iva.toFixed(2)}</td>
-            <td class="total">${total.toFixed(2)}</td>
-        `;
-
-        // Eventos para recalcular y validar
-        const cantidadInput = fila.querySelector(".cantidad-input");
-        const precioInput = fila.querySelector(".precio-input");
-        const descuentoInput = fila.querySelector(".descuento-input");
-
-        cantidadInput.addEventListener("input", actualizarTotal);
-        precioInput.addEventListener("input", actualizarTotal);
-        descuentoInput.addEventListener("input", actualizarTotal);
-
-        // Validaciones al perder foco (blur)
-        cantidadInput.addEventListener("blur", validarCantidad);
-        descuentoInput.addEventListener("blur", validarDescuento);
-
-        tablaDatos.appendChild(fila);
-        actualizarResumen(); // Actualiza el resumen de totales
-    }
-
-    // Validación para cantidad
-    function validarCantidad(event) {
-        const input = event.target;
-        if (parseFloat(input.value) <= 0 || isNaN(parseFloat(input.value))) {
-            input.value = 1; // Restablece a 1 si el valor es inválido
-        }
-        actualizarTotal(event); // Recalcula los totales
-    }
-
-    // Validación para descuento
-    function validarDescuento(event) {
-        const input = event.target;
-        const fila = input.closest("tr");
-        const cantidad = parseFloat(fila.querySelector(".cantidad-input").value) || 0;
-        const precio = parseFloat(fila.querySelector(".precio-input").value) || 0;
-        const subtotal = cantidad * precio;
-
-        if (parseFloat(input.value) < 0 || parseFloat(input.value) > subtotal || isNaN(parseFloat(input.value))) {
-            input.value = 0; // Restablece a 0 si el valor es inválido
-        }
-        actualizarTotal(event); // Recalcula los totales
-    }
-
-    // Función para actualizar el total y recalcular el IVA y descuento
-    function actualizarTotal(event) {
-        const fila = event.target.closest("tr");
-        const cantidad = parseFloat(fila.querySelector(".cantidad-input").value) || 0;
-        const precio = parseFloat(fila.querySelector(".precio-input").value) || 0;
-        const descuento = parseFloat(fila.querySelector(".descuento-input").value) || 0;
-
-        // Recalcular IVA y total
-        const iva = precio * 0.12; // IVA por unidad
-        const total = cantidad * (precio + iva - descuento);
-
-        // Actualiza los valores en la fila
-        fila.querySelector(".iva").textContent = (cantidad * iva).toFixed(2); // IVA total
-        fila.querySelector(".total").textContent = total > 0 ? total.toFixed(2) : "0.00"; // No permite totales negativos
-
-        actualizarResumen(); // Actualiza el resumen de totales
-    }
-
-    // Función para actualizar el resumen de totales
-    function actualizarResumen() {
-        const filas = tablaDatos.querySelectorAll("tr");
-        let subTotal = 0;
-        let total = 0;
-
-        filas.forEach((fila) => {
-            const cantidad = parseFloat(fila.querySelector(".cantidad-input").value) || 0;
-            const precio = parseFloat(fila.querySelector(".precio-input").value) || 0;
-            const descuento = parseFloat(fila.querySelector(".descuento-input").value) || 0;
-            const iva = precio * 0.12;
-            subTotal += cantidad * precio;
-            total += cantidad * (precio + iva - descuento);
+        // Abrir el modal
+        btnCodigo.addEventListener("click", () => {
+            modal.style.display = "block";
         });
 
-        document.querySelector(".resumen-totales p:nth-child(2) span").textContent = subTotal.toFixed(2);
-        document.getElementById("total").querySelector("span").textContent = total.toFixed(2);
-    }
-
-    // Cerrar el modal al hacer clic fuera
-    window.addEventListener("click", (event) => {
-        if (event.target === modal) {
+        // Cerrar el modal
+        closeCodigoModal.addEventListener("click", () => {
             modal.style.display = "none";
             mesSelector.style.display = "none";
             selectedCodigo = null;
+        });
+
+        // Seleccionar un código
+        codigoList.addEventListener("click", (event) => {
+            if (event.target.tagName === "LI") {
+                selectedCodigo = event.target;
+                const requiereMes = selectedCodigo.getAttribute("data-requiere-mes") === "true";
+
+                if (requiereMes) {
+                    mesSelector.style.display = "block"; // Mostrar el selector de mes
+                } else {
+                    agregarFila(selectedCodigo.textContent, null);
+                    modal.style.display = "none";
+                }
+            }
+        });
+
+        // Agregar fila al seleccionar un mes
+        mesInput.addEventListener("change", () => {
+            if (selectedCodigo) {
+                agregarFila(selectedCodigo.textContent, mesInput.value);
+                modal.style.display = "none";
+                mesSelector.style.display = "none";
+                mesInput.value = ""; // Reiniciar selección de mes
+            }
+        });
+
+        // Función para agregar una fila a la tabla
+        function agregarFila(descripcion, mes = null) {
+            const codigo = selectedCodigo.getAttribute("data-codigo") || "N/A";
+            const idRazon = selectedCodigo.getAttribute("data-id");
+            const precio = parseFloat(selectedCodigo.getAttribute("data-precio"));
+            const ivaPorcentaje = parseFloat(selectedCodigo.getAttribute("data-iva")) || 0; // IVA inicial
+            const cantidad = 1; // Valor inicial para la cantidad
+            const descuento = 0; // Asume descuento inicial en 0
+            const iva = precio * ivaPorcentaje; // Calcular el IVA basado en el porcentaje
+            const total = cantidad * (precio + iva - descuento);
+
+            const fila = document.createElement("tr");
+
+            // Establecer el atributo `data-iva` en la fila
+            fila.setAttribute("data-iva", ivaPorcentaje);
+
+            fila.innerHTML = `
+        <td data-id="${idRazon}">${codigo}</td>
+        <td>${descripcion}</td>
+        <td>${mes || "N/A"}</td>
+        <td><input type="number" value="${cantidad}" min="1" class="cantidad-input" required></td>
+        <td><input type="number" value="${precio.toFixed(2)}" min="0" class="precio-input" required></td>
+        <td><input type="number" value="${descuento.toFixed(2)}" min="0" class="descuento-input" required></td>
+        <td class="iva-table">${iva.toFixed(2)}</td>
+        <td class="total">${total.toFixed(2)}</td>
+        <td><button type="button" class="delete-btn">Eliminar</button></td>
+    `;
+
+            // Agregar eventos de validación y cálculo
+            fila.querySelector(".cantidad-input").addEventListener("input", actualizarTotal);
+            fila.querySelector(".precio-input").addEventListener("input", actualizarTotal);
+            fila.querySelector(".descuento-input").addEventListener("input", actualizarTotal);
+
+            // Evento para eliminar fila
+            fila.querySelector(".delete-btn").addEventListener("click", () => {
+                fila.remove();
+                actualizarResumen();
+            });
+
+            // Agregar la fila al DOM
+            tablaDatos.appendChild(fila);
+
+            actualizarResumen(); // Actualiza el resumen de totales
         }
+
+
+
+        // Función para actualizar el total y recalcular el IVA y descuento
+        function actualizarTotal(event) {
+            const fila = event.target.closest("tr"); // Obtiene la fila donde ocurrió el evento
+            const cantidad = parseFloat(fila.querySelector(".cantidad-input").value) || 0;
+            const precio = parseFloat(fila.querySelector(".precio-input").value) || 0;
+            const descuento = parseFloat(fila.querySelector(".descuento-input").value) || 0;
+
+            // Leer el porcentaje de IVA desde el atributo `data-iva`
+            const ivaPorcentaje = parseFloat(fila.getAttribute("data-iva")) || 0;
+            const iva = cantidad * precio * (ivaPorcentaje); // Recalcular el IVA
+
+            // Subtotal (sin IVA ni descuento)
+            const subtotal = cantidad * precio - descuento;
+
+            // Total de la fila (subtotal + IVA)
+            const total = subtotal + iva;
+
+            // Actualizar las celdas correspondientes de esta fila
+            fila.querySelector(".iva-table").textContent = iva.toFixed(2); // Actualizar el valor de IVA
+            fila.querySelector(".total").textContent = total > 0 ? total.toFixed(2) : "0.00"; // Actualizar el valor Total
+
+            actualizarResumen(); // Actualiza el resumen general
+        }
+
+        // Función para actualizar el resumen de totales
+        function actualizarResumen() {
+            const filas = tablaDatos.querySelectorAll("tr");
+            let subTotal = 0; // Suma de subtotales (cantidad * precio unitario)
+            let descuentoTotal = 0; // Suma de descuentos
+            let netoTotal = 0; // Neto sin IVA
+            let ivaTotal = 0; // Suma de IVA
+            let totalConIVA = 0; // Suma de totales con IVA y descuento aplicados
+
+            filas.forEach((fila) => {
+                const cantidad = parseFloat(fila.querySelector(".cantidad-input").value) || 0;
+                const precio = parseFloat(fila.querySelector(".precio-input").value) || 0;
+                const descuento = parseFloat(fila.querySelector(".descuento-input").value) || 0;
+                const ivaUnitario = parseFloat(fila.querySelector(".iva-table").textContent) || 0; // El IVA directo de la celda
+
+                const subtotalFila = cantidad * precio; // Subtotal sin IVA ni descuento
+                const netoFila = subtotalFila - descuento; // Neto sin IVA
+                const ivaFila = ivaUnitario; // El IVA ya está precalculado
+                const totalFila = netoFila + ivaFila; // Total con IVA
+
+                // Sumar los valores para el resumen
+                subTotal += subtotalFila;
+                descuentoTotal += descuento;
+                netoTotal += netoFila; // Neto sin IVA
+                ivaTotal += ivaFila; // IVA total
+                totalConIVA += totalFila; // Total con IVA y descuento aplicados
+            });
+
+            // Actualizar los valores en el resumen
+            document.querySelector(".resumen-totales p:nth-child(2) span").textContent = subTotal.toFixed(2); // Subtotal
+            document.querySelector(".resumen-totales p:nth-child(3) span").textContent = descuentoTotal.toFixed(2); // Descuento total
+            document.getElementById("netoResumen").querySelector("span").textContent = netoTotal.toFixed(2); // Neto total
+            document.getElementById("ivaResumen").querySelector("span").textContent = ivaTotal.toFixed(2); // IVA total
+            document.getElementById("totalResumen").querySelector("span").textContent = totalConIVA.toFixed(2); // Total con IVA
+        }
+
+
+
+
+
+        // Cerrar el modal al hacer clic fuera
+        window.addEventListener("click", (event) => {
+            if (event.target === modal) {
+                modal.style.display = "none";
+                mesSelector.style.display = "none";
+                selectedCodigo = null;
+            }
+        });
     });
-});
+
 </script>
 
 <style>
@@ -710,3 +737,120 @@ document.addEventListener("DOMContentLoaded", () => {
         width: 80px;
     }
 </style>
+<script>
+    document.querySelector(".save-btn").addEventListener("click", () => {
+
+        const detalles = []; // Array para almacenar los detalles de las filas
+
+        // Referencia a las filas del cuerpo de la tabla
+        const filas = document.querySelectorAll("#tabla-datos tbody tr");
+
+        // Validar que existan filas
+        if (filas.length === 0) {
+            alert("Debe agregar al menos un detalle a la factura.");
+            return;
+        }
+
+        // Iterar sobre cada fila para extraer los datos
+        let valid = true; // Indicador de validación
+        filas.forEach((fila) => {
+            const idRazon = fila.querySelector("td:nth-child(1)").getAttribute("data-id"); // Código (id_razon)
+            const descripcion = fila.querySelector("td:nth-child(2)").textContent.trim(); // Descripción
+            const subtotal = parseFloat(fila.querySelector(".total").textContent.trim()) || 0; // Total (subtotal)
+            const cantidad = parseFloat(fila.querySelector(".cantidad-input").value) || 0;
+            const precio = parseFloat(fila.querySelector(".precio-input").value) || 0;
+
+            // Validar que los campos de la fila estén completos
+            if (!idRazon || !descripcion || subtotal <= 0 || cantidad <= 0 || precio <= 0) {
+                valid = false;
+            }
+
+            // Agregar el objeto de detalle al array
+            detalles.push({
+                id_razon: idRazon,
+                descripcion: descripcion,
+                subtotal: subtotal,
+            });
+        });
+
+        if (!valid) {
+            alert("Asegúrese de que todos los campos en las filas estén completos y que los valores sean mayores a 0.");
+            return;
+        }
+
+        const fecha = new Date();
+
+        // Validar y formatear la fecha de emisión
+        facturaData.fecha_emision = fecha.toISOString().split('T')[0];
+
+        // Obtener el valor del campo fecha de vencimiento
+        const fechaVencimientoInput = document.getElementById("fecha-vencimiento").value;
+
+        // Validar si la fecha de vencimiento es válida
+        if (fechaVencimientoInput) {
+            facturaData.fecha_vencimiento = new Date(fechaVencimientoInput).toISOString().split('T')[0];
+        } else {
+            facturaData.fecha_vencimiento = null; // Asignar null si no hay un valor válido
+            console.warn("La fecha de vencimiento no es válida o está vacía.");
+        }
+
+        // Validar otros campos clave
+        const cliente = document.getElementById("ci-ruc").value.trim();
+        if (!cliente) {
+            alert("Debe ingresar el cliente (C.I./RUC).");
+            return;
+        }
+
+        facturaData.id = document.getElementById("secuencia").value;
+        facturaData.id_sucursal = document.getElementById("sucursal").value;
+        facturaData.valor_sin_impuesto = parseFloat(document.querySelector(".resumen-totales p:nth-child(2) span").textContent);
+        facturaData.medidor_id = document.getElementById("concepto").value;
+        facturaData.iva = document.querySelector(".resumen-totales p:nth-child(3) span").textContent;
+        facturaData.total = parseFloat(document.getElementById("totalResumen").querySelector("span").textContent);
+        facturaData.cliente = cliente;
+
+        const facturaDataScript = {
+            fecha_emision: facturaData.fecha_emision,
+            fecha_vencimiento: facturaData.fecha_vencimiento,
+            id_sucursal: facturaData.id_sucursal,
+            facturador: facturaData.facturador,
+            cliente: facturaData.cliente, // Supongamos que el cliente es el CI/RUC
+            medidor_id: facturaData.medidor_id,
+            estado_factura: "Sin autorizar",
+            valor_sin_impuesto: facturaData.valor_sin_impuesto,
+            iva: facturaData.iva,
+            total: facturaData.total,
+            detalles: detalles
+        };
+
+        // Validar los datos antes de enviarlos
+        if (!facturaDataScript.fecha_emision || !facturaDataScript.id_sucursal || !facturaDataScript.cliente) {
+            alert("Por favor, complete todos los campos obligatorios.");
+            return;
+        }
+
+        fetch('http://localhost/Junta_Agua/public/api/save_factura.php', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(facturaDataScript),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Error en la respuesta del servidor");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                if (data.success) {
+                    //navegar a la página de inicio
+                    alert("Factura guardada exitosamente ");
+                    window.location.href = '/Junta_Agua/public/?view=factura/nuevafactura';
+                } else {
+                    alert("Error al guardar la factura: " + data.message);
+                }
+            })
+            .catch((error) => console.error("Error al guardar la factura:", error));
+    });
+</script>
