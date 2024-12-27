@@ -31,15 +31,15 @@
             <div class="columna-centro">
                 <div class="pestana-mantenimiento">
                     <div class="grupo">
-                    <div>
-                        <label for="fecha-emision">Emisión:</label>
-                        <input type="date" id="fecha-emision">
-                    </div>
-                    
-                    <div>
-                        <label for="fecha-vencimiento">Vence:</label>
-                        <input type="date" id="fecha-vencimiento">
-                    </div>
+                        <div>
+                            <label for="fecha-emision">Emisión:</label>
+                            <input type="date" id="fecha-emision">
+                        </div>
+
+                        <div>
+                            <label for="fecha-vencimiento">Vence:</label>
+                            <input type="date" id="fecha-vencimiento">
+                        </div>
                     </div>
                     <br>
                     <div class="grupo">
@@ -74,11 +74,10 @@
                             <label for="nombre-cliente">Cliente:</label>
                             <input type="text" id="nombre-cliente" readonly>
                         </div>
-                        <div>                            
+                        <div>
                             <label for="codigo">Código:</label>
                             <div class="input-group">
-                                <input type="text" id="codigo">
-                                <button type="button" class="btn-busqueda-producto">🔍</button>
+                                <button id="btn-codigo" type="button">Seleccionar Código</button>
                             </div>
                         </div>
                     </div>
@@ -102,7 +101,7 @@
                             <button class="btn dropdown-btn">
                                 <i class="fa fa-caret-down"></i>
                             </button>
-                            <div  class="dropdown-content" style="right: 0; left: auto;">
+                            <div class="dropdown-content" style="right: 0; left: auto;">
                                 <a href="#" onclick="setAction(event, 'ticket')">Generar Ticket</a>
                                 <a href="#" onclick="setAction(event, 'pdf')">Generar PDF</a>
                             </div>
@@ -116,37 +115,21 @@
     <div class="table-container">
         <!-- Tabla de Facturas -->
         <div class="factura-detalle">
-            <table>
-                <tr>
-                    <th>Código</th>
-                    <th>Descripción</th>
-                    <th>Medida</th>
-                    <th>Cantidad</th>
-                    <th>Precio IVA</th>
-                    <th>Desc.</th>
-                    <th>IVA</th>
-                    <th>Total</th>
-                </tr>
-                <tr>
-                    <td>P000000018</td>
-                    <td>Tarifa Básica Agosto</td>
-                    <td>Unidad</td>
-                    <td>1,00</td>
-                    <td>3,00</td>
-                    <td>0,0000</td>
-                    <td>0%</td>
-                    <td>3,00</td>
-                </tr>
-                <tr>
-                    <td>P000000016</td>
-                    <td>Tarifa Básica Julio</td>
-                    <td>Unidad</td>
-                    <td>1,00</td>
-                    <td>3,00</td>
-                    <td>0,0000</td>
-                    <td>0%</td>
-                    <td>3,00</td>
-                </tr>
+            <table id="tabla-datos">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Descripción</th>
+                        <th>Medida</th>
+                        <th>Cantidad</th>
+                        <th>Precio IVA</th>
+                        <th>Desc.</th>
+                        <th>IVA</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
             </table>
         </div>
 
@@ -187,88 +170,114 @@
     </div>
 </div>
 
+<!-- Modal para seleccionar el código -->
+<div id="codigoModal" class="modal">
+    <div class="modal-content">
+        <h2>Seleccionar Código</h2>
+        <div id="codigo-list">
+            <!-- Lista de opciones -->
+            <ul>
+
+            </ul>
+        </div>
+        <div id="mes-selector" style="display: none;">
+            <label for="mes">Mes:</label>
+            <select id="mes">
+                <option value="Ninguno">Ninguno</option>
+                <option value="Enero">Enero</option>
+                <option value="Febrero">Febrero</option>
+                <option value="Marzo">Marzo</option>
+                <option value="Abril">Abril</option>
+                <option value="Mayo">Mayo</option>
+                <option value="Junio">Junio</option>
+                <option value="Julio">Julio</option>
+                <option value="Agosto">Agosto</option>
+                <option value="Septiembre">Septiembre</option>
+                <option value="Octubre">Octubre</option>
+                <option value="Noviembre">Noviembre</option>
+                <option value="Diciembre">Diciembre</option>
+            </select>
+        </div>
+        <button id="close-codigo-modal" class="close-modal">Cerrar</button>
+    </div>
+</div>
 
 <style>
+    .dropdown {
+        position: absolute;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #ddd
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .btn:hover,
+    .dropdown:hover .btn {
+        background-color: #0b7dda;
+    }
 
 
 
 
 
 
-.dropdown {
-position: absolute;
-display: inline-block;
-}
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
 
-.dropdown-content {
-display: none;
-position: absolute;
-background-color: #f1f1f1;
-min-width: 160px;
-z-index: 1;
-}
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 350px;
+    }
 
-.dropdown-content a {
-color: black;
-padding: 12px 16px;
-text-decoration: none;
-display: block;
-}
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
 
-.dropdown-content a:hover {background-color: #ddd}
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
 
-.dropdown:hover .dropdown-content {
-display: block;
-}
-
-.btn:hover, .dropdown:hover .btn {
-background-color: #0b7dda;
-}
-
-
-
-
-
-
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 5% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 350px;
-}
-
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-#ticketContent {
-    margin-top: 20px;
-}
-
-
+    #ticketContent {
+        margin-top: 20px;
+    }
 </style>
 <!-- Scripts -->
 <script type="module">
@@ -316,9 +325,9 @@ background-color: #0b7dda;
     });
 
 
-//-----------------------------------ticket
+    //-----------------------------------ticket
 
-    document.getElementById('actionBtn').addEventListener('click', function(event) {
+    document.getElementById('actionBtn').addEventListener('click', function (event) {
         // Evitar la recarga o cierre inesperado
         event.preventDefault();
 
@@ -485,3 +494,219 @@ background-color: #0b7dda;
 
 
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("codigoModal");
+    const btnCodigo = document.getElementById("btn-codigo");
+    const closeCodigoModal = document.getElementById("close-codigo-modal");
+    const codigoList = document.getElementById("codigo-list");
+    const mesSelector = document.getElementById("mes-selector");
+    const mesInput = document.getElementById("mes");
+    const tablaDatos = document.getElementById("tabla-datos").querySelector("tbody");
+
+    let selectedCodigo = null;
+    let contadorProductos = 1; // Contador para numerar los productos
+
+    // Abrir el modal
+    btnCodigo.addEventListener("click", () => {
+        modal.style.display = "block";
+    });
+
+    // Cerrar el modal
+    closeCodigoModal.addEventListener("click", () => {
+        modal.style.display = "none";
+        mesSelector.style.display = "none";
+        selectedCodigo = null;
+    });
+
+    // Seleccionar un código
+    codigoList.addEventListener("click", (event) => {
+        if (event.target.tagName === "LI") {
+            selectedCodigo = event.target;
+            const requiereMes = selectedCodigo.getAttribute("data-requiere-mes") === "true";
+
+            if (requiereMes) {
+                mesSelector.style.display = "block";
+            } else {
+                agregarFila(selectedCodigo.textContent, null);
+                modal.style.display = "none";
+            }
+        }
+    });
+
+    // Agregar fila al seleccionar un mes
+    mesInput.addEventListener("change", () => {
+        if (selectedCodigo) {
+            agregarFila(selectedCodigo.textContent, mesInput.value);
+            modal.style.display = "none";
+            mesSelector.style.display = "none";
+            mesInput.value = ""; // Reiniciar selección de mes
+        }
+    });
+
+    // Función para agregar una fila a la tabla
+    function agregarFila(descripcion, mes) {
+        const tipo = selectedCodigo.getAttribute("data-tipo");
+        const precio = parseFloat(selectedCodigo.getAttribute("data-precio"));
+        const cantidad = 1; // Valor inicial para la cantidad
+        const descuento = 0; // Asume descuento inicial en 0
+        const iva = precio * 0.12; // Calcula el IVA inicial
+        const total = cantidad * (precio + iva - descuento);
+
+        // Generar código con el formato personalizado
+        const codigo = "abc"
+        contadorProductos++; // Incrementar el contador para el siguiente producto
+
+        const fila = document.createElement("tr");
+        fila.innerHTML = `
+            <td>${codigo}</td>
+            <td>${descripcion}</td>
+            <td>${mes || "N/A"}</td>
+            <td><input type="number" value="${cantidad}" min="1" class="cantidad-input"></td>
+            <td><input type="number" value="${precio.toFixed(2)}" min="0" class="precio-input"></td>
+            <td><input type="number" value="${descuento.toFixed(2)}" min="0" class="descuento-input"></td>
+            <td class="iva">${iva.toFixed(2)}</td>
+            <td class="total">${total.toFixed(2)}</td>
+        `;
+
+        // Eventos para recalcular y validar
+        const cantidadInput = fila.querySelector(".cantidad-input");
+        const precioInput = fila.querySelector(".precio-input");
+        const descuentoInput = fila.querySelector(".descuento-input");
+
+        cantidadInput.addEventListener("input", actualizarTotal);
+        precioInput.addEventListener("input", actualizarTotal);
+        descuentoInput.addEventListener("input", actualizarTotal);
+
+        // Validaciones al perder foco (blur)
+        cantidadInput.addEventListener("blur", validarCantidad);
+        descuentoInput.addEventListener("blur", validarDescuento);
+
+        tablaDatos.appendChild(fila);
+        actualizarResumen(); // Actualiza el resumen de totales
+    }
+
+    // Validación para cantidad
+    function validarCantidad(event) {
+        const input = event.target;
+        if (parseFloat(input.value) <= 0 || isNaN(parseFloat(input.value))) {
+            input.value = 1; // Restablece a 1 si el valor es inválido
+        }
+        actualizarTotal(event); // Recalcula los totales
+    }
+
+    // Validación para descuento
+    function validarDescuento(event) {
+        const input = event.target;
+        const fila = input.closest("tr");
+        const cantidad = parseFloat(fila.querySelector(".cantidad-input").value) || 0;
+        const precio = parseFloat(fila.querySelector(".precio-input").value) || 0;
+        const subtotal = cantidad * precio;
+
+        if (parseFloat(input.value) < 0 || parseFloat(input.value) > subtotal || isNaN(parseFloat(input.value))) {
+            input.value = 0; // Restablece a 0 si el valor es inválido
+        }
+        actualizarTotal(event); // Recalcula los totales
+    }
+
+    // Función para actualizar el total y recalcular el IVA y descuento
+    function actualizarTotal(event) {
+        const fila = event.target.closest("tr");
+        const cantidad = parseFloat(fila.querySelector(".cantidad-input").value) || 0;
+        const precio = parseFloat(fila.querySelector(".precio-input").value) || 0;
+        const descuento = parseFloat(fila.querySelector(".descuento-input").value) || 0;
+
+        // Recalcular IVA y total
+        const iva = precio * 0.12; // IVA por unidad
+        const total = cantidad * (precio + iva - descuento);
+
+        // Actualiza los valores en la fila
+        fila.querySelector(".iva").textContent = (cantidad * iva).toFixed(2); // IVA total
+        fila.querySelector(".total").textContent = total > 0 ? total.toFixed(2) : "0.00"; // No permite totales negativos
+
+        actualizarResumen(); // Actualiza el resumen de totales
+    }
+
+    // Función para actualizar el resumen de totales
+    function actualizarResumen() {
+        const filas = tablaDatos.querySelectorAll("tr");
+        let subTotal = 0;
+        let total = 0;
+
+        filas.forEach((fila) => {
+            const cantidad = parseFloat(fila.querySelector(".cantidad-input").value) || 0;
+            const precio = parseFloat(fila.querySelector(".precio-input").value) || 0;
+            const descuento = parseFloat(fila.querySelector(".descuento-input").value) || 0;
+            const iva = precio * 0.12;
+            subTotal += cantidad * precio;
+            total += cantidad * (precio + iva - descuento);
+        });
+
+        document.querySelector(".resumen-totales p:nth-child(2) span").textContent = subTotal.toFixed(2);
+        document.getElementById("total").querySelector("span").textContent = total.toFixed(2);
+    }
+
+    // Cerrar el modal al hacer clic fuera
+    window.addEventListener("click", (event) => {
+        if (event.target === modal) {
+            modal.style.display = "none";
+            mesSelector.style.display = "none";
+            selectedCodigo = null;
+        }
+    });
+});
+</script>
+
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 400px;
+    }
+
+    .modal-content ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .modal-content li {
+        padding: 10px;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        margin: 5px 0;
+    }
+
+    .modal-content li:hover {
+        background-color: #ddd;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    table th,
+    table td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: center;
+    }
+
+    table input {
+        width: 80px;
+    }
+</style>
