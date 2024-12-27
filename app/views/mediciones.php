@@ -5,16 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Mediciones</title>
     <link rel="stylesheet" href="/Junta_Agua/public/styles/mediciones.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-
-<div>
-    <div class="container2">
+<div class="container2">
     <h1>Registro de Mediciones</h1>
 
     <!-- Formulario para registrar nueva medición -->
-    <form>
-        <!-- Primer grupo de campos (ID Medidor, Fecha, Lectura Anterior) -->
+    <form id="form-medicion">
         <div class="form-group flex-group">
             <div class="form-item">
                 <label for="idmedidor">ID del Medidor</label>
@@ -25,73 +23,112 @@
                 <input type="date" name="fecha_lectura" id="fecha_lectura" class="form-control" required>
             </div>
             <div class="form-item">
-                <label for="lectura_anterior">Lectura Anterior</label>
-                <input type="number" name="lectura_anterior" id="lectura_anterior" class="form-control" step="0.01" required>
-            </div>
-        </div>
-
-        <!-- Segundo grupo de campos (Lectura Actual, Consumo y Mes Facturado) -->
-        <div class="form-group flex-group">
-            <div class="form-item">
                 <label for="lectura_actual">Lectura Actual</label>
                 <input type="number" name="lectura_actual" id="lectura_actual" class="form-control" step="0.01" required>
             </div>
-            <div class="form-item">
-                <label for="consumo_m3">Consumo en m3</label>
-                <input type="number" name="consumo_m3" id="consumo_m3" class="form-control" step="0.01" required>
-            </div>
-            <div class="form-item">
-                <label for="mes_facturado">Mes Facturado</label>
-                <input type="text" name="mes_facturado" id="mes_facturado" class="form-control" required>
-            </div>
         </div>
-        
-        <button type="submit" class="btn btn-primary">Registrar Medición</button>
+        <button type="submit" class="btn btn-primary" id="btn-registrar" disabled>Registrar Medición</button>
     </form>
 
-    <!-- Lista de Mediciones (Colocada abajo) -->
-    <h2>Lista de Mediciones</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID Medidor</th>
-                <th>Fecha Lectura</th>
-                <th>Lectura Anterior</th>
-                <th>Lectura Actual</th>
-                <th>Consumo (m3)</th>
-                <th>Mes Facturado</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>001</td>
-                <td>2024-12-01</td>
-                <td>150.75</td>
-                <td>180.50</td>
-                <td>29.75</td>
-                <td>Diciembre</td>
-            </tr>
-            <tr>
-                <td>002</td>
-                <td>2024-12-05</td>
-                <td>200.30</td>
-                <td>220.10</td>
-                <td>19.80</td>
-                <td>Diciembre</td>
-            </tr>
-            <tr>
-                <td>003</td>
-                <td>2024-12-10</td>
-                <td>100.00</td>
-                <td>150.00</td>
-                <td>50.00</td>
-                <td>Diciembre</td>
-            </tr>
-        </tbody>
-    </table>
-
-</div>
+    <!-- Modal para mostrar información del cliente -->
+    <div id="modal-cliente" class="modal">
+        <div class="modal-content">
+            <span id="close-modal" class="close-btn">&times;</span>
+            <h3>Información del Cliente</h3>
+            <p id="cliente-info"></p>
+        </div>
+    </div>
 </div>
 
+
+<script>
+$(document).ready(function () {
+    let idCliente = null; // Variable para almacenar el ID del cliente validado
+
+    // Validar el medidor al presionar Enter
+    $("#idmedidor").on("keydown", function (e) {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            validarMedidor($(this).val());
+        }
+    });
+
+    function validarMedidor(idMedidor) {
+        $.ajax({
+            url: "/Junta_Agua/public/api/validar_medidor.php",
+            method: "GET",
+            data: { id_medidor: idMedidor },
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    idCliente = response.cliente.id_cliente;
+                    $("#cliente-info").text(`Cliente: ${response.cliente.nombre}, Cédula: ${response.cliente.cedula}`);
+                    $("#modal-cliente").show();
+                    $("#btn-registrar").prop("disabled", false);
+                } else {
+                    idCliente = null;
+                    alert(response.message);
+                    $("#btn-registrar").prop("disabled", true);
+                }
+            },
+            error: function (xhr) {
+                alert("Error al validar el medidor.");
+                console.error(xhr.responseText);
+            }
+        });
+    }
+
+  // Registrar la medición
+$("#form-medicion").on("submit", function (e) {
+    e.preventDefault();
+
+    if (!idCliente) {
+        alert("Debe validar el medidor antes de registrar.");
+        return;
+    }
+
+    const data = {
+        id_medidor: $("#idmedidor").val(),
+        id_cliente: idCliente,
+        fecha_lectura: $("#fecha_lectura").val(),
+        lectura_actual: $("#lectura_actual").val()
+    };
+
+    $.ajax({
+        url: "/Junta_Agua/public/index.php?view=mediciones&action=registrarMedicion",
+        method: "POST",
+        data: data,
+        dataType: "json",
+        success: function (response) {
+            if (response.success) {
+                alert(response.message);
+                location.reload(); // Recarga la página
+            } else {
+                alert(response.message); // Mensaje de error del servidor
+            }
+        },
+        error: function (xhr) {
+    console.error("Error al registrar la medición:", xhr.responseText);
+
+    // Intentar parsear como JSON
+    try {
+        const response = JSON.parse(xhr.responseText);
+        alert(response.message);
+    } catch (e) {
+        // Si no es JSON, mostrar error genérico
+        alert("Hubo un error inesperado. Revisa la consola para más detalles.");
+    }
+}
+
+    });
+});
+
+
+    // Cerrar el modal
+    $("#close-modal").on("click", function () {
+        $("#modal-cliente").hide();
+    });
+});
+</script>
 </body>
 </html>
