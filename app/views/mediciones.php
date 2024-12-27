@@ -40,19 +40,76 @@
     </div>
 </div>
 
+<!-- Filtros -->
+<h2>Filtros</h2>
+<div class="filters">
+    <input type="text" id="filter-medidor" placeholder="Filtrar por Nro Medidor o Cédula">
+    <div class="filter-dates">
+        <label>Desde:</label>
+        <input type="date" id="filter-date-from">
+        <label>Hasta:</label>
+        <input type="date" id="filter-date-to">
+    </div>
+    <button id="reset-filters" class="btn">Quitar Filtros</button>
+</div>
+
+<!-- Lista de Mediciones -->
+<h2>Lista de Mediciones</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nro Medidor</th>
+            <th>Cédula</th>
+            <th>Fecha Lectura</th>
+            <th>Consumo (m3)</th>
+            <th>Mes Facturado</th>
+        </tr>
+    </thead>
+    <tbody id="table-body">
+        <!-- Filas dinámicas -->
+    </tbody>
+</table>
+
+<!-- Paginación -->
+<div class="pagination">
+    <button id="prev-page">Anterior</button>
+    <span id="current-page">1</span>
+    <button id="next-page">Siguiente</button>
+</div>
 
 <script>
+// Add scripts for table and filters without affecting the existing form logic
 $(document).ready(function () {
+    let mediciones = [];
+    let currentPage = 1;
+    const itemsPerPage = 5;
     let idCliente = null; // Variable para almacenar el ID del cliente validado
 
-    // Validar el medidor al presionar Enter
-    $("#idmedidor").on("keydown", function (e) {
-        if (e.key === "Enter") {
-            e.preventDefault();
-            validarMedidor($(this).val());
-        }
-    });
-
+// Validar el medidor al presionar Enter
+$("#idmedidor").on("keydown", function (e) {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        validarMedidor($(this).val());
+    }
+});
+    function fetchMediciones() {
+        $.ajax({
+            url: "/Junta_Agua/public/index.php?view=mediciones&action=obtenerMediciones",
+            method: "GET",
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    mediciones = response.data;
+                    updateTable();
+                } else {
+                    alert("Error al obtener mediciones.");
+                }
+            },
+            error: function (xhr) {
+                console.error("Error al obtener mediciones:", xhr.responseText);
+            }
+        });
+    }
     function validarMedidor(idMedidor) {
         $.ajax({
             url: "/Junta_Agua/public/api/validar_medidor.php",
@@ -77,8 +134,7 @@ $(document).ready(function () {
             }
         });
     }
-
-  // Registrar la medición
+// Registrar la medición
 $("#form-medicion").on("submit", function (e) {
     e.preventDefault();
 
@@ -128,6 +184,96 @@ $("#form-medicion").on("submit", function (e) {
     $("#close-modal").on("click", function () {
         $("#modal-cliente").hide();
     });
+
+    function renderTable(data) {
+        const tableBody = $("#table-body");
+        tableBody.empty();
+
+        data.forEach(medicion => {
+            const row = `
+                <tr>
+                    <td>${medicion.nro_medidor || "N/A"}</td>
+                    <td>${medicion.identificacion || "N/A"}</td>
+                    <td>${medicion.fecha_lectura || "N/A"}</td>
+                    <td>${medicion.lectura}</td>
+                    <td>${medicion.fecha_lectura 
+                        ? new Date(medicion.fecha_lectura).toLocaleString('es-ES', { month: 'long' }) 
+                        : "N/A"}</td>
+                </tr>`;
+            tableBody.append(row);
+        });
+    }
+
+    function applyFilters() {
+        const filterValue = $("#filter-medidor").val().toLowerCase();
+        const dateFrom = $("#filter-date-from").val();
+        const dateTo = $("#filter-date-to").val();
+
+        let filteredData = mediciones;
+
+        if (filterValue) {
+            filteredData = filteredData.filter(medicion =>
+                medicion.nro_medidor?.toLowerCase().includes(filterValue) ||
+                medicion.cedula?.toLowerCase().includes(filterValue)
+            );
+        }
+
+        if (dateFrom || dateTo) {
+            filteredData = filteredData.filter(medicion => {
+                const fecha = new Date(medicion.fecha_lectura);
+                const desde = dateFrom ? new Date(dateFrom) : null;
+                const hasta = dateTo ? new Date(dateTo) : null;
+
+                return (!desde || fecha >= desde) && (!hasta || fecha <= hasta);
+            });
+        }
+
+        return filteredData;
+    }
+
+    function getPaginatedData(data) {
+        const start = (currentPage - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        return data.slice(start, end);
+    }
+
+    function updateTable() {
+        const filteredData = applyFilters();
+        const paginatedData = getPaginatedData(filteredData);
+        renderTable(paginatedData);
+
+        $("#current-page").text(currentPage);
+    }
+
+    $("#filter-medidor, #filter-date-from, #filter-date-to").on("input change", () => {
+        currentPage = 1;
+        updateTable();
+    });
+
+    $("#reset-filters").on("click", () => {
+        $("#filter-medidor").val('');
+        $("#filter-date-from").val('');
+        $("#filter-date-to").val('');
+        currentPage = 1;
+        updateTable();
+    });
+
+    $("#prev-page").on("click", () => {
+        if (currentPage > 1) {
+            currentPage--;
+            updateTable();
+        }
+    });
+
+    $("#next-page").on("click", () => {
+        const filteredData = applyFilters();
+        if (currentPage < Math.ceil(filteredData.length / itemsPerPage)) {
+            currentPage++;
+            updateTable();
+        }
+    });
+
+    fetchMediciones();
 });
 </script>
 </body>
