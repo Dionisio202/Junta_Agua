@@ -53,8 +53,8 @@
             <div class="columna3">
                 <h2>Filtro por Fecha</h2>
                 <div style="display: flex; gap: 10px;">
-                    <label>Desde: <input type="date" name="fechaDesde" value="2023-07-01"></label>
-                    <label>Hasta: <input type="date" name="fechaHasta" value="2023-07-01"></label>
+                    <label>Desde: <input type="date" name="fechaDesde"></label>
+                    <label>Hasta: <input type="date" name="fechaHasta"></label>
                 </div>
                 <br>
             </div>

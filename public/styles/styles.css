@@ -820,3 +820,26 @@ button {
 .close-modal:hover {
     background-color: #16486a;
 }
+
+.date-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    flex-wrap: wrap; 
+    margin: 10px 0; 
+}
+
+.date-filter-container label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+.date-filter-container .filter-input {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 200px;
+    width: 100%;
+}
