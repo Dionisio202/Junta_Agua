@@ -29,8 +29,8 @@ class MedicionesController {
         $fechaLectura = $_POST['fecha_lectura'] ?? null;
         $lectura = $_POST['lectura_actual'] ?? null;
 
-        if (!$idMedidor || !$idCliente || !$fechaLectura || !$lectura) {
-            $this->sendHttpResponse(400, ['success' => false, 'message' => 'Todos los campos son obligatorios.']);
+        if ($idMedidor === null || $idCliente === null || $fechaLectura === null || $lectura === null || $lectura < 0) {
+            $this->sendHttpResponse(400, ['success' => false, 'message' => 'Todos los campos son obligatorios y la lectura no puede ser negativa.']);
         }
 
         $response = $this->registrarMedicion($idMedidor, $idCliente, $fechaLectura, $lectura);

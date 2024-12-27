@@ -24,7 +24,8 @@
             </div>
             <div class="form-item">
                 <label for="lectura_actual">Lectura Actual</label>
-                <input type="number" name="lectura_actual" id="lectura_actual" class="form-control" step="0.01" required>
+                <input type="number" name="lectura_actual" id="lectura_actual" class="form-control" step="1" min="0" required>
+
             </div>
         </div>
         <button type="submit" class="btn btn-primary" id="btn-registrar" disabled>Registrar Medición</button>
