@@ -23,7 +23,7 @@ class User
     }
 
     public function authenticateUser($cedula, $password) {
-        $query = "SELECT nombre, rol, id, apellido FROM " . $this->table_name . " WHERE cedula = :cedula AND clave = :clave LIMIT 1";
+        $query = "SELECT nombre, rol, id, apellido, correo FROM " . $this->table_name . " WHERE cedula = :cedula AND clave = :clave LIMIT 1";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":cedula", $cedula);
         $stmt->bindParam(":clave", $password); // Contraseña sin cifrar
