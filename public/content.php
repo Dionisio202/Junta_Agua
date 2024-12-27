@@ -90,6 +90,10 @@ switch ($view) {
                     break;
 
                     case 'mediciones':
+                        if (!checkAccess(['Contador', 'Presidente'])) {
+                            echo "<p>Acceso denegado. No tienes permiso para acceder a esta vista.</p>";
+                            exit();
+                        }
                         $database = new Database();
                         $db = $database->getConnection();
                         $model = new MedicionesModel($db);
