@@ -94,6 +94,8 @@ switch ($view) {
                             echo "<p>Acceso denegado. No tienes permiso para acceder a esta vista.</p>";
                             exit();
                         }
+                        $rol = $_SESSION['Rol'] ?? 'Desconocido';
+                        $nombre = $_SESSION['Nombre'] ?? 'Invitado';
                         $database = new Database();
                         $db = $database->getConnection();
                         $model = new MedicionesModel($db);

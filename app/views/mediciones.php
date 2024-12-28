@@ -8,6 +8,10 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+<div class="user-info">
+        <span class="user-role"><?= htmlspecialchars($rol??'Invitado'); ?></span>
+        <span class="user-name"><?= htmlspecialchars($nombre ?? 'Usuario'); ?></span>
+    </div>
     <div class="table-container">
         <h1>Registro de Mediciones</h1>
 
