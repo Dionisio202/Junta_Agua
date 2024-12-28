@@ -4,11 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Mediciones</title>
-    <link rel="stylesheet" href="/Junta_Agua/public/styles/mediciones.css">
+    <link rel="stylesheet" href="styles/mediciones.css">
 </head>
 <body>
+    <!-- <div class="user-info">
+        <span class="user-role"><?= htmlspecialchars($rol); ?></span>
+        <span class="user-name"><?= htmlspecialchars($nombre ?? 'Usuario'); ?></span>
+    </div> -->
 
 <div>
+    <div class="table-container">
+
+
     <div class="container2">
     <h1>Registro de Mediciones</h1>
 
@@ -90,6 +97,7 @@
         </tbody>
     </table>
 
+</div>
 </div>
 </div>
 
