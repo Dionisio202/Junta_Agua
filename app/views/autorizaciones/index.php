@@ -87,8 +87,12 @@
             <tbody id="table-body"></tbody>
         </table>
         
-            <!-- Controles de Paginación -->
-            <div id="pagination" class="pagination"></div>
+        <!-- Controles de Paginación -->
+        <div id="pagination" class="pagination">    
+            <span id="prev-page" class="page-control">Anterior</span>
+            <span id="current-page">1</span>
+            <span id="next-page" class="page-control">Siguiente</span>
+        </div>
     </div>
 
     <script src="http://localhost/Junta_Agua/public/scripts/autorizations_main.js" type="module"></script>

@@ -4,80 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Mediciones</title>
-    <link rel="stylesheet" href="styles/mediciones.css">
+    <link rel="stylesheet" href="styles/styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-<div class="container2">
-    <h1>Registro de Mediciones</h1>
+    <div class="table-container">
+        <h1>Registro de Mediciones</h1>
 
-    <!-- Formulario para registrar nueva medición -->
-    <form id="form-medicion">
-        <div class="form-group flex-group">
-            <div class="form-item">
-                <label for="idmedidor">ID del Medidor</label>
-                <input type="text" name="idmedidor" id="idmedidor" class="form-control" required>
+        <!-- Formulario para registrar nueva medición -->
+        <form id="form-medicion" class="form">
+            <div class="flex-group">
+                <div class="form-group form-item">
+                    <label for="idmedidor">ID del Medidor</label>
+                    <input type="text" name="idmedidor" id="idmedidor" class="form-control" required>
+                </div>
+                <div class="form-group form-item">
+                    <label for="fecha_lectura">Fecha de Lectura</label>
+                    <input type="date" name="fecha_lectura" id="fecha_lectura" class="form-control" required>
+                </div>
+                <div class="form-group form-item">
+                    <label for="lectura_actual">Lectura Actual</label>
+                    <input type="number" name="lectura_actual" id="lectura_actual" class="form-control" step="1" min="0" required>
+                </div>
             </div>
-            <div class="form-item">
-                <label for="fecha_lectura">Fecha de Lectura</label>
-                <input type="date" name="fecha_lectura" id="fecha_lectura" class="form-control" required>
-            </div>
-            <div class="form-item">
-                <label for="lectura_actual">Lectura Actual</label>
-                <input type="number" name="lectura_actual" id="lectura_actual" class="form-control" step="1" min="0" required>
+            <button type="submit" class="btn btn-primary" id="btn-registrar" disabled>Registrar Medición</button>
+        </form>
 
+        <!-- Modal para mostrar información del cliente -->
+        <div id="modal-cliente" class="modal">
+            <div class="modal-content">
+                <span id="close-modal" class="close-btn">&times;</span>
+                <h3>Información del Cliente</h3>
+                <p id="cliente-info"></p>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary" id="btn-registrar" disabled>Registrar Medición</button>
-    </form>
 
-    <!-- Modal para mostrar información del cliente -->
-    <div id="modal-cliente" class="modal">
-        <div class="modal-content">
-            <span id="close-modal" class="close-btn">&times;</span>
-            <h3>Información del Cliente</h3>
-            <p id="cliente-info"></p>
+        <!-- Filtros -->
+        <h2>Filtros</h2>
+        <div class="filters">
+            <input type="text" id="filter-medidor" class="filter-input" placeholder="Filtrar por Nro Medidor o Cédula">
+            <div class="date-filter-container">
+                <label for="filter-date-from">Desde:</label>
+                <input type="date" id="filter-date-from" class="filter-input">
+                <label for="filter-date-to">Hasta:</label>
+                <input type="date" id="filter-date-to" class="filter-input">
+            </div>
+            <button type="button" id="reset-filters" class="reset-btn">Quitar Filtros</button>
+        </div>
+        <br>
+        <!-- Lista de Mediciones -->
+        <h2>Lista de Mediciones</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nro Medidor</th>
+                    <th>Cédula</th>
+                    <th>Fecha Lectura</th>
+                    <th>Consumo (m3)</th>
+                    <th>Mes Facturado</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <!-- Filas dinámicas -->
+            </tbody>
+        </table>
+
+        <!-- Paginación -->
+        <div id="pagination" class="pagination">
+            <span id="prev-page" class="page-control">Anterior</span>
+            <span id="current-page">1</span>
+            <span id="next-page" class="page-control">Siguiente</span>
         </div>
     </div>
-</div>
-
-<!-- Filtros -->
-<h2>Filtros</h2>
-<div class="filters">
-    <input type="text" id="filter-medidor" placeholder="Filtrar por Nro Medidor o Cédula">
-    <div class="filter-dates">
-        <label>Desde:</label>
-        <input type="date" id="filter-date-from">
-        <label>Hasta:</label>
-        <input type="date" id="filter-date-to">
-    </div>
-    <button id="reset-filters" class="btn">Quitar Filtros</button>
-</div>
-
-<!-- Lista de Mediciones -->
-<h2>Lista de Mediciones</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Nro Medidor</th>
-            <th>Cédula</th>
-            <th>Fecha Lectura</th>
-            <th>Consumo (m3)</th>
-            <th>Mes Facturado</th>
-        </tr>
-    </thead>
-    <tbody id="table-body">
-        <!-- Filas dinámicas -->
-    </tbody>
-</table>
-
-<!-- Paginación -->
-<div class="pagination">
-    <button id="prev-page">Anterior</button>
-    <span id="current-page">1</span>
-    <button id="next-page">Siguiente</button>
-</div>
-</div>
 
 <script>
 // Add scripts for table and filters without affecting the existing form logic

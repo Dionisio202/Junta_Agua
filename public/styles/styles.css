@@ -193,7 +193,6 @@ h1 {
     text-transform: capitalize; /* capitaliza el primer carácter */
 }
 
-
 .header-buttons {
     display: flex;
     justify-content: space-between;
@@ -322,7 +321,6 @@ button {
     }
 }
 
-
 /* Del paginador */
 .pagination {
     display: flex;
@@ -365,6 +363,94 @@ button {
 .page-number:hover {
     color: #568cc6;
 }
+
+/* 
+    Estilos de mediciones
+*/
+
+/* Estilo del Formulario */
+form {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.flex-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-item {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.form-item:last-child {
+    margin-right: 0;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+    color: #34495e;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px 12px;
+    margin-top: 5px;
+    border: 1px solid #dfe6e9;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-control:focus {
+    border-color: #2980b9;
+    outline: none;
+}
+
+/* Estilos del bloque de filtros */
+.filters {
+    display: flex;
+    flex: 1;
+    align-items: center; 
+    gap: 10px; 
+    flex-wrap: wrap;
+}
+
+.filter-input {
+    flex: 1;  
+    border-radius: 4px;
+}
+
+.date-filter-container {
+    display: flex;
+    align-content: center;
+    gap: 10px; 
+}
+
+@media (max-width: 768px) {
+    .filters {
+        flex-direction: column; 
+        align-items: flex-start; 
+    }
+    .date-filter-container {
+        flex-direction: column; 
+        gap: 5px;  
+    }
+    .filter-input, .reset-btn {
+        width: 100%; 
+    }
+}
+
+
 
 /*
     Columnas index autorizacion
