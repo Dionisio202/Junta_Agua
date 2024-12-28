@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Mediciones</title>
-    <link rel="stylesheet" href="/Junta_Agua/public/styles/mediciones.css">
+    <link rel="stylesheet" href="styles/mediciones.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
@@ -76,6 +76,7 @@
     <button id="prev-page">Anterior</button>
     <span id="current-page">1</span>
     <button id="next-page">Siguiente</button>
+</div>
 </div>
 
 <script>

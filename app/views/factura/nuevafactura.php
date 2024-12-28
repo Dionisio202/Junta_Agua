@@ -6,7 +6,21 @@
     <span class="user-apellido"><?= htmlspecialchars($_SESSION['Apellido'] ?? 'Sin apellido'); ?></span>
     <span class="user-id"><?= htmlspecialchars($_SESSION['idUser'] ?? 'Sin ID'); ?></span>
 </div>
-
+<script>
+    // Definir el objeto facturaData como una variable global
+    var facturaData = {
+        fecha_emision: "",
+        fecha_autorizacion: "",
+        fecha_vencimiento: "",
+        id_sucursal: null,
+        facturador: "<?= htmlspecialchars($_SESSION['idUser'] ?? '') ?>",
+        cliente: null,
+        medidor_id: null,
+        valor_sin_impuesto: 0,
+        iva: 0,
+        total: 0
+    };
+</script>
 <div class="table-container">
     <div class="header-buttons">
         <h1>Facturación <?= $rol === 'Tesorero' ? 'TESORERÍA' : ''; ?></h1>
@@ -31,15 +45,15 @@
             <div class="columna-centro">
                 <div class="pestana-mantenimiento">
                     <div class="grupo">
-                    <div>
-                        <label for="fecha-emision">Emisión:</label>
-                        <input type="date" id="fecha-emision">
-                    </div>
-                    
-                    <div>
-                        <label for="fecha-vencimiento">Vence:</label>
-                        <input type="date" id="fecha-vencimiento">
-                    </div>
+                        <div>
+                            <label for="fecha-emision">Emisión:</label>
+                            <input type="date" id="fecha-emision">
+                        </div>
+
+                        <div>
+                            <label for="fecha-vencimiento">Vence:</label>
+                            <input type="date" id="fecha-vencimiento">
+                        </div>
                     </div>
                     <br>
                     <div class="grupo">
@@ -74,11 +88,10 @@
                             <label for="nombre-cliente">Cliente:</label>
                             <input type="text" id="nombre-cliente" readonly>
                         </div>
-                        <div>                            
+                        <div>
                             <label for="codigo">Código:</label>
                             <div class="input-group">
-                                <input type="text" id="codigo">
-                                <button type="button" class="btn-busqueda-producto">🔍</button>
+                                <button id="btn-codigo" type="button">Seleccionar Código</button>
                             </div>
                         </div>
                     </div>
@@ -102,7 +115,7 @@
                             <button class="btn dropdown-btn">
                                 <i class="fa fa-caret-down"></i>
                             </button>
-                            <div  class="dropdown-content" style="right: 0; left: auto;">
+                            <div class="dropdown-content" style="right: 0; left: auto;">
                                 <a href="#" onclick="setAction(event, 'ticket')">Generar Ticket</a>
                                 <a href="#" onclick="setAction(event, 'pdf')">Generar PDF</a>
                             </div>
@@ -116,48 +129,36 @@
     <div class="table-container">
         <!-- Tabla de Facturas -->
         <div class="factura-detalle">
-            <table>
-                <tr>
-                    <th>Código</th>
-                    <th>Descripción</th>
-                    <th>Medida</th>
-                    <th>Cantidad</th>
-                    <th>Precio IVA</th>
-                    <th>Desc.</th>
-                    <th>IVA</th>
-                    <th>Total</th>
-                </tr>
-                <tr>
-                    <td>P000000018</td>
-                    <td>Tarifa Básica Agosto</td>
-                    <td>Unidad</td>
-                    <td>1,00</td>
-                    <td>3,00</td>
-                    <td>0,0000</td>
-                    <td>0%</td>
-                    <td>3,00</td>
-                </tr>
-                <tr>
-                    <td>P000000016</td>
-                    <td>Tarifa Básica Julio</td>
-                    <td>Unidad</td>
-                    <td>1,00</td>
-                    <td>3,00</td>
-                    <td>0,0000</td>
-                    <td>0%</td>
-                    <td>3,00</td>
-                </tr>
+            <table id="tabla-datos">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Descripción</th>
+                        <th>Medida</th>
+                        <th>Cantidad</th>
+                        <th>Precio IVA</th>
+                        <th>Desc.</th>
+                        <th>IVA</th>
+                        <th>Total</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Filas dinámicas aquí -->
+                </tbody>
             </table>
+
         </div>
 
         <!-- Resumen de Totales -->
         <div class="datos-resumen">
             <div class="resumen-totales">
                 <h3>Resumen de valores</h3>
-                <p>Sub Total: <span>6,0000</span></p>
-                <p>Descuento %: <span>0,00</span></p>
-                <p id="total">Total: <span>6,00</span></p>
-                <p>Neto: <span>6,00</span></p>
+                <p>Sub Total: <span>0,0000</span></p>
+                <p>Descuento: <span>0,00</span></p>
+                <p id="netoResumen">Neto: <span>0,00</span></p>
+                <p id="ivaResumen">IVA: <span>0,00</span></p>
+                <p id="totalResumen">Total: <span>0,00</span></p>
             </div>
         </div>
     </div>
@@ -187,88 +188,114 @@
     </div>
 </div>
 
+<!-- Modal para seleccionar el código -->
+<div id="codigoModal" class="modal">
+    <div class="modal-content">
+        <h2>Seleccionar Código</h2>
+        <div id="codigo-list">
+            <!-- Lista de opciones -->
+            <ul>
+
+            </ul>
+        </div>
+        <div id="mes-selector" style="display: none;">
+            <label for="mes">Mes:</label>
+            <select id="mes">
+                <option value="Ninguno">Ninguno</option>
+                <option value="Enero">Enero</option>
+                <option value="Febrero">Febrero</option>
+                <option value="Marzo">Marzo</option>
+                <option value="Abril">Abril</option>
+                <option value="Mayo">Mayo</option>
+                <option value="Junio">Junio</option>
+                <option value="Julio">Julio</option>
+                <option value="Agosto">Agosto</option>
+                <option value="Septiembre">Septiembre</option>
+                <option value="Octubre">Octubre</option>
+                <option value="Noviembre">Noviembre</option>
+                <option value="Diciembre">Diciembre</option>
+            </select>
+        </div>
+        <button id="close-codigo-modal" class="close-modal">Cerrar</button>
+    </div>
+</div>
 
 <style>
+    .dropdown {
+        position: absolute;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #ddd
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .btn:hover,
+    .dropdown:hover .btn {
+        background-color: #0b7dda;
+    }
 
 
 
 
 
 
-.dropdown {
-position: absolute;
-display: inline-block;
-}
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
 
-.dropdown-content {
-display: none;
-position: absolute;
-background-color: #f1f1f1;
-min-width: 160px;
-z-index: 1;
-}
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 350px;
+    }
 
-.dropdown-content a {
-color: black;
-padding: 12px 16px;
-text-decoration: none;
-display: block;
-}
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
 
-.dropdown-content a:hover {background-color: #ddd}
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
 
-.dropdown:hover .dropdown-content {
-display: block;
-}
-
-.btn:hover, .dropdown:hover .btn {
-background-color: #0b7dda;
-}
-
-
-
-
-
-
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 5% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 350px;
-}
-
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-#ticketContent {
-    margin-top: 20px;
-}
-
-
+    #ticketContent {
+        margin-top: 20px;
+    }
 </style>
 <!-- Scripts -->
 <script type="module">
@@ -316,9 +343,9 @@ background-color: #0b7dda;
     });
 
 
-//-----------------------------------ticket
+    //-----------------------------------ticket
 
-    document.getElementById('actionBtn').addEventListener('click', function(event) {
+    document.getElementById('actionBtn').addEventListener('click', function (event) {
         // Evitar la recarga o cierre inesperado
         event.preventDefault();
 
@@ -484,4 +511,346 @@ background-color: #0b7dda;
     setAction(event, 'ticket');
 
 
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const modal = document.getElementById("codigoModal");
+        const btnCodigo = document.getElementById("btn-codigo");
+        const closeCodigoModal = document.getElementById("close-codigo-modal");
+        const codigoList = document.getElementById("codigo-list");
+        const mesSelector = document.getElementById("mes-selector");
+        const mesInput = document.getElementById("mes");
+        const tablaDatos = document.getElementById("tabla-datos").querySelector("tbody");
+
+        let selectedCodigo = null;
+
+        // Abrir el modal
+        btnCodigo.addEventListener("click", () => {
+            modal.style.display = "block";
+        });
+
+        // Cerrar el modal
+        closeCodigoModal.addEventListener("click", () => {
+            modal.style.display = "none";
+            mesSelector.style.display = "none";
+            selectedCodigo = null;
+        });
+
+        // Seleccionar un código
+        codigoList.addEventListener("click", (event) => {
+            if (event.target.tagName === "LI") {
+                selectedCodigo = event.target;
+                const requiereMes = selectedCodigo.getAttribute("data-requiere-mes") === "true";
+
+                if (requiereMes) {
+                    mesSelector.style.display = "block"; // Mostrar el selector de mes
+                } else {
+                    agregarFila(selectedCodigo.textContent, null);
+                    modal.style.display = "none";
+                }
+            }
+        });
+
+        // Agregar fila al seleccionar un mes
+        mesInput.addEventListener("change", () => {
+            if (selectedCodigo) {
+                agregarFila(selectedCodigo.textContent, mesInput.value);
+                modal.style.display = "none";
+                mesSelector.style.display = "none";
+                mesInput.value = ""; // Reiniciar selección de mes
+            }
+        });
+
+        // Función para agregar una fila a la tabla
+        function agregarFila(descripcion, mes = null) {
+            const codigo = selectedCodigo.getAttribute("data-codigo") || "N/A";
+            const idRazon = selectedCodigo.getAttribute("data-id");
+            const precio = parseFloat(selectedCodigo.getAttribute("data-precio"));
+            const ivaPorcentaje = parseFloat(selectedCodigo.getAttribute("data-iva")) || 0; // IVA inicial
+            const cantidad = 1; // Valor inicial para la cantidad
+            const descuento = 0; // Asume descuento inicial en 0
+            const iva = precio * ivaPorcentaje; // Calcular el IVA basado en el porcentaje
+            const total = cantidad * (precio + iva - descuento);
+
+            const fila = document.createElement("tr");
+
+            // Establecer el atributo `data-iva` en la fila
+            fila.setAttribute("data-iva", ivaPorcentaje);
+
+            fila.innerHTML = `
+        <td data-id="${idRazon}">${codigo}</td>
+        <td>${descripcion}</td>
+        <td>${mes || "N/A"}</td>
+        <td><input type="number" value="${cantidad}" min="1" class="cantidad-input" required></td>
+        <td><input type="number" value="${precio.toFixed(2)}" min="0" class="precio-input" required></td>
+        <td><input type="number" value="${descuento.toFixed(2)}" min="0" class="descuento-input" required></td>
+        <td class="iva-table">${iva.toFixed(2)}</td>
+        <td class="total">${total.toFixed(2)}</td>
+        <td><button type="button" class="delete-btn">Eliminar</button></td>
+    `;
+
+            // Agregar eventos de validación y cálculo
+            fila.querySelector(".cantidad-input").addEventListener("input", actualizarTotal);
+            fila.querySelector(".precio-input").addEventListener("input", actualizarTotal);
+            fila.querySelector(".descuento-input").addEventListener("input", actualizarTotal);
+
+            // Evento para eliminar fila
+            fila.querySelector(".delete-btn").addEventListener("click", () => {
+                fila.remove();
+                actualizarResumen();
+            });
+
+            // Agregar la fila al DOM
+            tablaDatos.appendChild(fila);
+
+            actualizarResumen(); // Actualiza el resumen de totales
+        }
+
+
+
+        // Función para actualizar el total y recalcular el IVA y descuento
+        function actualizarTotal(event) {
+            const fila = event.target.closest("tr"); // Obtiene la fila donde ocurrió el evento
+            const cantidad = parseFloat(fila.querySelector(".cantidad-input").value) || 0;
+            const precio = parseFloat(fila.querySelector(".precio-input").value) || 0;
+            const descuento = parseFloat(fila.querySelector(".descuento-input").value) || 0;
+
+            // Leer el porcentaje de IVA desde el atributo `data-iva`
+            const ivaPorcentaje = parseFloat(fila.getAttribute("data-iva")) || 0;
+            const iva = cantidad * precio * (ivaPorcentaje); // Recalcular el IVA
+
+            // Subtotal (sin IVA ni descuento)
+            const subtotal = cantidad * precio - descuento;
+
+            // Total de la fila (subtotal + IVA)
+            const total = subtotal + iva;
+
+            // Actualizar las celdas correspondientes de esta fila
+            fila.querySelector(".iva-table").textContent = iva.toFixed(2); // Actualizar el valor de IVA
+            fila.querySelector(".total").textContent = total > 0 ? total.toFixed(2) : "0.00"; // Actualizar el valor Total
+
+            actualizarResumen(); // Actualiza el resumen general
+        }
+
+        // Función para actualizar el resumen de totales
+        function actualizarResumen() {
+            const filas = tablaDatos.querySelectorAll("tr");
+            let subTotal = 0; // Suma de subtotales (cantidad * precio unitario)
+            let descuentoTotal = 0; // Suma de descuentos
+            let netoTotal = 0; // Neto sin IVA
+            let ivaTotal = 0; // Suma de IVA
+            let totalConIVA = 0; // Suma de totales con IVA y descuento aplicados
+
+            filas.forEach((fila) => {
+                const cantidad = parseFloat(fila.querySelector(".cantidad-input").value) || 0;
+                const precio = parseFloat(fila.querySelector(".precio-input").value) || 0;
+                const descuento = parseFloat(fila.querySelector(".descuento-input").value) || 0;
+                const ivaUnitario = parseFloat(fila.querySelector(".iva-table").textContent) || 0; // El IVA directo de la celda
+
+                const subtotalFila = cantidad * precio; // Subtotal sin IVA ni descuento
+                const netoFila = subtotalFila - descuento; // Neto sin IVA
+                const ivaFila = ivaUnitario; // El IVA ya está precalculado
+                const totalFila = netoFila + ivaFila; // Total con IVA
+
+                // Sumar los valores para el resumen
+                subTotal += subtotalFila;
+                descuentoTotal += descuento;
+                netoTotal += netoFila; // Neto sin IVA
+                ivaTotal += ivaFila; // IVA total
+                totalConIVA += totalFila; // Total con IVA y descuento aplicados
+            });
+
+            // Actualizar los valores en el resumen
+            document.querySelector(".resumen-totales p:nth-child(2) span").textContent = subTotal.toFixed(2); // Subtotal
+            document.querySelector(".resumen-totales p:nth-child(3) span").textContent = descuentoTotal.toFixed(2); // Descuento total
+            document.getElementById("netoResumen").querySelector("span").textContent = netoTotal.toFixed(2); // Neto total
+            document.getElementById("ivaResumen").querySelector("span").textContent = ivaTotal.toFixed(2); // IVA total
+            document.getElementById("totalResumen").querySelector("span").textContent = totalConIVA.toFixed(2); // Total con IVA
+        }
+
+
+
+
+
+        // Cerrar el modal al hacer clic fuera
+        window.addEventListener("click", (event) => {
+            if (event.target === modal) {
+                modal.style.display = "none";
+                mesSelector.style.display = "none";
+                selectedCodigo = null;
+            }
+        });
+    });
+
+</script>
+
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 400px;
+    }
+
+    .modal-content ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .modal-content li {
+        padding: 10px;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        margin: 5px 0;
+    }
+
+    .modal-content li:hover {
+        background-color: #ddd;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    table th,
+    table td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: center;
+    }
+
+    table input {
+        width: 80px;
+    }
+</style>
+<script>
+    document.querySelector(".save-btn").addEventListener("click", () => {
+
+        const detalles = []; // Array para almacenar los detalles de las filas
+
+        // Referencia a las filas del cuerpo de la tabla
+        const filas = document.querySelectorAll("#tabla-datos tbody tr");
+
+        // Validar que existan filas
+        if (filas.length === 0) {
+            alert("Debe agregar al menos un detalle a la factura.");
+            return;
+        }
+
+        // Iterar sobre cada fila para extraer los datos
+        let valid = true; // Indicador de validación
+        filas.forEach((fila) => {
+            const idRazon = fila.querySelector("td:nth-child(1)").getAttribute("data-id"); // Código (id_razon)
+            const descripcion = fila.querySelector("td:nth-child(2)").textContent.trim(); // Descripción
+            const subtotal = parseFloat(fila.querySelector(".total").textContent.trim()) || 0; // Total (subtotal)
+            const cantidad = parseFloat(fila.querySelector(".cantidad-input").value) || 0;
+            const precio = parseFloat(fila.querySelector(".precio-input").value) || 0;
+
+            // Validar que los campos de la fila estén completos
+            if (!idRazon || !descripcion || subtotal <= 0 || cantidad <= 0 || precio <= 0) {
+                valid = false;
+            }
+
+            // Agregar el objeto de detalle al array
+            detalles.push({
+                id_razon: idRazon,
+                descripcion: descripcion,
+                subtotal: subtotal,
+            });
+        });
+
+        if (!valid) {
+            alert("Asegúrese de que todos los campos en las filas estén completos y que los valores sean mayores a 0.");
+            return;
+        }
+
+        const fecha = new Date();
+
+        // Validar y formatear la fecha de emisión
+        facturaData.fecha_emision = fecha.toISOString().split('T')[0];
+
+        // Obtener el valor del campo fecha de vencimiento
+        const fechaVencimientoInput = document.getElementById("fecha-vencimiento").value;
+
+        // Validar si la fecha de vencimiento es válida
+        if (fechaVencimientoInput) {
+            facturaData.fecha_vencimiento = new Date(fechaVencimientoInput).toISOString().split('T')[0];
+        } else {
+            facturaData.fecha_vencimiento = null; // Asignar null si no hay un valor válido
+            console.warn("La fecha de vencimiento no es válida o está vacía.");
+        }
+
+        // Validar otros campos clave
+        const cliente = document.getElementById("ci-ruc").value.trim();
+        if (!cliente) {
+            alert("Debe ingresar el cliente (C.I./RUC).");
+            return;
+        }
+
+        facturaData.id = document.getElementById("secuencia").value;
+        facturaData.id_sucursal = document.getElementById("sucursal").value;
+        facturaData.valor_sin_impuesto = parseFloat(document.querySelector(".resumen-totales p:nth-child(2) span").textContent);
+        facturaData.medidor_id = document.getElementById("concepto").value;
+        facturaData.iva = document.querySelector(".resumen-totales p:nth-child(3) span").textContent;
+        facturaData.total = parseFloat(document.getElementById("totalResumen").querySelector("span").textContent);
+        facturaData.cliente = cliente;
+
+        const facturaDataScript = {
+            fecha_emision: facturaData.fecha_emision,
+            fecha_vencimiento: facturaData.fecha_vencimiento,
+            id_sucursal: facturaData.id_sucursal,
+            facturador: facturaData.facturador,
+            cliente: facturaData.cliente, // Supongamos que el cliente es el CI/RUC
+            medidor_id: facturaData.medidor_id,
+            estado_factura: "Sin autorizar",
+            valor_sin_impuesto: facturaData.valor_sin_impuesto,
+            iva: facturaData.iva,
+            total: facturaData.total,
+            detalles: detalles
+        };
+
+        // Validar los datos antes de enviarlos
+        if (!facturaDataScript.fecha_emision || !facturaDataScript.id_sucursal || !facturaDataScript.cliente) {
+            alert("Por favor, complete todos los campos obligatorios.");
+            return;
+        }
+
+        fetch('http://localhost/Junta_Agua/public/api/save_factura.php', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(facturaDataScript),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Error en la respuesta del servidor");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                if (data.success) {
+                    //navegar a la página de inicio
+                    alert("Factura guardada exitosamente ");
+                    window.location.href = '/Junta_Agua/public/?view=factura/nuevafactura';
+                } else {
+                    alert("Error al guardar la factura: " + data.message);
+                }
+            })
+            .catch((error) => console.error("Error al guardar la factura:", error));
+    });
 </script>

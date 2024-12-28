@@ -13,9 +13,7 @@
     </div>
 
     <div class="table-container">
-        <div class="header-buttons">
-            <h1>Facturación <?= $rol === 'Tesorero' ? 'TESORERÍA' : ''; ?></h1>
-        </div>
+        <h1>Facturación <?= $rol === 'Tesorero' ? 'TESORERÍA' : ''; ?></h1>
         <div class="buttons" style="display: flex; flex-direction: column; gap: 15px;">
             <div style="display: flex; align-items: center; gap: 15px;">
                 <input
@@ -28,25 +26,22 @@
                 <?php if ($rol === 'Contador'): ?>
                     <button type="button" class="add-btn" onclick="window.location.href='/Junta_Agua/public/?view=factura/nuevafactura'">Agregar nueva Factura</button>
                 <?php endif; ?>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 5px; width: 150px;">
-    <label for="filter-date-from" style="text-align: center;">Desde:</label>
-    <input
-        type="date"
-        id="filter-date-from"
-        class="filter-input"
-        style="max-width: 100%;"
-    >
-    <label for="filter-date-to" style="text-align: center;">Hasta:</label>
-    <input
-        type="date"
-        id="filter-date-to"
-        class="filter-input"
-        style="max-width: 100%;"
-    >
-</div>
-
         </div>
+        <div class="date-filter-container">
+            <label for="filter-date-from">Desde:</label>
+            <input
+                type="date"
+                id="filter-date-from"
+                class="filter-input"
+            >
+            <label for="filter-date-to">Hasta:</label>
+            <input
+                type="date"
+                id="filter-date-to"
+                class="filter-input"
+            >
+        </div>
+    </div>
 
         <table id="factura-table">
             <thead>
@@ -67,11 +62,12 @@
             </tbody>
         </table>
 
-        <div class="pagination">
-            <button id="prev-page">Anterior</button>
+        <div id="pagination" class="pagination">
+            <span id="prev-page" class="page-control">Anterior</span>
             <span id="current-page">1</span>
-            <button id="next-page">Siguiente</button>
+            <span id="next-page" class="page-control">Siguiente</span>
         </div>
+
     </div>
 
     <script>

@@ -9,68 +9,68 @@
 </head>
 
 <body>
-    <div class="header-container">
-        <h1>Autorización de Facturas</h1>
+    <div class="user-info">
+        <span class="user-role"><?= htmlspecialchars($rol); ?></span>
+        <span class="user-name"><?= htmlspecialchars($nombre ?? 'Usuario'); ?></span>
     </div>
-
-    <!-- Sección de Filtros -->
-    <div class="seccion-factura">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-            <!-- Tipos de Documentos -->
-            <div class="columna1">
-                <h2>Tipos de Documentos</h2>
-                <label class="checkboxCustom">Facturas
-                    <input type="checkbox" name="facturas">
-                    <span class="checkmark"></span>
-                </label>
-
-                <label class="checkboxCustom">Otros
-                    <input type="checkbox" name="otros">
-                    <span class="checkmark"></span>
-                </label>
-
-                <label class="checkboxCustom">Todos
-                    <input type="checkbox" name="todos">
-                    <span class="checkmark"></span>
-                </label>
-                <br>
-            </div>
-
-            <!-- Estado de Factura -->
-            <div class="columna2">
-                <h2>Estado de Factura</h2>
-                <label class="checkboxCustom">No Autorizado
-                    <input type="checkbox" name="noAutorizado">
-                    <span class="checkmark"></span>
-                </label>
-                <label class="checkboxCustom">Autorizado
-                    <input type="checkbox" name="autorizado">
-                    <span class="checkmark"></span>
-                </label>
-            </div>
-
-            <!-- Filtro por Fecha -->
-            <div class="columna3">
-                <h2>Filtro por Fecha</h2>
-                <div style="display: flex; gap: 10px;">
-                    <label>Desde: <input type="date" name="fechaDesde" value="2023-07-01"></label>
-                    <label>Hasta: <input type="date" name="fechaHasta" value="2023-07-01"></label>
+    <div class="table-container">
+        <h1>Autorización de Facturas</h1>
+        <!-- Sección de Filtros -->
+        <div class="seccion-factura">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <!-- Tipos de Documentos -->
+                <div class="columna1">
+                    <h2>Tipos de Documentos</h2>
+                    <label class="checkboxCustom">Facturas
+                        <input type="checkbox" name="facturas">
+                        <span class="checkmark"></span>
+                    </label>
+                    
+                    <label class="checkboxCustom">Otros
+                        <input type="checkbox" name="otros">
+                        <span class="checkmark"></span>
+                    </label>
+                    
+                    <label class="checkboxCustom">Todos
+                        <input type="checkbox" name="todos">
+                        <span class="checkmark"></span>
+                    </label>
+                    <br>
                 </div>
-                <br>
+                
+                <!-- Estado de Factura -->
+                <div class="columna2">
+                    <h2>Estado de Factura</h2>
+                    <label class="checkboxCustom">No Autorizado
+                        <input type="checkbox" name="noAutorizado">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="checkboxCustom">Autorizado
+                        <input type="checkbox" name="autorizado">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                
+                <!-- Filtro por Fecha -->
+                <div class="columna3">
+                    <h2>Filtro por Fecha</h2>
+                    <div style="display: flex; gap: 10px;">
+                        <label>Desde: <input type="date" name="fechaDesde"></label>
+                        <label>Hasta: <input type="date" name="fechaHasta"></label>
+                    </div>
+                    <br>
+                </div>
             </div>
-        </div>
-        <div class="buttons">
-            <button type="button" class="styled-button consultar">Consultar</button>
+            <div class="buttons">
+                <button type="button" class="styled-button consultar">Consultar</button>
             <button type="button" class="styled-button todos">Todos</button>
             <button type="button" class="styled-button opciones">Opciones</button>
             <button type="button" class="styled-button actualizar">Actualizar</button>
             <button type="button" class="styled-button autorizar">Autorizar</button>
         </div>
-
+        
     </div>
-
-    <!-- Tabla -->
-    <div class="table-container">
+    
         <table width="100%" style="border-collapse: collapse;">
             <thead>
                 <tr>
@@ -86,10 +86,10 @@
             </thead>
             <tbody id="table-body"></tbody>
         </table>
+        
+            <!-- Controles de Paginación -->
+            <div id="pagination" class="pagination"></div>
     </div>
-
-    <!-- Controles de Paginación -->
-    <div id="pagination" class="pagination"></div>
 
     <script src="http://localhost/Junta_Agua/public/scripts/autorizations_main.js" type="module"></script>
 </body>

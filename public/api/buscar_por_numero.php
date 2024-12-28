@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../app/models/Clientes.php';
 
 // Establecer el encabezado de respuesta como JSON
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 
 // Crear una instancia de la conexión y el modelo
 $database = new Database();
@@ -21,7 +21,7 @@ foreach ($clientes as $cliente) {
     $clientesArray[] = [
         'id' => $cliente['id'],
         'cedula' => $cliente['identificacion'],
-        'nombre' => $cliente['nombre_comercial'],
+        'nombre' => $cliente['razon_social'],
     ];
 }
 

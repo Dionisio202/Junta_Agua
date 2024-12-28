@@ -13,6 +13,14 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
+h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
 /* Container */
 .container {
     display: flex;
@@ -135,13 +143,20 @@ body {
         padding: 0;
     }
 
+    .sidebar-header h2 {
+        padding-top: 30px;
+        display: none;
+        font-size: 18px;
+    }
+
     .toggle-btn {
-        display: inline-block;
+        width: 7%;
+        background-color: #0F4C75;
     }
 
     #toggler:checked ~ #sidebar {
-        width: 200px;
-        padding: 20px 10px;
+        height: 100%;
+        background-color: #0F4C75;
     }
 
     .main-content {
@@ -153,37 +168,31 @@ body {
     }
 }
 
+/* Para el apartado de usuario */
 .user-info {
     text-align: right; 
     font-size: 14px; 
-    color: #333; 
     padding: 5px;
 }
 
+/* Estilos para el rol de usuario */
 .user-role {
-    display: block; 
-    font-size: 14px; 
-    color: #333; 
+    display: block;
+    font-size: 14px;
+    color: #16486a; /* color de texto azul */
+    font-weight: 600; /* un poco de énfasis */
+    margin-bottom: 5px; /* separación con otros elementos */
+    text-transform: capitalize; /* capitaliza el primer carácter */
 }
 
+/* Estilos para el nombre de usuario */
 .user-name {
-    font-size: 14px; 
-    color: #333; 
+    font-size: 16px; /* tamaño de fuente ligeramente mayor */
+    color: #22638e; /* un azul más suave para el nombre */
+    font-weight: 700; /* mayor énfasis en el nombre */
+    text-transform: capitalize; /* capitaliza el primer carácter */
 }
 
-.table-container {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-    font-size: 24px;
-    font-weight: 600;
-    color: #333333;
-    margin-bottom: 20px;
-}
 
 .header-buttons {
     display: flex;
@@ -215,15 +224,22 @@ button {
     margin: 2%;
 }
 
+/* De la tabla */
 .table-container {
-    margin-top: 20px; 
+    background-color: #ffffff;
+    padding: 2.5%; 
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    max-width: 100%;
+    overflow-x: auto; 
 }
 
 .table-container button {
     background-color: #3282B8;
     color: #ffffff;
-    padding: 10px 15px;
-    font-size: 14px;
+    padding: 1em 2em; /* Usando unidades relativas */
+    font-size: 1rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -240,6 +256,7 @@ button {
     border-collapse: separate;
     margin-top: 20px;
     border-spacing: 0;
+    min-width: 600px; 
 }
 
 .table-container th,
@@ -255,25 +272,58 @@ button {
 }
 
 .table-container tr {
-    background-color: #f2f2f2; 
+    background-color: #f2f2f2;
     border-radius: 8px;
     overflow: hidden;
 }
 
-.table-container th:first-child, .table-container td:first-child  {
+.table-container th:first-child, .table-container td:first-child {
     border-top-left-radius: 7px;
     border-bottom-left-radius: 7px;
-  }
-  
-.table-container th:nth-last-child(1), .table-container td:nth-last-child(1){
+}
+
+.table-container th:nth-last-child(1), .table-container td:nth-last-child(1) {
     border-top-right-radius: 7px;
     border-bottom-right-radius: 7px;
-  }
-  
+}
+
 .table-container tr:hover {
     background-color: #e0e0e0;
 }
 
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .table-container {
+        padding: 3%; /* Ajusta el padding para pantallas más pequeñas */
+    }
+
+    .table-container th, .table-container td {
+        padding: 8px 10px; /* Reduce el padding en pantallas más pequeñas */
+    }
+
+    .table-container table {
+        min-width: 100%; /* Permite que la tabla se ajuste al ancho de la pantalla */
+    }
+
+    .table-container button {
+        padding: 0.8em 1.5em; /* Ajuste de tamaño de los botones */
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .table-container th, .table-container td {
+        padding: 6px 8px; /* Menos padding para pantallas pequeñas */
+    }
+
+    .table-container button {
+        padding: 0.6em 1.2em;
+        font-size: 0.8rem;
+    }
+}
+
+
+/* Del paginador */
 .pagination {
     display: flex;
     justify-content: center;
@@ -281,22 +331,20 @@ button {
     margin-top: 20px;
 }
 
-.pagination span {
+.pagination span, .pagination .page-control {
     margin: 0 5px;
     cursor: pointer;
     color: #16486a;
     font-weight: 600;
 }
 
-.pagination span:hover {
+.pagination span:hover, .pagination .page-control:hover {
     color: #22638e;
 }
 
-.pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
+.pagination #current-page {
+    margin: 0 10px;
+    font-weight: 700;
 }
 
 .page-number, .page-arrow {
@@ -619,6 +667,7 @@ button {
 /* 
     Estilos del filtro en facturacion
 */
+
 .filter-input {
     width: 100%;
     max-width: 300px;
@@ -819,4 +868,28 @@ button {
 
 .close-modal:hover {
     background-color: #16486a;
+}
+
+/*Estilos para el filtro de fecha del Facturación*/
+.date-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    flex-wrap: wrap; 
+    margin: 10px 0; 
+}
+
+.date-filter-container label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+.date-filter-container .filter-input {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 200px;
+    width: 100%;
 }
