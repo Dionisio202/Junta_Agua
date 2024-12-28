@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="user-info">
-        <span class="user-role"><?= htmlspecialchars($rol); ?></span>
+        <span class="user-role"><?= htmlspecgitialchars($rol); ?></span>
         <span class="user-name"><?= htmlspecialchars($nombre ?? 'Usuario'); ?></span>
     </div>
 
@@ -62,11 +62,12 @@
             </tbody>
         </table>
 
-        <div class="pagination">
-            <button id="prev-page">Anterior</button>
+        <div id="pagination" class="pagination">
+            <span id="prev-page" class="page-control">Anterior</span>
             <span id="current-page">1</span>
-            <button id="next-page">Siguiente</button>
+            <span id="next-page" class="page-control">Siguiente</span>
         </div>
+
     </div>
 
     <script>
