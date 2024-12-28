@@ -14,19 +14,15 @@
 
     <div class="table-container">
         <h1>Facturación <?= $rol === 'Tesorero' ? 'TESORERÍA' : ''; ?></h1>
-        <div class="buttons" style="display: flex; flex-direction: column; gap: 15px;">
-            <div style="display: flex; align-items: center; gap: 15px;">
+
+        <h2>Filtros</h2>
+        <div class="filters" >
                 <input
                     type="text"
                     id="filter-input"
                     placeholder="Filtrar por cédula o número de medidor"
                     class="filter-input"
                 >
-                <button type="button" id="reset-filters" class="reset-btn">Quitar Filtros</button>
-                <?php if ($rol === 'Contador'): ?>
-                    <button type="button" class="add-btn" onclick="window.location.href='/Junta_Agua/public/?view=factura/nuevafactura'">Agregar nueva Factura</button>
-                <?php endif; ?>
-        </div>
         <div class="date-filter-container">
             <label for="filter-date-from">Desde:</label>
             <input
@@ -40,7 +36,13 @@
                 id="filter-date-to"
                 class="filter-input"
             >
+            <button type="button" id="reset-filters" class="reset-btn">Quitar Filtros</button>
         </div>
+    </div>
+    <div style="text-align: right;">
+    <?php if ($rol === 'Contador'): ?>
+        <button type="button" class="add-btn" onclick="window.location.href='/Junta_Agua/public/?view=factura/nuevafactura'">Agregar nueva Factura</button>
+    <?php endif; ?>
     </div>
 
         <table id="factura-table">

@@ -416,7 +416,10 @@ form {
     outline: none;
 }
 
-/* Estilos del bloque de filtros */
+/* 
+    Estilos del contenedor de filtros 
+*/
+
 .filters {
     display: flex;
     flex: 1;
@@ -426,14 +429,46 @@ form {
 }
 
 .filter-input {
+    width: 100%;
+    max-width: 300px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
     flex: 1;  
     border-radius: 4px;
 }
 
+.disabled-action {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.reset-btn {
+    margin-left: 10px; 
+}
+
 .date-filter-container {
     display: flex;
-    align-content: center;
+    align-items: center;
     gap: 10px; 
+    flex-wrap: wrap; 
+    margin: 10px 0; 
+}
+
+.date-filter-container label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+.date-filter-container .filter-input {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 200px;
+    width: 100%;
 }
 
 @media (max-width: 768px) {
@@ -449,8 +484,6 @@ form {
         width: 100%; 
     }
 }
-
-
 
 /*
     Columnas index autorizacion
@@ -611,10 +644,10 @@ form {
     background: white;
 }
 /* 
-    Módulo de Nueva Factura
+    Módulo de Autorizaciones
  */
 
-/* Integración de la nueva sección con campos de formulario */
+/* filtros de autorizaciones */
 .seccion-factura, .encabezado-autorizacion {
     font-family: 'Poppins', sans-serif;
     background-color: #f9f9f9;
@@ -748,45 +781,6 @@ form {
 
 .seccion-factura .buttons button:hover {
     background-color: #16486a;
-}
-
-/* 
-    Estilos del filtro en facturacion
-*/
-
-.filter-input {
-    width: 100%;
-    max-width: 300px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.add-btn {
-    padding: 10px 15px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.add-btn:hover {
-    background-color: #0056b3;
-}
-
-.disabled-action {
-    pointer-events: none;
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.buttons {
-    margin-bottom: 15px;
-}
-
-.clickable-row {
-    cursor: pointer; 
 }
 
 /*
@@ -954,28 +948,4 @@ form {
 
 .close-modal:hover {
     background-color: #16486a;
-}
-
-/*Estilos para el filtro de fecha del Facturación*/
-.date-filter-container {
-    display: flex;
-    align-items: center;
-    gap: 10px; 
-    flex-wrap: wrap; 
-    margin: 10px 0; 
-}
-
-.date-filter-container label {
-    font-weight: bold;
-    font-size: 14px;
-    color: #333;
-}
-
-.date-filter-container .filter-input {
-    padding: 5px 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    max-width: 200px;
-    width: 100%;
 }
