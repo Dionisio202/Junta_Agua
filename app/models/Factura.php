@@ -78,7 +78,6 @@ class Factura
             f.fecha_emision,
             f.fecha_vencimiento,
             f.id_sucursal,
-            f.id_razon,
             f.estado_factura,
             f.tipo_pago,
             f.valor_sin_impuesto,

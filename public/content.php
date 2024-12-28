@@ -1,9 +1,11 @@
 <?php
 require_once '../app/controllers/FacturaController.php';
 require_once '../app/controllers/AutorizacionesController.php';
-
-
+require_once '../app/controllers/MedicionesController.php';
+require_once '../app/models/MedicionesModel.php';
 // Función para verificar el acceso según el rol del usuario
+require_once '../config/database.php';
+
 function checkAccess($requiredRoles) {
     $userRole = $_SESSION['Rol'] ?? 'Invitado'; // Obtén el rol del usuario o asigna 'Invitado' por defecto
     return in_array($userRole, $requiredRoles); // Verifica si el rol del usuario está permitido
@@ -81,23 +83,39 @@ switch ($view) {
                         'correo' => $_SESSION['Correo'] ?? 'N/A',
                         'telefono' => 'N/A',
          
-                        'correo' => $_SESSION['Correo'] ?? 'test@example.com',
+                        
             
                     ];
                     include '../app/views/perfil.php';
                     break;
 
                     case 'mediciones':
-                        // Permitir acceso a Contador y Presidente
                         if (!checkAccess(['Contador', 'Presidente'])) {
                             echo "<p>Acceso denegado. No tienes permiso para acceder a esta vista.</p>";
                             exit();
                         }
-                        include '../app/views/mediciones.php';
+                        $database = new Database();
+                        $db = $database->getConnection();
+                        $model = new MedicionesModel($db);
+                        $controller = new MedicionesController($model);
+                
+                        if ($action) {
+                            $controller->handleAction($action);
+                        } else {
+                            include '../app/views/mediciones.php';
+                        }
                         break;
+                
+                    default:
+                        http_response_code(404);
+                        echo json_encode(['success' => false, 'message' => 'Vista no encontrada.']);
+                        exit();
+                    
+                    
+                    
+                    
+
+                    
                         
-    // Aquí puedes añadir otros casos para otros controladores y métodos
-    default:
-        echo "<p>Vista no encontrada.</p>";
-        break;
+   
 }

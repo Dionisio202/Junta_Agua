@@ -15,7 +15,7 @@ $infoTributaria->addChild('ptoEmi', '002');
 $infoTributaria->addChild('secuencial', '000000998');
 $infoTributaria->addChild('dirMatriz', 'Ambato');
 
-
+//Parametros informacion del cliente
 $infoFactura = $factura->addChild('infoFactura');
 
 $infoFactura->addChild('fechaEmision', '14/12/2024');
