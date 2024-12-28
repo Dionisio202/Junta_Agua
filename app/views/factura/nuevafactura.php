@@ -807,7 +807,6 @@
         facturaData.medidor_id = document.getElementById("concepto").value;
         facturaData.iva = document.querySelector(".resumen-totales p:nth-child(3) span").textContent;
         facturaData.total = parseFloat(document.getElementById("totalResumen").querySelector("span").textContent);
-        facturaData.cliente = cliente;
 
         const facturaDataScript = {
             fecha_emision: facturaData.fecha_emision,
