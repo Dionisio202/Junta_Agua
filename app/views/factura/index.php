@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="user-info">
-        <span class="user-role"><?= htmlspecgitialchars($rol); ?></span>
+        <span class="user-role"><?= htmlspecialchars($rol); ?></span>
         <span class="user-name"><?= htmlspecialchars($nombre ?? 'Usuario'); ?></span>
     </div>
 
