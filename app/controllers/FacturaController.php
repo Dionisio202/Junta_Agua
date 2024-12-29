@@ -48,6 +48,7 @@ class FacturaController {
         if ($idFactura) {
             // Obtener los detalles de la factura
             $facturaDetalles = $this->factura->getFacturaDetailsById($idFactura);
+            $detalleFactura =  $this->factura->getDetalleFacturaById($idFactura );
         } else {
             $facturaDetalles = null; // No se proporcionó un ID
         }

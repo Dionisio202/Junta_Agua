@@ -104,6 +104,29 @@ class Factura
 
         return $stmt->fetch(PDO::FETCH_ASSOC); // Retorna una sola fila
     }
+
+    public function getDetalleFacturaById($facturaId)
+{
+    $query = "
+    SELECT 
+        r.codigo AS codigo,
+        r.razon AS descripcion,
+        df.subtotal AS total
+    FROM 
+        detalle_factura df
+    JOIN 
+        razones r ON df.id_razon = r.id
+    WHERE 
+        df.id_factura = :facturaId
+    ";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':facturaId', $facturaId, PDO::PARAM_INT);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna todos los detalles relacionados
+}
+
     public function saveFactura($factura) {
         try {
             // Consulta SQL corregida
