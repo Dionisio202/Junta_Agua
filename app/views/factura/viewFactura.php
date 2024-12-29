@@ -265,7 +265,9 @@
                 concepto: document.getElementById('concepto').value,
                 ciRuc: document.getElementById('ci-ruc').value,
                 cliente: document.getElementById('nombre-cliente').value,
-                // Verifica que el campo de 'total' exista
+                medicion1: "--",
+                medicion2: "--",
+                medicion3: "--",
                 total: document.getElementById('total') ? document.getElementById('total').textContent : '0.00'
             };
 

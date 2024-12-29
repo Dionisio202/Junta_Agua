@@ -16,6 +16,7 @@
         facturador: "<?= htmlspecialchars($_SESSION['idUser'] ?? '') ?>",
         cliente: null,
         medidor_id: null,
+        //medidor_id: 2,  //para testeo
         valor_sin_impuesto: 0,
         iva: 0,
         total: 0
@@ -345,8 +346,9 @@
 
     //-----------------------------------ticket
 
-    document.getElementById('actionBtn').addEventListener('click', function (event) {
+    document.getElementById('actionBtn').addEventListener('click', async  function (event) {
         // Evitar la recarga o cierre inesperado
+        await obtenerLecturas();
         event.preventDefault();
 
         // Recoger los datos del formulario
@@ -359,7 +361,9 @@
             concepto: document.getElementById('concepto').value,
             ciRuc: document.getElementById('ci-ruc').value,
             cliente: document.getElementById('nombre-cliente').value,
-            // Verifica que el campo de 'total' exista
+            medicion1: medicionData.lectura1,
+            medicion2: medicionData.lectura2,
+            medicion3: medicionData.lectura3,
             total: document.getElementById('total') ? document.getElementById('total').textContent : '0.00'
         };
 
@@ -852,4 +856,46 @@
             })
             .catch((error) => console.error("Error al guardar la factura:", error));
     });
+
+//-------------------------------------------------------------------------------------------------------
+
+
+    var medicionData = {
+        lectura1: "--",
+        lectura2: "--",
+        lectura3: "--",
+        };  
+    
+    obtenerLecturas()
+    async function obtenerLecturas() {
+        const fechaEmision = document.getElementById('fecha-emision').value;  // Obtener la fecha seleccionada
+        const medidorId = facturaData.medidor_id;  // Obtener el medidor_id desde facturaData
+
+        // Verificar si la fecha y medidorId están disponibles
+        if (!fechaEmision || !medidorId) {
+            console.error('La fecha de emisión o el medidor_id no están definidos');
+            return;
+        }
+
+        // Extraer el mes de la fecha seleccionada (en formato MM)
+        const mesEmision = new Date(fechaEmision).getMonth() + 1;  // getMonth() devuelve un valor entre 0 y 11, por eso sumamos 1
+        
+        // Calcular los dos meses anteriores
+        const mesAnterior = mesEmision === 1 ? 12 : mesEmision - 1;  // Si el mes de emisión es enero (1), el mes anterior será diciembre (12)
+        const mesAntesDeAnterior = mesAnterior === 1 ? 12 : mesAnterior - 1;  // Si el mes anterior es enero, el mes antes de anterior será diciembre
+
+        try {
+            // Realizar la solicitud fetch pasando medidor_id, mesEmision, mesAnterior y mesAntesDeAnterior
+            const response = await fetch(`/Junta_Agua/app/models/obtener_lecturas.php?medidor_id=${medidorId}&mes_emision=${mesEmision}&mes_anterior=${mesAnterior}&mes_antes_anterior=${mesAntesDeAnterior}`);
+            const dataLecturas = await response.json();
+            
+            // Actualizar las lecturas en el objeto facturaData si es necesario
+            medicionData.lectura1 = String(dataLecturas.lectura_1);
+            medicionData.lectura2 = String(dataLecturas.lectura_2);
+            medicionData.lectura3 = String(dataLecturas.lectura_3);
+        } catch (error) {
+            console.error('Error al obtener las lecturas:', error);
+        }
+    }
+
 </script>

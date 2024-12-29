@@ -14,6 +14,9 @@ if ($data) {
     $concepto = $data['concepto'] ?? '';
     $ci_ruc = $data['ciRuc'] ?? '';
     $cliente = $data['cliente'] ?? '';
+    $medicion1 = $data['medicion1'] ?? '';
+    $medicion2 = $data['medicion2'] ?? '';
+    $medicion3 = $data['medicion3'] ?? '';
     $total = $data['total'] ?? '';
 } else {
     echo "No se encontraron datos en la cookie.";
@@ -161,38 +164,30 @@ if ($data) {
                         </tr>
                         <tr>
                             <th>Meses</th>
-                            <th id="mes1"><?php echo date('n', strtotime($vence)); ?></th>
-                            <th id="mes2"><?php echo date('n', strtotime('-1 month', strtotime($vence))); ?></th>
-                            <th id="mes3"><?php echo date('n', strtotime('-2 months', strtotime($vence))); ?></th>
+                            <th id="mes1"><?php echo date('n', strtotime($emision)); ?></th>
+                            <th id="mes2"><?php echo date('n', strtotime('-1 month', strtotime($emision))); ?></th>
+                            <th id="mes3"><?php echo date('n', strtotime('-2 months', strtotime($emision))); ?></th>
                         </tr>
                         <tr>
                             <td>Valor</td>
-                            <td id="valor1">555.5</td>
-                            <td id="valor2">555.5</td>
-                            <td id="valor3">555.5</td>
+                            <td id="valor1"><?php echo $medicion1; ?></td>
+                            <td id="valor2"><?php echo $medicion2; ?></td>
+                            <td id="valor3"><?php echo $medicion3; ?></td>
                         </tr>
                     </table>
                 </div>
                 <div>
                     <table>
                         <tr>
-                            <th>Total Pendiente:</th>
+                            <th>Total:</th>
                         </tr>
                         <tr>
-                            <td id="totalPendiente">5</td>
+                            <td id="id="pagado""><?php echo $total; ?></td>
                         </tr>
                     </table>
                 </div>
             </div>
 
-            <div class="info-item">
-                <span>Meses Pagados:</span>
-                <span id="mesesPagados">5</span>
-            </div>
-            <div class="info-item">
-                <span>Pagado:</span>
-                <span id="pagado"><?php echo $total; ?></span>
-            </div>
         </div>
     </div>
 </body>
