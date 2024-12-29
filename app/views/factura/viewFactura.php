@@ -126,7 +126,7 @@
                 <div class="columna-izquierda">
                     <div class="pestana-datos-adicionales">
                         <label for="facturador">Facturador:</label>
-                        <input type="text" id="nombre-facturador" value="" readonly>
+                        <input type="text" id="nombre-facturador" value="Contador" readonly>
                         <label for="sucursal">Sucursal:</label>
                         <select id="sucursal" disabled>
                             <option selected><?= htmlspecialchars($facturaDetalles['id_sucursal'] ?? 'MATRIZ / SANTA ROSA'); ?></option>
@@ -150,11 +150,11 @@
                         <div class="grupo">
                             <div>
                                 <label for="serie">Serie:</label>
-                                <input type="text" id="serie" value="" readonly>
+                                <input type="text" id="serie" value="001" readonly>
                             </div>
                             <div>
                                 <label for="numero">Número:</label>
-                                <input type="text" id="numero" value="" readonly>
+                                <input type="text" id="numero" value="200" readonly>
                             </div>
                             <div>
                                 <label for="secuencia">Secuencia:</label>
@@ -163,7 +163,7 @@
                             <div>
                                 <label for="concepto">Concepto:</label>
                                 <select id="concepto" disabled>
-                                    <option><?= htmlspecialchars($facturaDetalles['id_razon'] ?? 'Ninguno'); ?></option>
+                                    <option><?= htmlspecialchars($facturaDetalles['medidor_id'] ?? 'Ninguno'); ?></option>
                                 </select>
                             </div>
                         </div>
@@ -201,7 +201,7 @@
         <div class="table-container">
             <div class="factura-detalle">
                 <table>
-                    <tr>
+                <tr>
                         <th>Código</th>
                         <th>Descripción</th>
                         <th>Medida</th>
@@ -210,26 +210,7 @@
                         <th>Desc.</th>
                         <th>IVA</th>
                         <th>Total</th>
-                    </tr>
-                    <tr>
-                        <td>P000000018</td>
-                        <td>Tarifa Básica Agosto</td>
-                        <td>Unidad</td>
-                        <td>1,00</td>
-                        <td>3,00</td>
-                        <td>0,00</td>
-                        <td>0%</td>
-                        <td>3,00</td>
-                    </tr>
-                    <tr>
-                        <td>P000000016</td>
-                        <td>Tarifa Básica Julio</td>
-                        <td>Unidad</td>
-                        <td>1,00</td>
-                        <td>3,00</td>
-                        <td>0,00</td>
-                        <td>0%</td>
-                        <td>3,00</td>
+                        <th>Acciones</th>
                     </tr>
                 </table>
             </div>

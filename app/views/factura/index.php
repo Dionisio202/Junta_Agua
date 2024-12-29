@@ -88,7 +88,7 @@
             data.forEach(factura => {
                 const row = `
                     <tr class="clickable-row" data-href="?view=factura/viewfactura&id=${factura.id}">
-                        <td>${factura.nombre_comercial}</td>
+                        <td>${factura.razon_social}</td>
                         <td>${factura.identificacion}</td>
                         <td>${factura.nro_medidor}</td>
                         <td>${factura.fecha_emision}</td>

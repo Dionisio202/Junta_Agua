@@ -18,7 +18,7 @@ class Factura
         $query = "
         SELECT 
             f.*, 
-            c.nombre_comercial, 
+            c.razon_social, 
             c.identificacion, 
             c.telefono1, 
             c.telefono2, 
@@ -74,7 +74,7 @@ class Factura
     {
         $query = "
         SELECT 
-            f.id AS secuencia,
+            LPAD(f.id, 9, '0') AS secuencia, 
             f.fecha_emision,
             f.fecha_vencimiento,
             f.id_sucursal,
@@ -83,8 +83,9 @@ class Factura
             f.valor_sin_impuesto,
             f.iva,
             f.total,
+            f.medidor_id,
             c.identificacion AS ci_ruc,
-            c.nombre_comercial AS cliente,
+            c.razon_social AS cliente,
             c.telefono1,
             c.telefono2,
             c.correo,
