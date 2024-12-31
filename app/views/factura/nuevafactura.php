@@ -760,6 +760,7 @@
         filas.forEach((fila) => {
             const idRazon = fila.querySelector("td:nth-child(1)").getAttribute("data-id"); // Código (id_razon)
             const descripcion = fila.querySelector("td:nth-child(2)").textContent.trim(); // Descripción
+            const descuento = parseFloat(fila.querySelector(".descuento-input").value) || 0; // Descuento
             const subtotal = parseFloat(fila.querySelector(".total").textContent.trim()) || 0; // Total (subtotal)
             const cantidad = parseFloat(fila.querySelector(".cantidad-input").value) || 0;
             const precio = parseFloat(fila.querySelector(".precio-input").value) || 0;
@@ -773,6 +774,7 @@
             detalles.push({
                 id_razon: idRazon,
                 descripcion: descripcion,
+                descuento: descuento,
                 subtotal: subtotal,
             });
         });

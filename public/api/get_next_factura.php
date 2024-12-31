@@ -20,7 +20,7 @@ $lastFactura = $facturaModel->getLastFactura();
 $nextFacturaId = $lastFactura + 1;
 
 // Formatear el nuevo ID con ceros a la izquierda hasta 10 dígitos
-$formattedFacturaId = str_pad($nextFacturaId, 10, "0", STR_PAD_LEFT);
+$formattedFacturaId = str_pad($nextFacturaId, 9, "0", STR_PAD_LEFT);
 
 // Devolver el nuevo ID formateado como JSON
 echo json_encode([
