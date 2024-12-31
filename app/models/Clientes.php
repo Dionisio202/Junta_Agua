@@ -17,7 +17,7 @@ class Cliente
             // Crear una consulta para obtener los datos del cliente por nombre
             $query = "SELECT id, identificacion, razon_social, nombre_comercial, direccion, telefono1, telefono2 
                       FROM clientes 
-                      WHERE nombre_comercial LIKE :nombre";
+                      WHERE razon_social LIKE :nombre";
 
             // Preparar la consulta
             $stmt = $this->conn->prepare($query);

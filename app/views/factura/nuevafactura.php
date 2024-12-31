@@ -364,7 +364,7 @@
             medicion1: medicionData.lectura1,
             medicion2: medicionData.lectura2,
             medicion3: medicionData.lectura3,
-            total: document.getElementById('total') ? document.getElementById('total').textContent : '0.00'
+            total: document.getElementById('totalResumen') ? document.getElementById('totalResumen').textContent : '0.00'
         };
 
         // Guardar los datos en una cookie antes de abrir el modal
@@ -869,6 +869,7 @@
     obtenerLecturas()
     async function obtenerLecturas() {
         const fechaEmision = document.getElementById('fecha-emision').value;  // Obtener la fecha seleccionada
+        facturaData.medidor_id = document.getElementById("concepto").value;
         const medidorId = facturaData.medidor_id;  // Obtener el medidor_id desde facturaData
 
         // Verificar si la fecha y medidorId están disponibles
