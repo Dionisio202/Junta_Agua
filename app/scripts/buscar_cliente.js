@@ -6,7 +6,7 @@ export function buscarCIRUC() {
 
   if (isNumber) {
     // Realizar búsqueda por números
-    fetch(`http://localhost/Junta_Agua/public/api/buscar_por_numero.php?numero=${input}`)
+    fetch(`http://localhost/Junta_Agua/app/api/buscar_por_numero.php?numero=${input}`)
       .then((response) => response.json())
       .then((data) => {
         if (!data.error) {
@@ -18,7 +18,7 @@ export function buscarCIRUC() {
       .catch((error) => console.error("Error en la búsqueda por número:", error));
   } else if (isLetter) {
     // Realizar búsqueda por letras
-    fetch(`http://localhost/Junta_Agua/public/api/buscar_por_letra.php?letra=${input}`)
+    fetch(`http://localhost/Junta_Agua/app/api/buscar_por_letra.php?letra=${input}`)
       .then((response) => response.json())
       .then((data) => {
         if (!data.error) {
@@ -63,7 +63,7 @@ function seleccionarCliente(cliente) {
 }
 
 function getMedidores($input) {
-  fetch(`http://localhost/Junta_Agua/public/api/get_medidores_cliente.php?cliente=${$input}`)
+  fetch(`http://localhost/Junta_Agua/app/api/get_medidores_cliente.php?cliente=${$input}`)
     .then((response) => response.json())
     .then((data) => {
       if (data) {

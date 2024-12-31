@@ -1,6 +1,6 @@
 export function cargarDatos(id) {
   // Cargar los datos del usuario por ID
-  fetch(`http://localhost/Junta_Agua/public/api/get_user_data.php?id=${id}`)
+  fetch(`http://localhost/Junta_Agua/app/api/get_user_data.php?id=${id}`)
     .then((response) => response.json())
     .then((data) => {
       if (!data.error) {
@@ -18,7 +18,7 @@ export function cargarDatos(id) {
     );
 
   // Cargar el número de la siguiente factura
-  fetch(`http://localhost/Junta_Agua/public/api/get_next_factura.php`)
+  fetch(`http://localhost/Junta_Agua/app/api/get_next_factura.php`)
     .then((response) => response.json())
     .then((data) => {
       if (!data.error) {
@@ -34,7 +34,7 @@ export function cargarDatos(id) {
     );
 
   // Cargar las sucursales
-  fetch(`http://localhost/Junta_Agua/public/api/get_sucursales.php`)
+  fetch(`http://localhost/Junta_Agua/app/api/get_sucursales.php`)
     .then((response) => response.json())
     .then((data) => {
       if (data) {
@@ -58,7 +58,7 @@ export function cargarDatos(id) {
     );
 
   // Cargar los datos del modal (productos)
-  fetch(`http://localhost/Junta_Agua/public/api/get_productos.php`)
+  fetch(`http://localhost/Junta_Agua/app/api/get_productos.php`)
   .then((response) => response.json())
   .then((data) => {
     if (data) {

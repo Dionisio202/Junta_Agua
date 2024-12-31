@@ -95,7 +95,7 @@
         </div>
     </div>
 
-    <script src="http://localhost/Junta_Agua/public/scripts/autorizations_main.js" type="module"></script>
+    <script src="http://localhost/Junta_Agua/app/scripts/autorizations_main.js" type="module"></script>
 </body>
 
 </html>

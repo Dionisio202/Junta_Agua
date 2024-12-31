@@ -1,6 +1,6 @@
 export async function getData() {
   try {
-    const response = await fetch(`http://localhost/Junta_Agua/public/api/get_facturas.php`);
+    const response = await fetch(`http://localhost/Junta_Agua/app/api/get_facturas.php`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

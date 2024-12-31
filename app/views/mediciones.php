@@ -116,7 +116,7 @@ $("#idmedidor").on("keydown", function (e) {
     }
     function validarMedidor(idMedidor) {
         $.ajax({
-            url: "/Junta_Agua/public/api/validar_medidor.php",
+            url: "/Junta_Agua/app/api/validar_medidor.php",
             method: "GET",
             data: { id_medidor: idMedidor },
             dataType: "json",

@@ -300,8 +300,8 @@
 </style>
 <!-- Scripts -->
 <script type="module">
-    import { cargarDatos } from '/Junta_Agua/public/scripts/form_nueva_factura.js';
-    import { buscarCIRUC } from '/Junta_Agua/public/scripts/buscar_cliente.js';
+    import { cargarDatos } from '/Junta_Agua/app/scripts/form_nueva_factura.js';
+    import { buscarCIRUC } from '/Junta_Agua/app/scripts/buscar_cliente.js';
 
     document.addEventListener("DOMContentLoaded", () => {
         // Cargar datos del usuario
@@ -834,7 +834,7 @@
             return;
         }
 
-        fetch('http://localhost/Junta_Agua/public/api/save_factura.php', {
+        fetch('http://localhost/Junta_Agua/app/api/save_factura.php', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
