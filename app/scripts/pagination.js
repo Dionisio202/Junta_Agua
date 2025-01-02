@@ -28,7 +28,7 @@ export function renderTable(page = 1) {
         <a href="?view=factura/nuevafactura&id=${factura.secuencia}" class="edit-icon" title="Editar">
           <i class="fas fa-edit"></i>
         </a>
-        <a href="javascript:void(0)" class="delete-icon" title="Borrar" data-id="${factura.secuencia}">
+        <a href="javascript:void(0)" class="delete-icont" title="Borrar" data-id="${factura.secuencia}">
           <i class="fas fa-trash"></i>
         </a>
       </td>
@@ -38,14 +38,37 @@ export function renderTable(page = 1) {
   renderPagination(filteredData, currentPage, rowsPerPage, changePage);
 
   // Añade evento solo para el botón de eliminar
-  document.querySelectorAll(".delete-icon").forEach((icon) => {
-    icon.addEventListener("click", (e) => {
+  document.querySelectorAll(".delete-icont").forEach((icon) => {
+    icon.removeAttribute("onclick"); // Elimina cualquier atributo inline
+    icon.addEventListener("click", async (e) => {
       const facturaId = e.currentTarget.getAttribute("data-id");
       if (confirm(`¿Seguro que deseas borrar la factura con ID ${facturaId}?`)) {
-        borrarFactura(facturaId);
+        try {
+          const response = await fetch(`http://localhost/Junta_Agua/app/api/update_deleted_Stated.php?id=${facturaId}`, {
+            method: "GET",
+          });
+  
+          if (!response.ok) {
+            throw new Error(`Error al borrar la factura: ${response.statusText}`);
+          }
+  
+          const result = await response.json();
+          if (result.success) {
+            alert(`Factura ${facturaId} actualizada a 'Eliminado'.`);
+         
+          } else {
+            alert(`Error al borrar la factura: ${result.message}`);
+          }
+        } catch (error) {
+          console.error("Error al borrar la factura:", error);
+          alert(`Ocurrió un error al borrar la factura: ${error.message}`);
+        }
+      }else	{
+        alert("No se ha eliminado la factura");
       }
     });
   });
+  
 }
 
 

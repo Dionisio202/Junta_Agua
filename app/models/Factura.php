@@ -130,6 +130,50 @@ class Factura
     return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna todos los detalles relacionados
 }
 
+public function updateAUthState($facturaId)
+{
+    $query = "
+    UPDATE 
+        facturas
+    SET 
+        estado_factura = 'Autorizado',
+        fecha_autorizacion = NOW() -- Establece la fecha actual
+    WHERE 
+        id = :facturaId
+    ";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':facturaId', $facturaId, PDO::PARAM_INT);
+
+    // Ejecutar la consulta
+    $stmt->execute();
+
+    // Retorna true si la actualización se realizó correctamente
+    return $stmt->rowCount() > 0;
+}
+
+public function updateDeletedState($facturaId)
+{
+    $query = "
+    UPDATE 
+        facturas
+    SET 
+        estado_factura = 'Eliminado'
+    WHERE 
+        id = :facturaId
+    ";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':facturaId', $facturaId, PDO::PARAM_INT);
+
+    // Ejecutar la consulta
+    $stmt->execute();
+
+    // Retorna true si la actualización se realizó correctamente
+    return $stmt->rowCount() > 0;
+}
+
+
     public function saveFactura($factura) {
         try {
             // Consulta SQL corregida
