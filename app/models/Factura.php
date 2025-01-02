@@ -152,6 +152,27 @@ public function updateAUthState($facturaId)
     return $stmt->rowCount() > 0;
 }
 
+public function updateDeletedState($facturaId)
+{
+    $query = "
+    UPDATE 
+        facturas
+    SET 
+        estado_factura = 'Eliminado',
+    WHERE 
+        id = :facturaId
+    ";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':facturaId', $facturaId, PDO::PARAM_INT);
+
+    // Ejecutar la consulta
+    $stmt->execute();
+
+    // Retorna true si la actualización se realizó correctamente
+    return $stmt->rowCount() > 0;
+}
+
 
     public function saveFactura($factura) {
         try {
