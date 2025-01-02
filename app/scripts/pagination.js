@@ -44,7 +44,7 @@ export function renderTable(page = 1) {
       const facturaId = e.currentTarget.getAttribute("data-id");
       if (confirm(`¿Seguro que deseas borrar la factura con ID ${facturaId}?`)) {
         try {
-          const response = await fetch(`http://localhost/Junta_Agua/app/api/update_deleted_Stated?id=${facturaId}`, {
+          const response = await fetch(`http://localhost/Junta_Agua/app/api/update_deleted_Stated.php?id=${facturaId}`, {
             method: "GET",
           });
   

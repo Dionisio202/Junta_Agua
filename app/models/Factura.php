@@ -158,7 +158,7 @@ public function updateDeletedState($facturaId)
     UPDATE 
         facturas
     SET 
-        estado_factura = 'Eliminado',
+        estado_factura = 'Eliminado'
     WHERE 
         id = :facturaId
     ";
