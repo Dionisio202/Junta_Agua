@@ -25,7 +25,7 @@ export function renderTable(page = 1) {
       <td>${factura.importe}</td>
       <td>${factura.mensajeError}</td>
       <td class="acciones">
-        <a href="?view=factura/editfactura&id=${factura.secuencia}" class="edit-icon" title="Editar">
+        <a href="?view=factura/nuevafactura&id=${factura.secuencia}" class="edit-icon" title="Editar">
           <i class="fas fa-edit"></i>
         </a>
         <a href="javascript:void(0)" class="delete-icon" title="Borrar" data-id="${factura.secuencia}">
