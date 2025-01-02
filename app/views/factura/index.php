@@ -55,7 +55,7 @@
                     <th>Total</th>
                     <th>Estado</th>
                     <?php if ($rol === 'Contador'): ?>
-                        <th>Acciones</th>
+                        
                     <?php endif; ?>
                 </tr>
             </thead>
@@ -94,10 +94,7 @@
                         <td>${factura.fecha_emision}</td>
                         <td>${factura.total}</td>
                         <td>${factura.estado_factura}</td>
-                        ${userRole === "Contador" ? `
-                        <td>
-                           
-                        </td>` : ""}
+                        
                     </tr>`;
                 tableBody.innerHTML += row;
             });
