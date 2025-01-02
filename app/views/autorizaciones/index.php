@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Autorización de Facturas</title>
     <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 
 <body>
@@ -82,6 +84,7 @@
                     <th>Nombre del Cliente</th>
                     <th>Importe</th>
                     <th>Mensaje Error</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody id="table-body"></tbody>
@@ -140,6 +143,22 @@
         transform: rotate(360deg);
     }
 }
+
+.acciones {
+color: black;
+}
+
+.acciones i {
+  cursor: pointer;
+  transition: color 0.3s ease;
+  color: black;
+
+}
+
+.acciones i:hover {
+  color: #007bff; /* Color al pasar el mouse */
+}
+
 
 </style>
 </html>

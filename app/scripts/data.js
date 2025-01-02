@@ -13,7 +13,7 @@ export async function getData() {
         emision: factura.fecha_emision || "Fecha no disponible",
         serie: factura.id || "No disponible",
         secuencia: factura.id || "No disponible",
-        cliente: `${factura.nombre_comercial || "Cliente no disponible"} (${factura.identificacion || "ID no disponible"})`,
+        cliente: `${factura.razon_social || "Cliente no disponible"} (${factura.identificacion || "ID no disponible"})`,
         importe: factura.total || "0.00",
         mensajeError: factura.mensajeError || "Sin errores",
         tipo: factura.tipo || "otro", // Asegúrate de que el tipo esté definido en la API

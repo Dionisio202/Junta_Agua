@@ -15,7 +15,7 @@ export function renderTable(page = 1) {
 
   const tableBody = document.getElementById("table-body");
   tableBody.innerHTML = pageData.map((factura) => `
-    <tr>
+    <tr data-id="${factura.secuencia}">
       <td><input type="checkbox"></td>
       <td>${factura.autorizado ? "Sí" : "No"}</td>
       <td>${factura.emision}</td>
@@ -24,11 +24,31 @@ export function renderTable(page = 1) {
       <td>${factura.cliente}</td>
       <td>${factura.importe}</td>
       <td>${factura.mensajeError}</td>
+      <td class="acciones">
+        <a href="?view=factura/editfactura&id=${factura.secuencia}" class="edit-icon" title="Editar">
+          <i class="fas fa-edit"></i>
+        </a>
+        <a href="javascript:void(0)" class="delete-icon" title="Borrar" data-id="${factura.secuencia}">
+          <i class="fas fa-trash"></i>
+        </a>
+      </td>
     </tr>
   `).join("");
 
   renderPagination(filteredData, currentPage, rowsPerPage, changePage);
+
+  // Añade evento solo para el botón de eliminar
+  document.querySelectorAll(".delete-icon").forEach((icon) => {
+    icon.addEventListener("click", (e) => {
+      const facturaId = e.currentTarget.getAttribute("data-id");
+      if (confirm(`¿Seguro que deseas borrar la factura con ID ${facturaId}?`)) {
+        borrarFactura(facturaId);
+      }
+    });
+  });
 }
+
+
 
 // Cambia de página
 export function changePage(page) {
