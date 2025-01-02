@@ -204,7 +204,8 @@
         <tr>
             <th>Código</th>
             <th>Descripción</th>
-            <th>Total</th>
+            <th>Subtotal</th>
+            <th>Descuento</th>
         </tr>
         <?php if (!empty($detalleFactura)): ?>
             <?php foreach ($detalleFactura as $detalle): ?>
@@ -212,6 +213,7 @@
                     <td><?= htmlspecialchars($detalle['codigo']); ?></td>
                     <td><?= htmlspecialchars($detalle['descripcion']); ?></td>
                     <td><?= number_format($detalle['total'], 2); ?></td>
+                    <td><?= number_format($detalle['Descuento'], 2); ?></td>
                 </tr>
             <?php endforeach; ?>
         <?php else: ?>

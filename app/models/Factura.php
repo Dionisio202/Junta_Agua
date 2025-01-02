@@ -111,7 +111,8 @@ class Factura
     SELECT 
         r.codigo AS codigo,
         r.razon AS descripcion,
-        df.subtotal AS total
+        df.subtotal AS total ,
+        df.descuento AS Descuento
     FROM 
         detalle_factura df
     JOIN 
