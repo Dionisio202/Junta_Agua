@@ -10,59 +10,59 @@
     <codDoc>01</codDoc>
     <estab>001</estab>
     <ptoEmi>001</ptoEmi>
-    <secuencial>000000017</secuencial>
+    <secuencial>000000111</secuencial>
     <dirMatriz>Ambato</dirMatriz>
   </infoTributaria>
   <infoFactura>
-    <fechaEmision>26/12/2024</fechaEmision>
+    <fechaEmision>02/01/2025</fechaEmision>
     <dirEstablecimiento>Nueva Ambato</dirEstablecimiento>
     <obligadoContabilidad>NO</obligadoContabilidad>
     <tipoIdentificacionComprador>05</tipoIdentificacionComprador>
     <guiaRemision>000-000-000009999</guiaRemision>
-    <razonSocialComprador>Efrain Caina</razonSocialComprador>
-    <identificacionComprador>1801808112</identificacionComprador>
-    <direccionComprador>Ambato</direccionComprador>
-    <totalSinImpuestos>20.00</totalSinImpuestos>
+    <razonSocialComprador>FELIZA HERLINDA ALTAMIRANO VALENCIA     </razonSocialComprador>
+    <identificacionComprador>1801310952</identificacionComprador>
+    <direccionComprador>BELLAVISTA EL ROSARIO</direccionComprador>
+    <totalSinImpuestos>3.00</totalSinImpuestos>
     <totalDescuento>0.00</totalDescuento>
     <totalConImpuestos>
       <totalImpuesto>
         <codigo>2</codigo>
         <codigoPorcentaje>0</codigoPorcentaje>
         <descuentoAdicional>0.00</descuentoAdicional>
-        <baseImponible>20.00</baseImponible>
+        <baseImponible>3.00</baseImponible>
         <valor>0.00</valor>
       </totalImpuesto>
     </totalConImpuestos>
-    <importeTotal>20.00</importeTotal>
+    <importeTotal>3.00</importeTotal>
     <moneda>dolar</moneda>
     <pagos>
       <pago>
         <formaPago>01</formaPago>
-        <total>20.00</total>
+        <total>3.00</total>
       </pago>
     </pagos>
   </infoFactura>
   <detalles>
     <detalle>
       <codigoPrincipal>OTR001</codigoPrincipal>
-      <codigoAuxiliar>OTR001</codigoAuxiliar>
-      <descripcion>OTROS</descripcion>
+      <codigoAuxiliar>TB0001</codigoAuxiliar>
+      <descripcion>Tarifa BásicaJunio</descripcion>
       <cantidad>1.00</cantidad>
-      <precioUnitario>20.00</precioUnitario>
+      <precioUnitario>3.00</precioUnitario>
       <descuento>0.00</descuento>
-      <precioTotalSinImpuesto>20.00</precioTotalSinImpuesto>
+      <precioTotalSinImpuesto>3.00</precioTotalSinImpuesto>
       <impuestos>
         <impuesto>
           <codigo>2</codigo>
           <codigoPorcentaje>0</codigoPorcentaje>
           <tarifa>0.00</tarifa>
-          <baseImponible>20.00</baseImponible>
+          <baseImponible>3.00</baseImponible>
           <valor>0.00</valor>
         </impuesto>
       </impuestos>
     </detalle>
   </detalles>
   <infoAdicional>
-    <campoAdicional nombre="emailcliente">solisedison@outlook.com</campoAdicional>
+    <campoAdicional nombre="emailcliente">moralescofres@gmail.com</campoAdicional>
   </infoAdicional>
 </factura>
