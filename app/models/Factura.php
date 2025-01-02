@@ -110,9 +110,11 @@ class Factura
     $query = "
     SELECT 
         r.codigo AS codigo,
-        r.razon AS descripcion,
+        df.descripcion AS descripcion,
         df.subtotal AS total ,
-        df.descuento AS Descuento
+        df.descuento AS Descuento,
+        df.cantidad AS cantidad,
+        df.precioIVA AS precio
     FROM 
         detalle_factura df
     JOIN 

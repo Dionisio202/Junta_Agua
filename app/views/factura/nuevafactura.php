@@ -135,7 +135,6 @@
                     <tr>
                         <th>Código</th>
                         <th>Descripción</th>
-                        <th>Medida</th>
                         <th>Cantidad</th>
                         <th>Precio IVA</th>
                         <th>Desc.</th>
@@ -583,8 +582,7 @@
 
             fila.innerHTML = `
         <td data-id="${idRazon}">${codigo}</td>
-        <td>${descripcion}</td>
-        <td>${mes || "N/A"}</td>
+        <td>${descripcion+mes}</td>
         <td><input type="number" value="${cantidad}" min="1" class="cantidad-input" required></td>
         <td><input type="number" value="${precio.toFixed(2)}" min="0" class="precio-input" required></td>
         <td><input type="number" value="${descuento.toFixed(2)}" min="0" class="descuento-input" required></td>
@@ -776,6 +774,8 @@
                 descripcion: descripcion,
                 descuento: descuento,
                 subtotal: subtotal,
+                cantidad: cantidad,
+                precioIVA: precio
             });
         });
 
@@ -902,3 +902,152 @@
     }
 
 </script>
+
+<script type="module">
+    // Función para obtener un parámetro de la URL
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    // Función para cargar los detalles de la factura desde ambas APIs
+    async function loadFacturaDetails() {
+        const idFactura = getQueryParam('id'); // Obtener el ID de la factura desde la URL
+
+        if (!idFactura) {
+            console.warn("No se proporcionó un ID de factura. Deteniendo carga.");
+            return; // No ejecutar más si no hay ID
+        }
+
+        try {
+            // Primera API: Obtener información general de la factura
+            const generalResponse = await fetch(`http://localhost/Junta_Agua/app/api/get_facturas_by_id.php?id=${idFactura}`);
+
+            if (!generalResponse.ok) {
+                throw new Error(`Error al obtener información general: ${generalResponse.status}`);
+            }
+
+            const generalResult = await generalResponse.json();
+
+            if (!generalResult.success) {
+                throw new Error(generalResult.message || 'Error al obtener información general de la factura.');
+            }
+
+            const facturaDetails = generalResult.data;
+            console.log('Detalles generales de la factura:', facturaDetails);
+
+            // Actualizar los valores en el formulario con los datos generales
+            document.getElementById('fecha-emision').value = facturaDetails.fecha_emision || '';
+            document.getElementById('fecha-vencimiento').value = facturaDetails.fecha_vencimiento || '';
+            document.getElementById('serie').value = '001'; // Valor predeterminado
+            document.getElementById('secuencia').value = facturaDetails.secuencia || '';
+            document.getElementById('ci-ruc').value = facturaDetails.ci_ruc || '';
+            document.getElementById('nombre-cliente').value = facturaDetails.cliente || '';
+
+            // Actualizar el select de medidores/conceptos
+            const medidorSelect = document.getElementById("concepto");
+            const medidorId = facturaDetails.medidor_id;
+
+            medidorSelect.innerHTML = ""; // Limpiar todas las opciones existentes
+
+            if (medidorId) {
+                const newOption = document.createElement("option");
+                newOption.value = medidorId;
+                newOption.textContent = `${medidorId}`; // Texto visible en el <select>
+                medidorSelect.appendChild(newOption);
+                medidorSelect.value = medidorId;
+            } else {
+                console.warn("No se encontró un ID de medidor válido.");
+            }
+
+            // Segunda API: Obtener detalles específicos de la factura
+            const detallesResponse = await fetch(`http://localhost/Junta_Agua/app/api/get_facturaDetallesbyId.php?id=${idFactura}`);
+
+            if (!detallesResponse.ok) {
+                throw new Error(`Error al obtener detalles: ${detallesResponse.status}`);
+            }
+
+            const detallesResult = await detallesResponse.json();
+
+            if (!detallesResult.success) {
+                throw new Error(detallesResult.message || 'Error al obtener detalles de la factura.');
+            }
+
+            const detalleFactura = detallesResult.data;
+            console.log('Detalles de la factura:', detalleFactura);
+
+            // Cargar detalles de la factura en la tabla
+            const tableBody = document.querySelector('.factura-detalle table tbody');
+            tableBody.innerHTML = ""; // Limpiar la tabla
+
+            if (detalleFactura.length > 0) {
+                detalleFactura.forEach((detalle) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td data-id="${detalle.codigo}">${detalle.codigo}</td>
+                        <td>${detalle.descripcion}</td>
+                        <td><input type="number" value="${detalle.cantidad}" min="1" class="cantidad-input" required></td>
+                        <td><input type="number" value="${parseFloat(detalle.precio || 0).toFixed(2)}" min="0" class="precio-input" required></td>
+                        <td><input type="number" value="${parseFloat(detalle.Descuento || 0).toFixed(2)}" min="0" class="descuento-input" required></td>
+                        <td class="iva-table">0.00</td>
+                        <td class="total">${parseFloat(detalle.total || 0).toFixed(2)}</td>
+                        <td><button type="button" class="delete-btn">Eliminar</button></td>
+                    `;
+
+                    // Eventos para actualizar valores en tiempo real
+                    row.querySelector('.cantidad-input').addEventListener('input', actualizarTotal);
+                    row.querySelector('.precio-input').addEventListener('input', actualizarTotal);
+                    row.querySelector('.descuento-input').addEventListener('input', actualizarTotal);
+
+                    // Evento para eliminar la fila
+                    row.querySelector('.delete-btn').addEventListener('click', () => {
+                        row.remove();
+                        actualizarResumen();
+                    });
+
+                    tableBody.appendChild(row);
+                });
+            } else {
+                tableBody.innerHTML = '<tr><td colspan="9">No hay detalles disponibles.</td></tr>';
+            }
+
+        } catch (error) {
+            console.error('Error al cargar los detalles de la factura:', error);
+            alert('No se pudo cargar la factura. Verifica la consola para más detalles.');
+        }
+    }
+
+    // Función para actualizar los totales de una fila
+    function actualizarTotal(event) {
+        const row = event.target.closest('tr');
+        const cantidad = parseFloat(row.querySelector('.cantidad-input').value) || 0;
+        const precio = parseFloat(row.querySelector('.precio-input').value) || 0;
+        const descuento = parseFloat(row.querySelector('.descuento-input').value) || 0;
+
+        const subtotal = cantidad * precio - descuento;
+        const iva = 0
+        const total = subtotal + iva;
+
+        row.querySelector('.iva-table').textContent = iva.toFixed(2);
+        row.querySelector('.total').textContent = total.toFixed(2);
+
+        actualizarResumen();
+    }
+
+    // Función para actualizar el resumen general
+    function actualizarResumen() {
+        const rows = document.querySelectorAll('.factura-detalle table tbody tr');
+        let totalGeneral = 0;
+
+        rows.forEach((row) => {
+            const total = parseFloat(row.querySelector('.total').textContent) || 0;
+            totalGeneral += total;
+        });
+
+        document.getElementById('totalResumen').querySelector('span').textContent = totalGeneral.toFixed(2);
+    }
+
+    // Cargar los datos al inicio
+    document.addEventListener('DOMContentLoaded', loadFacturaDetails);
+</script>
+
