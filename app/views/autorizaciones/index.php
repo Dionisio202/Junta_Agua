@@ -66,7 +66,7 @@
             <button type="button" class="styled-button todos">Todos</button>
             <button type="button" class="styled-button opciones">Opciones</button>
             <button type="button" class="styled-button actualizar">Actualizar</button>
-            <button type="button" class="styled-button autorizar">Autorizar</button>
+            <button id="autorizar-btn" class="styled-button autorizar">Autorizar</button>
         </div>
         
     </div>
