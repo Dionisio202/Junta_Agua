@@ -229,5 +229,29 @@ class Factura
                 'message' => 'Excepción capturada: ' . $e->getMessage()
             ];
         }
-    }   
+    }
+    public function getFacturaDetalles($idFactura) {
+        try {
+            // Preparar la llamada al procedimiento almacenado
+            $query = "CALL ObtenerDatosFactura(:idFactura)";
+            $stmt = $this->conn->prepare($query);
+    
+            // Vincular el parámetro
+            $stmt->bindParam(':idFactura', $idFactura, PDO::PARAM_INT);
+    
+            // Ejecutar la consulta
+            $stmt->execute();
+    
+            // Obtener los resultados
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            // Capturar y retornar errores
+            return [
+                'status' => 'error',
+                'message' => 'Excepción capturada: ' . $e->getMessage()
+            ];
+        }
+    }
+       
 }

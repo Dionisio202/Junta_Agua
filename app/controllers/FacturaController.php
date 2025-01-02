@@ -63,5 +63,4 @@ class FacturaController {
 
         require_once __DIR__ . '/../views/autorizaciones/index.php';
     }
-    
 }
