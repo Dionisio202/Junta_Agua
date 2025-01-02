@@ -943,7 +943,7 @@
             document.getElementById('secuencia').value = facturaDetails.secuencia || '';
             document.getElementById('ci-ruc').value = facturaDetails.ci_ruc || '';
             document.getElementById('nombre-cliente').value = facturaDetails.cliente || '';
-
+            document.getElementById("totalResumen").querySelector("span").textContent = facturaData.total || "0.00";
             // Actualizar el select de medidores/conceptos
             const medidorSelect = document.getElementById("concepto");
             const medidorId = facturaDetails.medidor_id;
@@ -1007,6 +1007,8 @@
 
                     tableBody.appendChild(row);
                 });
+                actualizarResumen();
+
             } else {
                 tableBody.innerHTML = '<tr><td colspan="9">No hay detalles disponibles.</td></tr>';
             }
@@ -1024,27 +1026,54 @@
         const precio = parseFloat(row.querySelector('.precio-input').value) || 0;
         const descuento = parseFloat(row.querySelector('.descuento-input').value) || 0;
 
-        const subtotal = cantidad * precio - descuento;
-        const iva = 0
-        const total = subtotal + iva;
+        const ivaPorcentaje = parseFloat(row.getAttribute("data-iva")) || 0;
+            const iva = cantidad * precio * (ivaPorcentaje); // Recalcular el IVA
 
-        row.querySelector('.iva-table').textContent = iva.toFixed(2);
-        row.querySelector('.total').textContent = total.toFixed(2);
+            // Subtotal (sin IVA ni descuento)
+            const subtotal = cantidad * precio - descuento;
 
+            // Total de la fila (subtotal + IVA)
+            const total = subtotal + iva;
+
+        row.querySelector(".iva-table").textContent = iva.toFixed(2); // Actualizar el valor de IVA
+        row.querySelector(".total").textContent = total > 0 ? total.toFixed(2) : "0.00"; // Actualizar el valor Total
         actualizarResumen();
     }
 
     // Función para actualizar el resumen general
     function actualizarResumen() {
-        const rows = document.querySelectorAll('.factura-detalle table tbody tr');
-        let totalGeneral = 0;
+        const filas = document.querySelectorAll('.factura-detalle table tbody tr');
+        let subTotal = 0; // Suma de subtotales (cantidad * precio unitario)
+            let descuentoTotal = 0; // Suma de descuentos
+            let netoTotal = 0; // Neto sin IVA
+            let ivaTotal = 0; // Suma de IVA
+            let totalConIVA = 0; // Suma de totales con IVA y descuento aplicados
 
-        rows.forEach((row) => {
-            const total = parseFloat(row.querySelector('.total').textContent) || 0;
-            totalGeneral += total;
-        });
+            filas.forEach((fila) => {
+                const cantidad = parseFloat(fila.querySelector(".cantidad-input").value) || 0;
+                const precio = parseFloat(fila.querySelector(".precio-input").value) || 0;
+                const descuento = parseFloat(fila.querySelector(".descuento-input").value) || 0;
+                const ivaUnitario = parseFloat(fila.querySelector(".iva-table").textContent) || 0; // El IVA directo de la celda
 
-        document.getElementById('totalResumen').querySelector('span').textContent = totalGeneral.toFixed(2);
+                const subtotalFila = cantidad * precio; // Subtotal sin IVA ni descuento
+                const netoFila = subtotalFila - descuento; // Neto sin IVA
+                const ivaFila = ivaUnitario; // El IVA ya está precalculado
+                const totalFila = netoFila + ivaFila; // Total con IVA
+
+                // Sumar los valores para el resumen
+                subTotal += subtotalFila;
+                descuentoTotal += descuento;
+                netoTotal += netoFila; // Neto sin IVA
+                ivaTotal += ivaFila; // IVA total
+                totalConIVA += totalFila; // Total con IVA y descuento aplicados
+            });
+
+            // Actualizar los valores en el resumen
+            document.querySelector(".resumen-totales p:nth-child(2) span").textContent = subTotal.toFixed(2); // Subtotal
+            document.querySelector(".resumen-totales p:nth-child(3) span").textContent = descuentoTotal.toFixed(2); // Descuento total
+            document.getElementById("netoResumen").querySelector("span").textContent = netoTotal.toFixed(2); // Neto total
+            document.getElementById("ivaResumen").querySelector("span").textContent = ivaTotal.toFixed(2); // IVA total
+            document.getElementById("totalResumen").querySelector("span").textContent = totalConIVA.toFixed(2); // Total con IVA
     }
 
     // Cargar los datos al inicio
