@@ -94,8 +94,52 @@
             <span id="next-page" class="page-control">Siguiente</span>
         </div>
     </div>
-
+ <!-- Loading -->
+ <div id="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Enviando factura, por favor espere...</p>
+</div>
     <script src="http://localhost/Junta_Agua/app/scripts/autorizations_main.js" type="module"></script>
+    <script src="http://localhost/Junta_Agua/app/scripts/enviarxml.js" type="module"></script>
 </body>
+<style>
+    /* Estilo general del loading */
+.loading {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    flex-direction: column;
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 1.2em;
+}
 
+/* Spinner de carga */
+.spinner {
+    border: 8px solid rgba(255, 255, 255, 0.3);
+    border-top: 8px solid white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+</style>
 </html>
