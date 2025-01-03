@@ -6,7 +6,8 @@ let data = []; // Datos originales
 let filteredData = []; // Datos filtrados
 let currentPage = 1;
 const rowsPerPage = 5;
-
+const baseURL = `${window.location.protocol}//${window.location.host}`;
+let apiURL = ``;
 // Renderiza la tabla
 export function renderTable(page = 1) {
   const startIndex = (page - 1) * rowsPerPage;
@@ -56,10 +57,11 @@ export function renderTable(page = 1) {
     icon.removeAttribute("onclick"); // Elimina cualquier atributo inline
     icon.addEventListener("click", async (e) => {
       const facturaId = e.currentTarget.getAttribute("data-id");
+      apiURL = `${baseURL}/Junta_Agua/app/api/update_deleted_Stated.php?id=${facturaId}`;
       if (confirm(`¿Seguro que deseas borrar la factura con ID ${facturaId}?`)) {
         try {
           const response = await fetch(
-            `http://localhost/Junta_Agua/app/api/update_deleted_Stated.php?id=${facturaId}`,
+            apiURL,
             {
               method: "GET",
             }

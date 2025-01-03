@@ -1,3 +1,5 @@
+const baseURL = `${window.location.protocol}//${window.location.host}`;
+let apiURL = ``;
 export function buscarCIRUC() {
   const input = document.getElementById("ci-ruc").value;
   // Verificar si el input contiene solo números o letras
@@ -6,7 +8,8 @@ export function buscarCIRUC() {
 
   if (isNumber) {
     // Realizar búsqueda por números
-    fetch(`http://localhost/Junta_Agua/app/api/buscar_por_numero.php?numero=${input}`)
+    apiURL = `${baseURL}/Junta_Agua/app/api/buscar_por_numero.php?numero=${input}`;
+    fetch(apiURL)
       .then((response) => response.json())
       .then((data) => {
         if (!data.error) {
@@ -18,7 +21,8 @@ export function buscarCIRUC() {
       .catch((error) => console.error("Error en la búsqueda por número:", error));
   } else if (isLetter) {
     // Realizar búsqueda por letras
-    fetch(`http://localhost/Junta_Agua/app/api/buscar_por_letra.php?letra=${input}`)
+    apiURL = `${baseURL}/Junta_Agua/app/api/buscar_por_letra.php?letra=${input}`;
+    fetch(apiURL)
       .then((response) => response.json())
       .then((data) => {
         if (!data.error) {
@@ -63,7 +67,8 @@ function seleccionarCliente(cliente) {
 }
 
 function getMedidores($input) {
-  fetch(`http://localhost/Junta_Agua/app/api/get_medidores_cliente.php?cliente=${$input}`)
+  apiURL = `${baseURL}/Junta_Agua/app/api/get_medidores_cliente.php?cliente=${$input}`;
+  fetch(apiURL)
     .then((response) => response.json())
     .then((data) => {
       if (data) {

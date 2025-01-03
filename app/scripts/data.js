@@ -1,6 +1,9 @@
+const baseURL = `${window.location.protocol}//${window.location.host}`;
+let apiURL = ``;
 export async function getData() {
   try {
-    const response = await fetch(`http://localhost/Junta_Agua/app/api/get_facturas.php`);
+    apiURL = `${baseURL}/Junta_Agua/app/api/get_facturas.php`;
+    const response = await fetch(apiURL);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

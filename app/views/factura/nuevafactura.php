@@ -741,6 +741,8 @@
     }
 </style>
 <script>
+    const baseURL = `${window.location.protocol}//${window.location.host}`;
+    let apiURL = ``;
     document.querySelector(".save-btn").addEventListener("click", () => {
 
         const detalles = []; // Array para almacenar los detalles de las filas
@@ -785,7 +787,7 @@
             return;
         }
 
-        const fecha = new Date();
+        const fecha = new Date(document.getElementById("fecha-emision").value);
 
         // Validar y formatear la fecha de emisión
         facturaData.fecha_emision = fecha.toISOString().split('T')[0];
@@ -864,8 +866,8 @@ if (checkParamInURL('id')) {
         };
 
         console.log("Datos de la factura:", facturaDataScript);
-
-        fetch('http://localhost/Junta_Agua/app/api/edita_factura.php', {
+        apiURL= `${baseURL}/Junta_Agua/app/api/edita_factura.php`;
+        fetch(apiURL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -902,8 +904,8 @@ if (checkParamInURL('id')) {
         }
 
         console.log("Datos de la factura:", facturaDataScript);
-
-        fetch('http://localhost/Junta_Agua/app/api/save_factura.php', {
+        apiURL = `${baseURL}/Junta_Agua/app/api/save_factura.php`;
+        fetch(apiURL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -986,6 +988,8 @@ obtenerLecturas();
 </script>
 
 <script type="module">
+    const baseURL = `${window.location.protocol}//${window.location.host}`;
+    let apiURL = ``;
     // Función para obtener un parámetro de la URL
     function getQueryParam(param) {
         const urlParams = new URLSearchParams(window.location.search);
@@ -1003,7 +1007,8 @@ obtenerLecturas();
 
         try {
             // Primera API: Obtener información general de la factura
-            const generalResponse = await fetch(`http://localhost/Junta_Agua/app/api/get_facturas_by_id.php?id=${idFactura}`);
+            apiURL = `${baseURL}/Junta_Agua/app/api/get_facturas_by_id.php?id=${idFactura}`;
+            const generalResponse = await fetch(apiURL);
 
             if (!generalResponse.ok) {
                 throw new Error(`Error al obtener información general: ${generalResponse.status}`);
@@ -1043,7 +1048,8 @@ obtenerLecturas();
             }
 
             // Segunda API: Obtener detalles específicos de la factura
-            const detallesResponse = await fetch(`http://localhost/Junta_Agua/app/api/get_facturaDetallesbyId.php?id=${idFactura}`);
+            apiURL = `${baseURL}/Junta_Agua/app/api/get_facturaDetallesbyId.php?id=${idFactura}`;
+            const detallesResponse = await fetch(apiURL);
 
             if (!detallesResponse.ok) {
                 throw new Error(`Error al obtener detalles: ${detallesResponse.status}`);
@@ -1161,4 +1167,3 @@ obtenerLecturas();
     // Cargar los datos al inicio
     document.addEventListener('DOMContentLoaded', loadFacturaDetails);
 </script>
-
