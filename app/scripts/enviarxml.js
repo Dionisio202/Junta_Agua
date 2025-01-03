@@ -153,6 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
               alert(error.message);
           } finally {
               loading.style.display = "none"; // Ocultar el loading
+              window.location.href = "/Junta_Agua/public/?view=autorizaciones";
           }
       });
 });

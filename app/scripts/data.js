@@ -17,6 +17,7 @@ export async function getData() {
         importe: factura.total || "0.00",
         mensajeError: factura.mensajeError || "Sin errores",
         tipo: factura.tipo || "otro", // Asegúrate de que el tipo esté definido en la API
+        estado:factura.estado_factura || "Sin estado"
       }));
     } else {
       throw new Error("Los datos obtenidos no son válidos.");
