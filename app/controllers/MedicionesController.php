@@ -38,7 +38,7 @@ class MedicionesController {
         if ($response['success']) {
             $this->sendHttpResponse(200, ['success' => true, 'message' => 'Medición registrada con éxito.']);
         } else {
-            $this->sendHttpResponse(500, ['success' => false, 'message' => 'Error al registrar la medición.']);
+            $this->sendHttpResponse(500, ['success' => false, 'message' => 'Error al registrar la medición.'."Parámetros recibidos: idMedidor=$idMedidor, idCliente=$idCliente, fechaLectura=$fechaLectura, lectura=$lectura"]);
         }
     }
 

@@ -8,7 +8,7 @@ class MedicionesModel {
 
     public function registrarMedicion($idMedidor, $idCliente, $fechaLectura, $lectura) {
         try {
-            $query = "INSERT INTO detalle_medidores (id_medidor, id_usuario, fecha_lectura, lectura) 
+            $query = "INSERT INTO detalle_medidores (id_medidor, id_cliente, fecha_lectura, lectura) 
                       VALUES (:id_medidor, :id_cliente, :fecha_lectura, :lectura)";
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':id_medidor', $idMedidor, PDO::PARAM_INT);

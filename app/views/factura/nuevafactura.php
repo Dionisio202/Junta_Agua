@@ -930,44 +930,57 @@ if (checkParamInURL('id')) {
 //-------------------------------------------------------------------------------------------------------
 
 
-    var medicionData = {
-        lectura1: "--",
-        lectura2: "--",
-        lectura3: "--",
-        };  
-    
-    obtenerLecturas()
-    async function obtenerLecturas() {
-        const fechaEmision = document.getElementById('fecha-emision').value;  // Obtener la fecha seleccionada
-        facturaData.medidor_id = document.getElementById("concepto").value;
-        const medidorId = facturaData.medidor_id;  // Obtener el medidor_id desde facturaData
+let medicionData = {
+    lectura1: "--",
+    lectura2: "--",
+    lectura3: "--",
+};
 
-        // Verificar si la fecha y medidorId están disponibles
-        if (!fechaEmision || !medidorId) {
-            console.error('La fecha de emisión o el medidor_id no están definidos');
-            return;
-        }
+async function obtenerLecturas() {
+    const fechaEmision = document.getElementById('fecha-emision').value;
+    facturaData.medidor_id = document.getElementById("concepto").value;
+    const medidorId = facturaData.medidor_id;
 
-        // Extraer el mes de la fecha seleccionada (en formato MM)
-        const mesEmision = new Date(fechaEmision).getMonth() + 1;  // getMonth() devuelve un valor entre 0 y 11, por eso sumamos 1
-        
-        // Calcular los dos meses anteriores
-        const mesAnterior = mesEmision === 1 ? 12 : mesEmision - 1;  // Si el mes de emisión es enero (1), el mes anterior será diciembre (12)
-        const mesAntesDeAnterior = mesAnterior === 1 ? 12 : mesAnterior - 1;  // Si el mes anterior es enero, el mes antes de anterior será diciembre
-
-        try {
-            // Realizar la solicitud fetch pasando medidor_id, mesEmision, mesAnterior y mesAntesDeAnterior
-            const response = await fetch(`/Junta_Agua/app/models/obtener_lecturas.php?medidor_id=${medidorId}&mes_emision=${mesEmision}&mes_anterior=${mesAnterior}&mes_antes_anterior=${mesAntesDeAnterior}`);
-            const dataLecturas = await response.json();
-            
-            // Actualizar las lecturas en el objeto facturaData si es necesario
-            medicionData.lectura1 = String(dataLecturas.lectura_1);
-            medicionData.lectura2 = String(dataLecturas.lectura_2);
-            medicionData.lectura3 = String(dataLecturas.lectura_3);
-        } catch (error) {
-            console.error('Error al obtener las lecturas:', error);
-        }
+    if (!fechaEmision || !medidorId) {
+        console.error('La fecha de emisión o el medidor_id no están definidos');
+        return;
     }
+
+    const fechaActual = new Date(fechaEmision);
+    const mesEmision = fechaActual.getMonth() + 1;
+    const yearEmision = fechaActual.getFullYear();
+
+    let mesAnterior = mesEmision - 1;
+    let yearAnterior = yearEmision;
+
+    if (mesAnterior === 0) {
+        mesAnterior = 12;
+        yearAnterior -= 1;
+    }
+
+    let mesAntesDeAnterior = mesAnterior - 1;
+    let yearAntesDeAnterior = yearAnterior;
+
+    if (mesAntesDeAnterior === 0) {
+        mesAntesDeAnterior = 12;
+        yearAntesDeAnterior -= 1;
+    }
+
+    try {
+        const response = await fetch(`/Junta_Agua/app/models/obtener_lecturas.php?medidor_id=${medidorId}&mes_emision=${mesEmision}&year_emision=${yearEmision}&mes_anterior=${mesAnterior}&year_anterior=${yearAnterior}&mes_antes_anterior=${mesAntesDeAnterior}&year_antes_anterior=${yearAntesDeAnterior}`);
+        const dataLecturas = await response.json();
+
+        medicionData.lectura1 = String(dataLecturas.lectura_1);
+        medicionData.lectura2 = String(dataLecturas.lectura_2);
+        medicionData.lectura3 = String(dataLecturas.lectura_3);
+    } catch (error) {
+        console.error('Error al obtener las lecturas:', error);
+    }
+}
+
+// Llama a la función
+obtenerLecturas();
+
 
 </script>
 
