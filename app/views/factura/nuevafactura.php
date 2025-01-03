@@ -136,7 +136,7 @@
                         <th>Código</th>
                         <th>Descripción</th>
                         <th>Cantidad</th>
-                        <th>Precio IVA</th>
+                        <th>Precio </th>
                         <th>Desc.</th>
                         <th>IVA</th>
                         <th>Total</th>
@@ -565,7 +565,7 @@
         });
 
         // Función para agregar una fila a la tabla
-        function agregarFila(descripcion, mes = null) {
+        function agregarFila(descripcion, mes = "") {
             const codigo = selectedCodigo.getAttribute("data-codigo") || "N/A";
             const idRazon = selectedCodigo.getAttribute("data-id");
             const precio = parseFloat(selectedCodigo.getAttribute("data-precio"));
@@ -579,10 +579,11 @@
 
             // Establecer el atributo `data-iva` en la fila
             fila.setAttribute("data-iva", ivaPorcentaje);
+            const descripcionConMes = mes ? `${descripcion} ${mes}` : descripcion;
 
             fila.innerHTML = `
         <td data-id="${idRazon}">${codigo}</td>
-        <td>${descripcion+mes}</td>
+        <td>${descripcionConMes}</td>
         <td><input type="number" value="${cantidad}" min="1" class="cantidad-input" required></td>
         <td><input type="number" value="${precio.toFixed(2)}" min="0" class="precio-input" required></td>
         <td><input type="number" value="${descuento.toFixed(2)}" min="0" class="descuento-input" required></td>
