@@ -15,11 +15,12 @@ export function renderTable(page = 1) {
 
   const tableBody = document.getElementById("table-body");
   tableBody.innerHTML = pageData
-    .map((factura) => {
-      const isDisabled = factura.estado === "Eliminado";
+    .map((factura, index) => {
+      const isDisabled = ["Eliminado", "Autorizado"].includes(factura.estado.trim());
+
       return `
         <tr data-id="${factura.secuencia}">
-          <td><input type="checkbox" ${isDisabled ? "disabled" : ""}></td>
+          <td><input type="checkbox" class="row-checkbox" data-index="${index}" ${isDisabled ? "disabled" : ""}></td>
           <td>${factura.autorizado ? "Sí" : "No"}</td>
           <td>${factura.emision}</td>
           <td>${factura.serie}</td>
@@ -47,6 +48,9 @@ export function renderTable(page = 1) {
 
   renderPagination(filteredData, currentPage, rowsPerPage, changePage);
 
+  // Inicializa los eventos de los checkboxes
+  initializeCheckboxEvents();
+
   // Añade evento solo para el botón de eliminar si no está deshabilitado
   document.querySelectorAll(".delete-icont").forEach((icon) => {
     icon.removeAttribute("onclick"); // Elimina cualquier atributo inline
@@ -60,14 +64,16 @@ export function renderTable(page = 1) {
               method: "GET",
             }
           );
-
+  
           if (!response.ok) {
             throw new Error(`Error al borrar la factura: ${response.statusText}`);
           }
-
+  
           const result = await response.json();
           if (result.success) {
             alert(`Factura ${facturaId} actualizada a 'Eliminado'.`);
+            // Redirigir a la página de autorizaciones
+            window.location.href = "/Junta_Agua/public/?view=autorizaciones";
           } else {
             alert(`Error al borrar la factura: ${result.message}`);
           }
@@ -80,10 +86,23 @@ export function renderTable(page = 1) {
       }
     });
   });
+  
 }
 
-
-
+// Inicializa los eventos de los checkboxes para que solo uno pueda ser seleccionado
+function initializeCheckboxEvents() {
+  const checkboxes = document.querySelectorAll(".row-checkbox");
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", (e) => {
+      if (e.target.checked) {
+        // Deselecciona todos los demás checkboxes
+        checkboxes.forEach((cb) => {
+          if (cb !== e.target) cb.checked = false;
+        });
+      }
+    });
+  });
+}
 
 // Cambia de página
 export function changePage(page) {

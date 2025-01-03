@@ -242,6 +242,61 @@ public function updateDeletedState($facturaId)
             ];
         }
     }
+    public function updateFactura($factura) {
+        try {
+            // Consulta SQL para actualizar la factura
+            $query = "UPDATE facturas SET 
+                fecha_emision = :fecha_emision, 
+                fecha_autorizacion = :fecha_autorizacion, 
+                fecha_vencimiento = :fecha_vencimiento, 
+                id_sucursal = :id_sucursal, 
+                facturador = :facturador, 
+                cliente = :cliente, 
+                medidor_id = :medidor_id, 
+                tipo_pago = :tipo_pago, 
+                valor_sin_impuesto = :valor_sin_impuesto, 
+                iva = :iva, 
+                total = :total
+            WHERE id = :id_factura";
+    
+            // Preparar la consulta
+            $stmt = $this->conn->prepare($query);
+    
+            // Asociar parámetros
+            $stmt->bindValue(':fecha_emision', $factura['fecha_emision'], PDO::PARAM_STR);
+            $stmt->bindValue(':fecha_autorizacion', $factura['fecha_autorizacion'] ?? null, PDO::PARAM_STR); // Campo opcional
+            $stmt->bindValue(':fecha_vencimiento', $factura['fecha_vencimiento'], PDO::PARAM_STR);
+            $stmt->bindValue(':id_sucursal', $factura['id_sucursal'], PDO::PARAM_INT);
+            $stmt->bindValue(':facturador', $factura['facturador'], PDO::PARAM_INT);
+            $stmt->bindValue(':cliente', $factura['cliente'], PDO::PARAM_INT);
+            $stmt->bindValue(':medidor_id', $factura['medidor_id'], PDO::PARAM_INT);
+            $stmt->bindValue(':tipo_pago', $factura['tipo_pago'] ?? 'efectivo', PDO::PARAM_STR);
+            $stmt->bindValue(':valor_sin_impuesto', $factura['valor_sin_impuesto'], PDO::PARAM_STR);
+            $stmt->bindValue(':iva', $factura['iva'], PDO::PARAM_STR);
+            $stmt->bindValue(':total', $factura['total'], PDO::PARAM_STR);
+            $stmt->bindValue(':id_factura', $factura['id_factura'], PDO::PARAM_INT); // Identificador de la factura
+    
+            // Ejecutar la consulta
+            if ($stmt->execute()) {
+                return [
+                    "success" => true,
+                    "message" => "Factura actualizada exitosamente",
+                    "id_factura" => $factura['id_factura'] 
+                ];
+            } else {
+                return [
+                    "success" => false,
+                    "message" => "Error al actualizar la factura"
+                ];
+            }
+        } catch (PDOException $e) {
+            return [
+                "success" => false,
+                "message" => "Error en la base de datos: " . $e->getMessage()
+            ];
+        }
+    }
+    
     
     
     public function saveDetalleFactura($idFactura, $detalles) {
@@ -276,6 +331,86 @@ public function updateDeletedState($facturaId)
             ];
         }
     }
+
+    public function updateDetalleFactura($idFactura, $detalles) {
+        try {
+            // Validar que el ID de la factura no sea NULL o vacío
+            if (empty($idFactura)) {
+                return [
+                    'status' => 'error',
+                    'message' => 'El ID de la factura no puede estar vacío.'
+                ];
+            }
+    
+            // Primero, eliminar todos los detalles existentes de esta factura
+            $queryDelete = "DELETE FROM detalle_factura WHERE id_factura = :idFactura";
+            $stmtDelete = $this->conn->prepare($queryDelete);
+            $stmtDelete->bindParam(':idFactura', $idFactura, PDO::PARAM_INT);
+            $stmtDelete->execute();
+    
+            // Transformar cada código de razón en su correspondiente ID
+            foreach ($detalles as &$detalle) {
+                $codigoRazon = $detalle['id_razon']; // Asegúrate de que esto corresponde al campo enviado
+                $queryRazon = "SELECT id FROM razones WHERE codigo = :codigo";
+                $stmtRazon = $this->conn->prepare($queryRazon);
+                $stmtRazon->bindParam(':codigo', $codigoRazon, PDO::PARAM_STR);
+                $stmtRazon->execute();
+    
+                $razon = $stmtRazon->fetch(PDO::FETCH_ASSOC);
+    
+                if ($razon) {
+                    $detalle['id_razon'] = $razon['id'];
+                } else {
+                    return [
+                        'status' => 'error',
+                        'message' => "No se encontró una razón con el código: $codigoRazon"
+                    ];
+                }
+            }
+    
+            // Convertir el array de detalles a JSON
+            $detallesJSON = json_encode($detalles);
+    
+            // Preparar la llamada al procedimiento almacenado
+            $query = "CALL InsertDetalleFactura(:idFactura, :detallesJSON)";
+            $stmt = $this->conn->prepare($query);
+    
+            // Vincular los parámetros
+            $stmt->bindParam(':idFactura', $idFactura, PDO::PARAM_INT);
+            $stmt->bindParam(':detallesJSON', $detallesJSON, PDO::PARAM_STR);
+    
+            // Ejecutar la consulta
+            if ($stmt->execute()) {
+                return [
+                    'status' => 'success',
+                    'message' => 'Detalles insertados correctamente.'
+                ];
+            } else {
+                return [
+                    'status' => 'error',
+                    'message' => 'Error al insertar detalles.'
+                ];
+            }
+        } catch (PDOException $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Excepción capturada: ' . $e->getMessage()
+            ];
+        }
+    }
+    
+    
+    
+
+    public function getClienteIdByIdentificacion($identificacion) {
+        $query = "SELECT id FROM clientes WHERE identificacion = :identificacion LIMIT 1";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':identificacion', $identificacion, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC)['id'] ?? null; // Devuelve el id o null si no encuentra
+    }
+    
+    
     public function getFacturaDetalles($idFactura) {
         try {
             // Preparar la llamada al procedimiento almacenado

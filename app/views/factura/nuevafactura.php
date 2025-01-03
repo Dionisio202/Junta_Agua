@@ -827,12 +827,80 @@
             total: facturaData.total,
             detalles: detalles
         };
+        console.log("Datos de la factura:", facturaDataScript);
 
-        // Validar los datos antes de enviarlos
+        function checkParamInURL(paramName) {
+    const urlParams = new URLSearchParams(window.location.search); // Obtiene los parámetros de la URL
+    return urlParams.has(paramName); // Devuelve true si el parámetro existe
+}
+function getParamFromURL(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param); // Devuelve el valor del parámetro o null si no existe
+}
+
+if (checkParamInURL('id')) {
+    const idFactura = getParamFromURL('id');
+    facturaData.id = document.getElementById("secuencia").value;
+        facturaData.id_sucursal = document.getElementById("sucursal").value;
+        facturaData.valor_sin_impuesto = parseFloat(document.querySelector(".resumen-totales p:nth-child(2) span").textContent);
+        facturaData.medidor_id = document.getElementById("concepto").value;
+        facturaData.iva = document.querySelector(".resumen-totales p:nth-child(3) span").textContent;
+        facturaData.total = parseFloat(document.getElementById("totalResumen").querySelector("span").textContent);
+        facturaData.cliente= document.getElementById("ci-ruc").value;
+
+            const facturaDataScript = {
+            fecha_emision: facturaData.fecha_emision,
+            fecha_vencimiento: facturaData.fecha_vencimiento,
+            id_sucursal: facturaData.id_sucursal,
+            facturador: facturaData.facturador,
+            cliente: facturaData.cliente, // Supongamos que el cliente es el CI/RUC
+            medidor_id: facturaData.medidor_id,
+            valor_sin_impuesto: facturaData.valor_sin_impuesto,
+            iva: facturaData.iva,
+            total: facturaData.total,
+            id_factura:idFactura,
+            detalles: detalles
+        };
+
+        console.log("Datos de la factura:", facturaDataScript);
+
+        fetch('http://localhost/Junta_Agua/app/api/edita_factura.php', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(facturaDataScript),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Error en la respuesta del servidor");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                if (data.success) {
+                    //navegar a la página de inicio
+                    alert("Factura guardada exitosamente ");
+                    window.location.href = '/Junta_Agua/public/?view=autorizaciones';
+                } else {
+                    alert("Error al guardar la factura: " + data.message);
+                }
+            })
+            .catch((error) => console.error("Error al guardar la factura:", error));
+
+        return;
+            
+        } else {
+         // Validar los datos antes de enviarlos
         if (!facturaDataScript.fecha_emision || !facturaDataScript.id_sucursal || !facturaDataScript.cliente) {
             alert("Por favor, complete todos los campos obligatorios.");
+            console.log("Datos de la factura:", facturaDataScript);
+
             return;
+        } 
         }
+
+        console.log("Datos de la factura:", facturaDataScript);
 
         fetch('http://localhost/Junta_Agua/app/api/save_factura.php', {
             method: "POST",
