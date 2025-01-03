@@ -348,23 +348,25 @@ public function updateDeletedState($facturaId)
             $stmtDelete->bindParam(':idFactura', $idFactura, PDO::PARAM_INT);
             $stmtDelete->execute();
     
-            // Transformar cada código de razón en su correspondiente ID
+            // Procesar los detalles
             foreach ($detalles as &$detalle) {
-                $codigoRazon = $detalle['id_razon']; // Asegúrate de que esto corresponde al campo enviado
-                $queryRazon = "SELECT id FROM razones WHERE codigo = :codigo";
-                $stmtRazon = $this->conn->prepare($queryRazon);
-                $stmtRazon->bindParam(':codigo', $codigoRazon, PDO::PARAM_STR);
-                $stmtRazon->execute();
+                if (!ctype_digit($detalle['id_razon'])) { // Verificar si no es un número
+                    $codigoRazon = $detalle['id_razon']; // Asume que es un código
+                    $queryRazon = "SELECT id FROM razones WHERE codigo = :codigo";
+                    $stmtRazon = $this->conn->prepare($queryRazon);
+                    $stmtRazon->bindParam(':codigo', $codigoRazon, PDO::PARAM_STR);
+                    $stmtRazon->execute();
     
-                $razon = $stmtRazon->fetch(PDO::FETCH_ASSOC);
+                    $razon = $stmtRazon->fetch(PDO::FETCH_ASSOC);
     
-                if ($razon) {
-                    $detalle['id_razon'] = $razon['id'];
-                } else {
-                    return [
-                        'status' => 'error',
-                        'message' => "No se encontró una razón con el código: $codigoRazon"
-                    ];
+                    if ($razon) {
+                        $detalle['id_razon'] = $razon['id'];
+                    } else {
+                        return [
+                            'status' => 'error',
+                            'message' => "No se encontró una razón con el código: $codigoRazon"
+                        ];
+                    }
                 }
             }
     
@@ -398,6 +400,7 @@ public function updateDeletedState($facturaId)
             ];
         }
     }
+    
     
     
     
