@@ -11,6 +11,7 @@ class Cliente
         $this->conn = $db;
     }
 
+    // Obtener clientes por nombre
     public function getClientsByName($nombre)
     {
         try {
@@ -37,29 +38,142 @@ class Cliente
         }
     }
 
-    public function getClientsByCedula($cedula)
-    {
-        try {
-            // Crear una consulta para obtener los datos del cliente por cédula
-            $query = "SELECT id, identificacion, razon_social, nombre_comercial, direccion, telefono1, telefono2 
-                      FROM clientes 
-                      WHERE identificacion LIKE :cedula";
+    // Obtener clientes por cédula
+    public function getClientsByNameAndCedula($nombre, $cedula)
+{
+    try {
+        // Crear una consulta para obtener los datos del cliente por nombre y cédula
+        $query = "SELECT id, identificacion, razon_social, nombre_comercial, direccion, telefono1, telefono2 
+                  FROM clientes 
+                  WHERE razon_social LIKE :nombre AND identificacion LIKE :cedula";
 
-            // Preparar la consulta
-            $stmt = $this->conn->prepare($query);
+        // Preparar la consulta
+        $stmt = $this->conn->prepare($query);
 
-            // Agregar comodines al patrón de búsqueda
-            $likePattern = '%' . $cedula . '%';
-            $stmt->bindParam(':cedula', $likePattern, PDO::PARAM_STR);
+        // Agregar comodines al patrón de búsqueda
+        $likePatternNombre = '%' . $nombre . '%';
+        $likePatternCedula = '%' . $cedula . '%';
 
-            // Ejecutar la consulta
-            $stmt->execute();
+        // Vincular los parámetros
+        $stmt->bindParam(':nombre', $likePatternNombre, PDO::PARAM_STR);
+        $stmt->bindParam(':cedula', $likePatternCedula, PDO::PARAM_STR);
 
-            // Devolver los resultados como un array asociativo
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (Exception $e) {
-            // Manejar errores y devolver un mensaje significativo
-            return ["error" => "Error al buscar clientes por cédula: " . $e->getMessage()];
-        }
+        // Ejecutar la consulta
+        $stmt->execute();
+
+        // Devolver los resultados como un array asociativo
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        // Manejar errores y devolver un mensaje significativo
+        return ["error" => "Error al buscar clientes por nombre y cédula: " . $e->getMessage()];
     }
 }
+
+
+
+    public function getClientById($id)
+{
+    try {
+        $query = "SELECT id, identificacion, razon_social, direccion, telefono1, telefono2 FROM clientes WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        return ["error" => "Error al obtener cliente por ID: " . $e->getMessage()];
+    }
+}
+
+public function agregarCliente($identificacion, $razon_social, $direccion, $telefono1, $telefono2) {
+    $query = "INSERT INTO clientes (
+                identificacion, razon_social, nombre_comercial, direccion, telefono1, telefono2,
+                correo, tarifa, grupo, zona, ruta, vendedor, cobrador, provincia, ciudad, parroquia
+              ) 
+              VALUES (
+                :identificacion, :razon_social, 'N/A', :direccion, :telefono1, :telefono2,
+                'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'
+              )";
+    
+    $stmt = $this->conn->prepare($query);
+
+    $stmt->bindParam(':identificacion', $identificacion);
+    $stmt->bindParam(':razon_social', $razon_social);
+    $stmt->bindParam(':direccion', $direccion);
+    $stmt->bindParam(':telefono1', $telefono1);
+    $stmt->bindParam(':telefono2', $telefono2);
+
+    return $stmt->execute();
+}
+
+public function obtenerClientePorId($id) {
+    $query = "SELECT id, identificacion, razon_social, direccion, telefono1, telefono2 
+              FROM clientes 
+              WHERE id = :id";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+public function editarCliente($id, $identificacion, $razon_social, $direccion, $telefono1, $telefono2)
+{
+    try {
+        $query = "UPDATE clientes 
+                  SET identificacion = :identificacion, razon_social = :razon_social, direccion = :direccion, 
+                      telefono1 = :telefono1, telefono2 = :telefono2 
+                  WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':identificacion', $identificacion);
+        $stmt->bindParam(':razon_social', $razon_social);
+        $stmt->bindParam(':direccion', $direccion);
+        $stmt->bindParam(':telefono1', $telefono1);
+        $stmt->bindParam(':telefono2', $telefono2);
+
+        return $stmt->execute();
+    } catch (Exception $e) {
+        return ["error" => "Error al actualizar cliente: " . $e->getMessage()];
+    }
+}
+
+public function eliminarCliente($id)
+{
+    try {
+        // Crear una consulta para eliminar el cliente
+        $query = "DELETE FROM clientes WHERE id = :id";
+        
+        // Preparar la consulta
+        $stmt = $this->conn->prepare($query);
+        
+        // Vincular el parámetro
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        
+        // Ejecutar la consulta
+        return $stmt->execute();
+    } catch (Exception $e) {
+        return ["error" => "Error al eliminar cliente: " . $e->getMessage()];
+    }
+}
+
+
+public function getClientsBySearch($searchTerm) {
+    // Prepara la consulta para buscar tanto por ID como por Razón Social
+    $query = "SELECT * FROM clientes WHERE id LIKE :searchTerm OR razon_social LIKE :searchTerm";
+
+    // Preparar la sentencia
+    $stmt = $this->conn->prepare($query);
+    $searchTerm = "%" . $searchTerm . "%";  // Para búsqueda parcial
+    $stmt->bindParam(":searchTerm", $searchTerm);
+
+    // Ejecutar la consulta
+    $stmt->execute();
+
+    // Retornar los resultados
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+}
+?>
