@@ -7,14 +7,15 @@ $db = $database->getConnection();
 
 $cliente = new Cliente($db);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {    
     $identificacion = htmlspecialchars($_POST['identificacion']);
     $razon_social = htmlspecialchars($_POST['razon_social']);
     $direccion = htmlspecialchars($_POST['direccion']);
     $telefono1 = htmlspecialchars($_POST['telefono1']);
     $telefono2 = isset($_POST['telefono2']) ? htmlspecialchars($_POST['telefono2']) : '';
+    $correo = htmlspecialchars($_POST['correo']);
 
-    $resultado = $cliente->agregarCliente($identificacion, $razon_social, $direccion, $telefono1, $telefono2);
+    $resultado = $cliente->agregarCliente($identificacion, $razon_social, $direccion, $telefono1, $telefono2, $correo);
 
     if ($resultado) {
         // Redirigir a la página de gestión de usuarios después de agregar

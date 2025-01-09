@@ -14,10 +14,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $razon_social = htmlspecialchars($_POST['razon_social']);
     $direccion = htmlspecialchars($_POST['direccion']);
     $telefono1 = htmlspecialchars($_POST['telefono1']);
+    $correo = htmlspecialchars($_POST['correo']);
     $telefono2 = isset($_POST['telefono2']) ? htmlspecialchars($_POST['telefono2']) : '';
 
+
     // Realizar la edición
-    $resultado = $cliente->editarCliente($id, $identificacion, $razon_social, $direccion, $telefono1, $telefono2);
+   // Correcta llamada con el orden de parámetros adecuado
+$resultado = $cliente->editarCliente($id, $identificacion, $razon_social, $direccion, $telefono1, $telefono2, $correo);
+
 
     // Comprobar si la edición fue exitosa
     if ($resultado) {

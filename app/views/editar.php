@@ -56,8 +56,16 @@ $clienteData = $cliente->obtenerClientePorId($id);
                     <label for="telefono2">Teléfono 2:</label>
                     <input type="text" class="form-control" id="telefono2" name="telefono2" value="<?php echo htmlspecialchars($clienteData['telefono2']); ?>">
                 </div>
-            </div>
+                <div class="form-row">
+    <div class="col-md-6">
+        <label for="correo">Correo:</label>
+        <input type="email" class="form-control" id="correo" name="correo" 
+               value="<?php echo htmlspecialchars($clienteData['correo']); ?>" required>
+    </div>
+</div>  
             <button type="submit" class="btn btn-success mt-3">Guardar Cambios</button>
+            <a href="/Junta_Agua/public/?view=gestion_usuarios" class="btn btn-danger mt-3">Cancelar</a>
+        </form>
         </form>
     </div>
 </body>

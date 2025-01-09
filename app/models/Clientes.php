@@ -85,14 +85,14 @@ class Cliente
     }
 }
 
-public function agregarCliente($identificacion, $razon_social, $direccion, $telefono1, $telefono2) {
+public function agregarCliente($identificacion, $razon_social, $direccion, $telefono1, $telefono2, $correo) {
     $query = "INSERT INTO clientes (
                 identificacion, razon_social, nombre_comercial, direccion, telefono1, telefono2,
                 correo, tarifa, grupo, zona, ruta, vendedor, cobrador, provincia, ciudad, parroquia
               ) 
               VALUES (
                 :identificacion, :razon_social, 'N/A', :direccion, :telefono1, :telefono2,
-                'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'
+                :correo, 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'
               )";
     
     $stmt = $this->conn->prepare($query);
@@ -102,12 +102,14 @@ public function agregarCliente($identificacion, $razon_social, $direccion, $tele
     $stmt->bindParam(':direccion', $direccion);
     $stmt->bindParam(':telefono1', $telefono1);
     $stmt->bindParam(':telefono2', $telefono2);
+    $stmt->bindParam(':correo', $correo);
+
 
     return $stmt->execute();
 }
 
 public function obtenerClientePorId($id) {
-    $query = "SELECT id, identificacion, razon_social, direccion, telefono1, telefono2 
+    $query = "SELECT id, identificacion, razon_social, direccion, telefono1, telefono2, correo 
               FROM clientes 
               WHERE id = :id";
     $stmt = $this->conn->prepare($query);
@@ -116,12 +118,12 @@ public function obtenerClientePorId($id) {
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-public function editarCliente($id, $identificacion, $razon_social, $direccion, $telefono1, $telefono2)
+public function editarCliente($id, $identificacion, $razon_social, $direccion, $telefono1, $telefono2, $correo)
 {
     try {
         $query = "UPDATE clientes 
                   SET identificacion = :identificacion, razon_social = :razon_social, direccion = :direccion, 
-                      telefono1 = :telefono1, telefono2 = :telefono2 
+                      telefono1 = :telefono1, telefono2 = :telefono2, correo = :correo
                   WHERE id = :id";
         $stmt = $this->conn->prepare($query);
 
@@ -131,6 +133,7 @@ public function editarCliente($id, $identificacion, $razon_social, $direccion, $
         $stmt->bindParam(':direccion', $direccion);
         $stmt->bindParam(':telefono1', $telefono1);
         $stmt->bindParam(':telefono2', $telefono2);
+        $stmt->bindParam(':correo', $correo);
 
         return $stmt->execute();
     } catch (Exception $e) {
@@ -158,21 +161,20 @@ public function eliminarCliente($id)
 }
 
 
-public function getClientsBySearch($searchTerm) {
-    // Prepara la consulta para buscar tanto por ID como por Razón Social
-    $query = "SELECT * FROM clientes WHERE id LIKE :searchTerm OR razon_social LIKE :searchTerm";
+public function getClientsBySearch($buscar)
+{
+    $query = "SELECT * FROM clientes 
+              WHERE identificacion LIKE :buscar OR 
+                    razon_social LIKE :buscar OR 
+                    direccion LIKE :buscar";
 
-    // Preparar la sentencia
     $stmt = $this->conn->prepare($query);
-    $searchTerm = "%" . $searchTerm . "%";  // Para búsqueda parcial
-    $stmt->bindParam(":searchTerm", $searchTerm);
-
-    // Ejecutar la consulta
+    $stmt->bindValue(':buscar', "%$buscar%", PDO::PARAM_STR);
     $stmt->execute();
 
-    // Retornar los resultados
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
 
 
 }
