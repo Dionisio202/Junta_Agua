@@ -1,5 +1,4 @@
 export function applyFilters(data, filters) {
-  console.log("Datos originales:", data);
   return data.filter((factura) => {
     // Filtrar por estado de autorización
     const cumpleAutorizacion =

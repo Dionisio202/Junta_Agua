@@ -4,7 +4,6 @@
     <span class="user-role"><?= htmlspecialchars($rol); ?></span>
     <span class="user-name"><?= htmlspecialchars($_SESSION['Nombre'] ?? $nombre ?? 'Usuario'); ?></span>
     <span class="user-apellido"><?= htmlspecialchars($_SESSION['Apellido'] ?? 'Sin apellido'); ?></span>
-    <span class="user-id"><?= htmlspecialchars($_SESSION['idUser'] ?? 'Sin ID'); ?></span>
 </div>
 <script>
     // Definir el objeto facturaData como una variable global
@@ -830,7 +829,6 @@
             total: facturaData.total,
             detalles: detalles
         };
-        console.log("Datos de la factura:", facturaDataScript);
 
         function checkParamInURL(paramName) {
     const urlParams = new URLSearchParams(window.location.search); // Obtiene los parámetros de la URL
@@ -864,8 +862,6 @@ if (checkParamInURL('id')) {
             id_factura:idFactura,
             detalles: detalles
         };
-
-        console.log("Datos de la factura:", facturaDataScript);
         apiURL= `${baseURL}/Junta_Agua/app/api/edita_factura.php`;
         fetch(apiURL, {
             method: "POST",
@@ -897,13 +893,10 @@ if (checkParamInURL('id')) {
          // Validar los datos antes de enviarlos
         if (!facturaDataScript.fecha_emision || !facturaDataScript.id_sucursal || !facturaDataScript.cliente) {
             alert("Por favor, complete todos los campos obligatorios.");
-            console.log("Datos de la factura:", facturaDataScript);
 
             return;
         } 
         }
-
-        console.log("Datos de la factura:", facturaDataScript);
         apiURL = `${baseURL}/Junta_Agua/app/api/save_factura.php`;
         fetch(apiURL, {
             method: "POST",
@@ -1021,7 +1014,6 @@ obtenerLecturas();
             }
 
             const facturaDetails = generalResult.data;
-            console.log('Detalles generales de la factura:', facturaDetails);
 
             // Actualizar los valores en el formulario con los datos generales
             document.getElementById('fecha-emision').value = facturaDetails.fecha_emision || '';
@@ -1062,7 +1054,6 @@ obtenerLecturas();
             }
 
             const detalleFactura = detallesResult.data;
-            console.log('Detalles de la factura:', detalleFactura);
 
             // Cargar detalles de la factura en la tabla
             const tableBody = document.querySelector('.factura-detalle table tbody');

@@ -72,7 +72,6 @@ function getMedidores($input) {
     .then((response) => response.json())
     .then((data) => {
       if (data) {
-        console.log(data);
         const medidorSelect = document.getElementById("concepto");
         medidorSelect.innerHTML = ""; // Limpiar las opciones existentes
 

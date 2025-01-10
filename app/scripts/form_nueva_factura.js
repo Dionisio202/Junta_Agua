@@ -3,7 +3,6 @@ let apiURL = ``;
 export function cargarDatos(id) {
   // Cargar los datos del usuario por ID
   apiURL = `${baseURL}/Junta_Agua/app/api/get_user_data.php?id=${id}`;
-  console.log(apiURL);
   fetch(apiURL)
     .then((response) => response.json())
     .then((data) => {
