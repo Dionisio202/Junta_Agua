@@ -222,13 +222,15 @@
                         });
 
                         reportContent += `\nTotal,,${totalValue.toFixed(2)}`;
+                        const today = new Date();
+                        const formattedDate = today.toISOString().split('T')[0]; // Obtiene la fecha en formato YYYY-MM-DD
 
                         // Descargar el reporte como archivo CSV
                         const blob = new Blob([reportContent], { type: "text/csv;charset=utf-8;" });
                         const url = URL.createObjectURL(blob);
                         const link = document.createElement("a");
                         link.setAttribute("href", url);
-                        link.setAttribute("download", "ReporteFacturas.csv");
+                        link.setAttribute("download", `ReporteFacturas_${formattedDate}.csv`);
                         link.style.visibility = "hidden";
                         document.body.appendChild(link);
                         link.click();
