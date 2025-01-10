@@ -216,7 +216,8 @@ button {
 .buttons {
     display: flex;
     justify-content: flex-end;
-    margin: 2%;
+    gap: 10px; 
+    flex-wrap: wrap; 
 }
 .button-bar {
     display: flex;
