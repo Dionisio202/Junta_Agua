@@ -63,6 +63,8 @@ h2 {
 .sidebar-header h2 {
     display: none;
     font-size: 18px;
+    color: #ffffff;
+    text-align: center;
 }
 
 #toggler:checked ~ #sidebar .sidebar-header h2 {
