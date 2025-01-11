@@ -26,7 +26,7 @@
                 <input type="date" id="filter-date-from" class="filter-input">
                 <label for="filter-date-to">Hasta:</label>
                 <input type="date" id="filter-date-to" class="filter-input">
-                <button type="button" id="reset-filters" class="reset-btn">Quitar Filtros</button>
+                <button type="button" id="reset-filters">Quitar Filtros</button>
             </div>
         </div>
        

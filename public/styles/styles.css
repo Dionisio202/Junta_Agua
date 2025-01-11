@@ -21,6 +21,12 @@ h1 {
     text-align: center;
 }
 
+h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333333;
+    text-align: left;
+}
 /* Container */
 .container {
     display: flex;
@@ -219,6 +225,7 @@ button {
     gap: 10px; 
     flex-wrap: wrap; 
 }
+
 .button-bar {
     display: flex;
     margin: 2%;
@@ -261,7 +268,7 @@ button {
 
 .table-container th,
 .table-container td {
-    padding: 12px 15px;
+    padding: 10px 15px;
     text-align: left;
     border-bottom: 4px solid #ffffff;     
 }
@@ -378,18 +385,19 @@ form {
     margin-bottom: 30px;
 }
 
-.form-group {
-    margin-bottom: 15px;
-}
-
 .flex-group {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    
 }
 
 .form-item {
-    flex: 1;
-    margin-right: 20px;
+    flex: 1 1 calc(33.33% - 20px);
 }
 
 .form-item:last-child {
@@ -415,6 +423,18 @@ form {
 .form-control:focus {
     border-color: #2980b9;
     outline: none;
+}
+
+@media (max-width: 768px) {
+    .form-item {
+        flex: 1 1 calc(50% - 20px); /* En pantallas medianas, 2 columnas */
+    }
+}
+
+@media (max-width: 576px) {
+    .form-item {
+        flex: 1 1 100%; /* En pantallas pequeñas, 1 columna */
+    }
 }
 
 /* 
@@ -443,10 +463,6 @@ form {
     pointer-events: none;
     opacity: 0.5;
     cursor: not-allowed;
-}
-
-.reset-btn {
-    margin-left: 10px; 
 }
 
 .date-filter-container {
@@ -481,7 +497,7 @@ form {
         flex-direction: column; 
         gap: 5px;  
     }
-    .filter-input, .reset-btn {
+    .filter-input {
         width: 100%; 
     }
 }

@@ -119,85 +119,77 @@ $clientes = $cliente->getClientsBySearch($buscar);
         });
     </script>
 </head>
+
 <body>
-<div class="container mt-5">
-    <h1>Gestión de Clientes</h1>
-    <div class="col-md-8">
-            <div class="card p-3">
-                <h4>Agregar Cliente</h4>
-                <form action="/Junta_Agua/app/controllers/agregar_cliente.php" method="POST">
-                    <div class="row g-2">
-                        <div class="col-md-4">
-                            <label for="identificacion">Identificación:</label>
-                            <input type="text" name="identificacion" class="form-control" placeholder="Identificación" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="razon_social">Razón Social:</label>
-                            <input type="text" name="razon_social" class="form-control" placeholder="Razón Social" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="direccion">Dirección:</label>
-                            <input type="text" name="direccion" class="form-control" placeholder="Dirección" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="telefono1">Teléfono 1:</label>
-                            <input type="text" name="telefono1" class="form-control" placeholder="Teléfono 1" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="telefono2">Teléfono 2:</label>
-                            <input type="text" name="telefono2" class="form-control" placeholder="Teléfono 2">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="correo">Correo:</label>
-                            <input type="email" name="correo" class="form-control" placeholder="Correo">
-                        </div>
-                        <div class="col-md-4 d-flex align-items-end">
-                            <button type="submit" class="btn btn-success w-100">Agregar Cliente</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    <!-- <div class="user-info">
+        <span class="user-role"><?= htmlspecialchars($rol); ?></span>
+        <span class="user-name"><?= htmlspecialchars($nombre ?? 'Usuario'); ?></span>
+    </div> -->
+
+    <div class="table-container">
+        <h1>Gestión de Clientes</h1>
+        <h2>Agregar Cliente</h2>
+        <form class="form" action="/Junta_Agua/app/controllers/agregar_cliente.php" method="POST">
+            <div class="flex-group">
+            <div class="form-group form-item">
+                    <label for="identificacion">Identificación:</label>
+                    <input type="text" name="identificacion" class="form-control" placeholder="Identificación" required>
+                </div>
+                <div class="form-group form-item">
+                    <label for="razon_social">Razón Social:</label>
+                    <input type="text" name="razon_social" class="form-control" placeholder="Razón Social" required>
+                </div>
+                <div class="form-group form-item">
+                    <label for="direccion">Dirección:</label>
+                    <input type="text" name="direccion" class="form-control" placeholder="Dirección" required>
+                </div>
+                <div class="form-group form-item">
+                    <label for="telefono1">Teléfono 1:</label>
+                    <input type="text" name="telefono1" class="form-control" placeholder="Teléfono 1" required>
+                </div>
+                <div class="form-group form-item">
+                    <label for="telefono2">Teléfono 2:</label>
+                    <input type="text" name="telefono2" class="form-control" placeholder="Teléfono 2">
+                </div>
+                <div class="form-group form-item">
+                    <label for="correo">Correo:</label>
+                    <input type="email" name="correo" class="form-control" placeholder="Correo">
+                </div>
+            </div>    
+            <button type="submit" class="btn btn-success w-100">Agregar Cliente</button>
+        </form>
     
-    <!-- Contenedor del buscador y agregar cliente -->
-    <div class="row mb-4 align-items-start">
-        <!-- Buscador -->
-        <div class="col-md-4">
-            <div class="input-group mb-3">
-                <input 
-                    type="text" 
-                    id="buscar" 
-                    class="form-control" 
-                    placeholder="Buscar por ID, Identificación o Razón Social" 
-                >
-                <button id="buscar-btn" class="btn btn-primary">Buscar</button>
-            </div>
+        <h2>Buscar Cliente</h2>
+        <div class="filters">
+            <input 
+                type="text" 
+                id="buscar" 
+                class="filter-input" 
+                placeholder="Buscar por ID, Identificación o Razón Social" 
+            >
+            <button id="buscar-btn">Buscar</button>
         </div>
 
-        <!-- Formulario de agregar cliente -->
-        
+        <!-- Tabla de clientes -->
+        <h2>Lista de Clientes</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Identificación</th>
+                    <th>Razón Social</th>
+                    <th>Dirección</th>
+                    <th>Teléfono 1</th>
+                    <th>Teléfono 2</th>
+                    <th>Correo</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-clientes">
+            </tbody>
+        </table>
     </div>
 
-    <!-- Tabla de clientes -->
-    <h3>Lista de Clientes</h3>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Identificación</th>
-                <th>Razón Social</th>
-                <th>Dirección</th>
-                <th>Teléfono 1</th>
-                <th>Teléfono 2</th>
-                <th>Correo</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody id="tabla-clientes">
-            <!-- Aquí se cargarán los clientes al inicio -->
-        </tbody>
-    </table>
-</div>
+
 </body>
 </html>
