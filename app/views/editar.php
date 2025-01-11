@@ -21,12 +21,11 @@ $clienteData = $cliente->obtenerClientePorId($id);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Cliente</title>
-    <link rel="stylesheet" href="/Junta_Agua/public/styles/clientes.css">
+    <link rel="stylesheet" href="/Junta_Agua/public/styles/styles.css">
 </head>
 <body>
     <div class="table-container">
         <h1>Editar Cliente</h1>
-
         <!-- Formulario de edición de cliente -->
         <form class="form" action="/Junta_Agua/app/controllers/editar_cliente.php" method="POST">
             <input type="hidden" name="id" value="<?php echo $clienteData['id']; ?>">

@@ -233,7 +233,7 @@ button {
 
 .edit-link {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 16px 32px;
     margin: 1%;
     font-size: 16px;
     text-align: center;
@@ -252,7 +252,7 @@ button {
 
 .cancel-link {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 14px 32px;
     margin: 1%;
     font-size: 16px;
     text-align: center;
@@ -268,6 +268,7 @@ button {
 .cancel-link:hover {
     background-color: #e45252;
 }
+
 /* De la tabla */
 .table-container {
     background-color: #ffffff;

@@ -92,7 +92,7 @@ $clientes = $cliente->getClientsBySearch($buscar);
                     <td>${cliente.correo}</td>
                     <td>
                         <a href="/Junta_Agua/app/views/editar.php?id=${cliente.id}" class="edit-link">Editar</a>
-                        <form action="/Junta_Agua/app/controllers/eliminar_cliente.php" method="POST" style="display:inline;">
+                        <form action="/Junta_Agua/app/controllers/eliminar_cliente.php" method="POST" style="display:inline;" class="form">
                             <input type="hidden" name="id" value="${cliente.id}">
                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este cliente?')">Eliminar</button>
                         </form>
