@@ -231,6 +231,43 @@ button {
     margin: 2%;
 }
 
+.edit-link {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 1%;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none; 
+    background-color: #f1c947;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.edit-link:hover {
+    background-color: #f4da86;
+}
+
+.cancel-link {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 1%;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none; 
+    background-color: #c82121;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.cancel-link:hover {
+    background-color: #e45252;
+}
 /* De la tabla */
 .table-container {
     background-color: #ffffff;
@@ -447,6 +484,7 @@ form {
     align-items: center; 
     gap: 10px; 
     flex-wrap: wrap;
+    margin-bottom: 1%;
 }
 
 .filter-input {
