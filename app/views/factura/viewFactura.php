@@ -183,8 +183,8 @@
                 <!-- Columna Derecha -->
                 <div class="columna-derecha">
                     <div style="display: flex; align-items: center; justify-content: flex-start; position: relative;">
-                        <button type="button" id="actionBtn" class="btn" style="width: 200px;">Generar Ticket</button>
-                        <div class="dropdown" style="position: absolute; right: 0;">
+                        <button type="button" id="actionBtn" class="btn" style="width: 215px; text-align: left;">Generar Ticket</button>
+                        <div class="dropdown" style="position: absolute; right: 0;" gap=10px>
                             <button class="btn dropdown-btn">
                                 <i class="fa fa-caret-down"></i>
                             </button>

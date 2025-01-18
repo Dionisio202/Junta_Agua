@@ -65,13 +65,13 @@
             </div>
             <div class="buttons">
                 <button type="button" class="styled-button consultar">Consultar</button>
-            <button type="button" class="styled-button todos">Todos</button>
-            <button type="button" class="styled-button opciones">Opciones</button>
-            <button type="button" class="styled-button actualizar">Actualizar</button>
-            <button id="autorizar-btn" class="styled-button autorizar">Autorizar</button>
-        </div>
+                <button type="button" class="styled-button todos">Todos</button>
+                <button type="button" class="styled-button opciones">Opciones</button>
+                <button type="button" class="styled-button actualizar">Actualizar</button>
+                <button id="autorizar-btn" class="styled-button autorizar">Autorizar</button>
+            </div>
         
-    </div>
+        </div>
     
         <table width="100%" style="border-collapse: collapse;">
             <thead>

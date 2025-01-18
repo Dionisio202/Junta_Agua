@@ -26,14 +26,13 @@
                 <input type="date" id="filter-date-from" class="filter-input">
                 <label for="filter-date-to">Hasta:</label>
                 <input type="date" id="filter-date-to" class="filter-input">
-                <button type="button" id="reset-filters" class="reset-btn">Quitar Filtros</button>
+                <button type="button" id="reset-filters">Quitar Filtros</button>
             </div>
         </div>
-        <div style="text-align: right; margin-top: 20px;">
+       
+        <div class="buttons">
             <button type="button" id="generate-report" class="report-btn">Generar Reporte</button>
-        </div>
-
-        <div style="text-align: right;">
+            
             <?php if ($rol === 'Contador'): ?>
                 <button type="button" class="add-btn"
                     onclick="window.location.href='/Junta_Agua/public/?view=factura/nuevafactura'">Agregar nueva

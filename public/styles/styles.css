@@ -21,6 +21,17 @@ h1 {
     text-align: center;
 }
 
+h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333333;
+    text-align: left;
+}
+
+.edit-page {
+    background-color: #3282b8
+}
+
 /* Container */
 .container {
     display: flex;
@@ -52,6 +63,8 @@ h1 {
 .sidebar-header h2 {
     display: none;
     font-size: 18px;
+    color: #ffffff;
+    text-align: center;
 }
 
 #toggler:checked ~ #sidebar .sidebar-header h2 {
@@ -207,20 +220,93 @@ h1 {
     width: 100%; /* Opcional: ajusta el ancho si es necesario */
 }
 
-button {
-    padding: 10px;
-    font-size: 16px;
+button, .btn {
+    background-color: #3282B8;
+    color: #ffffff;
+    padding: 1em 2em; 
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.2s;
 }
 
+button:hover, .btn:hover {
+    background-color: #64a1ca;
+}
+
+button:disabled,.btn:disabled {
+    background-color: #b0c4de; 
+    color: #ffffff; 
+    cursor: not-allowed; 
+    opacity: 0.6; 
+    box-shadow: none; 
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+    color: #ffffff;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+}
+
+.btn-sm {
+    padding: 0.5em 1em;
+    font-size: 0.875rem;
+}
+
+/*para el grupo de botones en autorizaciones*/
 .buttons {
     display: flex;
     justify-content: flex-end;
-    margin: 2%;
+    gap: 10px; 
+    flex-wrap: wrap; 
 }
+
 .button-bar {
     display: flex;
     margin: 2%;
+}
+
+.edit-link {
+    display: inline-block;
+    padding: 14px 32px;
+    margin: 1%;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none; 
+    background-color: #f1c947;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.edit-link:hover {
+    background-color: #f4da86;
+}
+
+.cancel-link, .btn-delete {
+    display: inline-block;
+    padding: 14px 32px;
+    margin: 1%;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none; 
+    background-color: #c82121;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.cancel-link:hover, .btn-delete:hover {
+    background-color: #e45252;
 }
 
 /* De la tabla */
@@ -232,25 +318,19 @@ button {
     margin-top: 20px;
     max-width: 100%;
     overflow-x: auto; 
+    
 }
 
-.table-container button {
-    background-color: #3282B8;
-    color: #ffffff;
-    padding: 1em 2em; /* Usando unidades relativas */
-    font-size: 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-right: 10px;
-    transition: background-color 0.2s;
+.table-container-centered {
+    display: flex;
+    flex-direction: column; /* Asegura el contenido alineado verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    justify-content: center; /* Centra verticalmente */
+    min-height: 100vh; /* Ocupa toda la altura de la pantalla */
+    margin: 0 auto; /* Centrado adicional para casos especiales */
 }
 
-.table-container button:hover {
-    background-color: #64a1ca;
-}
-
-.table-container table {
+table {
     width: 100%;
     border-collapse: separate;
     margin-top: 20px;
@@ -258,35 +338,35 @@ button {
     min-width: 600px; 
 }
 
-.table-container th,
-.table-container td {
-    padding: 12px 15px;
+th,td {
+    padding: 10px 15px;
     text-align: left;
     border-bottom: 4px solid #ffffff;     
 }
 
-.table-container th {
+th {
     background-color: #3282B8;
     color: #ffffff;
 }
 
-.table-container tr {
+tr {
     background-color: #f2f2f2;
     border-radius: 8px;
     overflow: hidden;
 }
 
-.table-container th:first-child, .table-container td:first-child {
+th:first-child, 
+td:first-child {
     border-top-left-radius: 7px;
     border-bottom-left-radius: 7px;
 }
 
-.table-container th:nth-last-child(1), .table-container td:nth-last-child(1) {
+th:nth-last-child(1), td:nth-last-child(1) {
     border-top-right-radius: 7px;
     border-bottom-right-radius: 7px;
 }
 
-.table-container tr:hover {
+tr:hover {
     background-color: #e0e0e0;
 }
 
@@ -369,7 +449,7 @@ button {
 */
 
 /* Estilo del Formulario */
-form {
+.form {
     background: #ffffff;
     padding: 20px;
     border-radius: 8px;
@@ -377,18 +457,19 @@ form {
     margin-bottom: 30px;
 }
 
-.form-group {
-    margin-bottom: 15px;
-}
-
 .flex-group {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    
 }
 
 .form-item {
-    flex: 1;
-    margin-right: 20px;
+    flex: 1 1 calc(33.33% - 20px);
 }
 
 .form-item:last-child {
@@ -416,6 +497,18 @@ form {
     outline: none;
 }
 
+@media (max-width: 768px) {
+    .form-item {
+        flex: 1 1 calc(50% - 20px); /* En pantallas medianas, 2 columnas */
+    }
+}
+
+@media (max-width: 576px) {
+    .form-item {
+        flex: 1 1 100%; /* En pantallas pequeñas, 1 columna */
+    }
+}
+
 /* 
     Estilos del contenedor de filtros 
 */
@@ -426,6 +519,7 @@ form {
     align-items: center; 
     gap: 10px; 
     flex-wrap: wrap;
+    margin-bottom: 1%;
 }
 
 .filter-input {
@@ -442,10 +536,6 @@ form {
     pointer-events: none;
     opacity: 0.5;
     cursor: not-allowed;
-}
-
-.reset-btn {
-    margin-left: 10px; 
 }
 
 .date-filter-container {
@@ -480,7 +570,7 @@ form {
         flex-direction: column; 
         gap: 5px;  
     }
-    .filter-input, .reset-btn {
+    .filter-input {
         width: 100%; 
     }
 }
