@@ -63,7 +63,7 @@
                         </div>
                         <div>
                             <label for="numero">Número:</label>
-                            <input type="text" id="numero" value="200" readonly>
+                            <input type="text" id="numero" value="" readonly>
                         </div>
                         <div>
                             <label for="secuencia">Secuencia:</label>
@@ -686,6 +686,24 @@
 
 </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const sucursalSelect = document.getElementById("sucursal"); // El select de sucursales
+    const secuenciaInput = document.getElementById("numero"); // El campo que quieres actualizar
+
+    // Evento para detectar cambios en el select
+    sucursalSelect.addEventListener("change", (event) => {
+        const selectedOption = event.target.selectedOptions[0]; // Opción seleccionada del select
+        const nuevoPtoEmi = selectedOption.getAttribute("data-ptoEmi"); // Obtener el valor del atributo data-ptoEmi
+
+        if (nuevoPtoEmi) {
+            secuenciaInput.value = nuevoPtoEmi; // Actualizar el campo secuencia con el punto de emisión
+        } else {
+            console.warn("No se encontró el atributo data-ptoEmi en la opción seleccionada.");
+        }
+    });
+});
+</script>
 <style>
     .modal {
         display: none;
@@ -824,6 +842,7 @@
             cliente: facturaData.cliente, // Supongamos que el cliente es el CI/RUC
             medidor_id: facturaData.medidor_id,
             estado_factura: "Sin autorizar",
+            tipo_pago: "efectivo",
             valor_sin_impuesto: facturaData.valor_sin_impuesto,
             iva: facturaData.iva,
             total: facturaData.total,
@@ -854,7 +873,9 @@ if (checkParamInURL('id')) {
             fecha_vencimiento: facturaData.fecha_vencimiento,
             id_sucursal: facturaData.id_sucursal,
             facturador: facturaData.facturador,
-            cliente: facturaData.cliente, // Supongamos que el cliente es el CI/RUC
+            cliente: facturaData.cliente,
+            estado_factura: "Sin autorizar",
+            tipo_pago: "efectivo",
             medidor_id: facturaData.medidor_id,
             valor_sin_impuesto: facturaData.valor_sin_impuesto,
             iva: facturaData.iva,
@@ -897,7 +918,8 @@ if (checkParamInURL('id')) {
             return;
         } 
         }
-        apiURL = `${baseURL}/Junta_Agua/app/api/save_factura.php`;
+
+        apiURL = `${baseURL}/Junta_Agua/app/api/save_factura2.php`;
         fetch(apiURL, {
             method: "POST",
             headers: {
@@ -1023,6 +1045,22 @@ obtenerLecturas();
             document.getElementById('ci-ruc').value = facturaDetails.ci_ruc || '';
             document.getElementById('nombre-cliente').value = facturaDetails.cliente || '';
             document.getElementById("totalResumen").querySelector("span").textContent = facturaData.total || "0.00";
+            const sucursalSelect = document.getElementById("sucursal");
+            const idSucursal = facturaDetails.id_sucursal;
+            if (idSucursal) {
+            const options = Array.from(sucursalSelect.options); // Convertir opciones en un array
+            const selectedOption = options.find(option => option.value == idSucursal);
+
+            if (selectedOption) {
+                selectedOption.selected = true; // Seleccionar la opción correspondiente
+                // Actualizar el punto de emisión basado en la sucursal seleccionada
+                document.getElementById("numero").value = selectedOption.getAttribute("data-ptoEmi");
+            } else {
+                console.warn(`No se encontró una sucursal con el ID: ${idSucursal}`);
+            }
+        } else {
+            console.warn("No se proporcionó un ID de sucursal en los datos de la factura.");
+        }
             // Actualizar el select de medidores/conceptos
             const medidorSelect = document.getElementById("concepto");
             const medidorId = facturaDetails.medidor_id;

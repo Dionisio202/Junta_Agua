@@ -120,10 +120,14 @@ document.addEventListener("DOMContentLoaded", () => {
           } = obtenerValoresPorTipo(tipoIdentificacion);
 
           // Construir el objeto `data`
+          var secuencial = facturaData.secuencial.toString().padStart(9, "0");
+          var guiaRemision = "001-" + facturaData.pto_emision + "-" + secuencial;
           const data = {
             ambiente: facturaData.ambiente,
+            ptoEmi: facturaData.pto_emision,
             tipoIdentificacionComprador: tipoIdentificacion,
             razonSocialComprador,
+            guiaRemision,
             identificacionComprador,
             totalSinImpuestos: facturaData.totalSinImpuestos,
             correo: facturaData.correo || "default@uta.edu.ec",
@@ -171,7 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           // Enviar la factura a la API remota
           const sendResponse = await fetch(
-            "https://facturaqua.com/electronic-invoice",
+            "https://facturaquas.com/electronic-invoice",
             {
               method: "POST",
               headers: {

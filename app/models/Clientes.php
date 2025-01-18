@@ -39,23 +39,21 @@ class Cliente
     }
 
     // Obtener clientes por cédula
-    public function getClientsByNameAndCedula($nombre, $cedula)
+    public function getClientsByCedula($cedula)
 {
     try {
         // Crear una consulta para obtener los datos del cliente por nombre y cédula
         $query = "SELECT id, identificacion, razon_social, nombre_comercial, direccion, telefono1, telefono2 
                   FROM clientes 
-                  WHERE razon_social LIKE :nombre AND identificacion LIKE :cedula";
+                  WHERE identificacion LIKE :cedula";
 
         // Preparar la consulta
         $stmt = $this->conn->prepare($query);
 
         // Agregar comodines al patrón de búsqueda
-        $likePatternNombre = '%' . $nombre . '%';
         $likePatternCedula = '%' . $cedula . '%';
 
         // Vincular los parámetros
-        $stmt->bindParam(':nombre', $likePatternNombre, PDO::PARAM_STR);
         $stmt->bindParam(':cedula', $likePatternCedula, PDO::PARAM_STR);
 
         // Ejecutar la consulta

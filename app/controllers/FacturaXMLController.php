@@ -31,7 +31,7 @@ class FacturaXMLController
             $infoTributaria->addChild('claveAcceso', $data['claveAcceso'] ?? '');
             $infoTributaria->addChild('codDoc', '01');
             $infoTributaria->addChild('estab', '001');
-            $infoTributaria->addChild('ptoEmi', '001');
+            $infoTributaria->addChild('ptoEmi', $data['ptoEmi'] ?? '200');
             $infoTributaria->addChild('secuencial', str_pad($data['secuencial'] ?? '8', 9, '0', STR_PAD_LEFT));
             $infoTributaria->addChild('dirMatriz', $data['dirMatriz'] ?? 'Ambato');
 

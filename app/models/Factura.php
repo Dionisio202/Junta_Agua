@@ -1,4 +1,5 @@
 <?php
+
 // app/models/Factura.php
 require_once __DIR__ . "/../../config/database.php";
 
@@ -74,7 +75,8 @@ class Factura
     {
         $query = "
         SELECT 
-            LPAD(f.id, 9, '0') AS secuencia, 
+            f.id,
+            LPAD(f.secuencia, 9, '0') AS secuencia,
             f.fecha_emision,
             f.fecha_vencimiento,
             f.id_sucursal,
@@ -475,4 +477,49 @@ class Factura
             ];
         }
     }
+
+    public function saveFacturaCompleta($facturaCompleta)
+    {
+        try {
+            // Convertir el array completo de la factura a JSON
+            $facturaJSON = json_encode($facturaCompleta);
+
+            // Preparar la llamada al procedimiento almacenado
+            $query = "CALL ProcesarFacturaCompleta2(:facturaJSON)";
+            $stmt = $this->conn->prepare($query);
+
+            // Vincular el parámetro
+            $stmt->bindParam(':facturaJSON', $facturaJSON, PDO::PARAM_STR);
+
+            // Ejecutar la consulta
+            if ($stmt->execute()) {
+                // Obtener el resultado (ID de la factura generada)
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                if (isset($result['id_factura'])) {
+                    return [
+                        'status' => 'success',
+                        'id_factura' => $result['id_factura'],
+                        'message' => 'Factura y detalles procesados correctamente.'
+                    ];
+                } else {
+                    return [
+                        'status' => 'error',
+                        'message' => 'No se devolvió el ID de la factura.'
+                    ];
+                }
+            } else {
+                return [
+                    'status' => 'error',
+                    'message' => 'Error al procesar la factura.'
+                ];
+            }
+        } catch (PDOException $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Excepción capturada: ' . $e->getMessage()
+            ];
+        }
+    }
+
 }

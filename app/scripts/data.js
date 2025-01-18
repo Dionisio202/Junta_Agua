@@ -12,10 +12,11 @@ export async function getData() {
 
     if (Array.isArray(apiData)) {
       return apiData.map((factura) => ({
+        id : factura.id,
         autorizado: factura.fecha_autorizacion ? true : false, // Basado en fecha_autorizacion
         emision: factura.fecha_emision || "Fecha no disponible",
         serie: "001",
-        secuencia: factura.id ? factura.id.toString().padStart(9, "0") : "No disponible",
+        secuencia: factura.secuencia	 ? factura.secuencia.toString().padStart(9, "0") : "No disponible",
         cliente: `${factura.razon_social || "Cliente no disponible"} (${factura.identificacion || "ID no disponible"})`,
         importe: factura.total || "0.00",
         mensajeError: factura.mensajeError || "Sin errores",

@@ -21,7 +21,8 @@ $sucursalesArray = [];
 foreach ($sucursales as $sucursal) {
     $sucursalesArray[$sucursal['id']] = [
         'nombre' => $sucursal['nombre'],
-        'ubicacion' => $sucursal['ubicacion']
+        'ubicacion' => $sucursal['ubicacion'],
+        'pto_emision' => $sucursal['pto_emision']
     ];
 }
 

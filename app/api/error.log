@@ -1,0 +1,161 @@
+[13-Jan-2025 08:31:15 Europe/Berlin] [log_6784c14305b103.63249272] Inicio del procesamiento en el endpoint.
+[13-Jan-2025 08:31:15 Europe/Berlin] [log_6784c14305b103.63249272] Datos recibidos (JSON): {"fecha_emision":"2025-01-13","fecha_vencimiento":"2025-01-14","id_sucursal":"2","facturador":"2","cliente":4,"medidor_id":"4","estado_factura":"Sin autorizar","tipo_pago":"efectivo","valor_sin_impuesto":3,"iva":"0.00","total":3,"detalles":[{"id_razon":"2","descripcion":"Tarifa Básica Agosto","descuento":0,"subtotal":3,"cantidad":1,"precioIVA":3}]}
+[13-Jan-2025 08:31:15 Europe/Berlin] [log_6784c14305b103.63249272] Datos decodificados: Array
+(
+    [fecha_emision] => 2025-01-13
+    [fecha_vencimiento] => 2025-01-14
+    [id_sucursal] => 2
+    [facturador] => 2
+    [cliente] => 4
+    [medidor_id] => 4
+    [estado_factura] => Sin autorizar
+    [tipo_pago] => efectivo
+    [valor_sin_impuesto] => 3
+    [iva] => 0.00
+    [total] => 3
+    [detalles] => Array
+        (
+            [0] => Array
+                (
+                    [id_razon] => 2
+                    [descripcion] => Tarifa Básica Agosto
+                    [descuento] => 0
+                    [subtotal] => 3
+                    [cantidad] => 1
+                    [precioIVA] => 3
+                )
+
+        )
+
+)
+
+[13-Jan-2025 08:31:15 Europe/Berlin] [log_6784c14305b103.63249272] Campos obligatorios validados correctamente.
+[13-Jan-2025 08:31:15 Europe/Berlin] [log_6784c14305b103.63249272] Resultado del modelo: Array
+(
+    [status] => success
+    [id_factura] => 15
+    [message] => Factura y detalles procesados correctamente.
+)
+
+[13-Jan-2025 08:31:15 Europe/Berlin] PHP Warning:  Undefined array key "success" in C:\xampp\htdocs\Junta_Agua\app\api\save_factura2.php on line 56
+[13-Jan-2025 08:31:15 Europe/Berlin] [log_6784c14305b103.63249272] Error encontrado: [log_6784c14305b103.63249272] Factura y detalles procesados correctamente.
+[13-Jan-2025 08:34:16 Europe/Berlin] [log_6784c1f8c1e419.85609518] Inicio del procesamiento en el endpoint.
+[13-Jan-2025 08:34:17 Europe/Berlin] [log_6784c1f8c1e419.85609518] Datos recibidos (JSON): {"fecha_emision":"2025-01-13","fecha_vencimiento":"2025-01-14","id_sucursal":"1","facturador":"2","cliente":4,"medidor_id":"4","estado_factura":"Sin autorizar","tipo_pago":"efectivo","valor_sin_impuesto":3,"iva":"0.00","total":3,"detalles":[{"id_razon":"2","descripcion":"Tarifa Básica Septiembre","descuento":0,"subtotal":3,"cantidad":1,"precioIVA":3}]}
+[13-Jan-2025 08:34:17 Europe/Berlin] [log_6784c1f8c1e419.85609518] Datos decodificados: Array
+(
+    [fecha_emision] => 2025-01-13
+    [fecha_vencimiento] => 2025-01-14
+    [id_sucursal] => 1
+    [facturador] => 2
+    [cliente] => 4
+    [medidor_id] => 4
+    [estado_factura] => Sin autorizar
+    [tipo_pago] => efectivo
+    [valor_sin_impuesto] => 3
+    [iva] => 0.00
+    [total] => 3
+    [detalles] => Array
+        (
+            [0] => Array
+                (
+                    [id_razon] => 2
+                    [descripcion] => Tarifa Básica Septiembre
+                    [descuento] => 0
+                    [subtotal] => 3
+                    [cantidad] => 1
+                    [precioIVA] => 3
+                )
+
+        )
+
+)
+
+[13-Jan-2025 08:34:17 Europe/Berlin] [log_6784c1f8c1e419.85609518] Campos obligatorios validados correctamente.
+[13-Jan-2025 08:34:17 Europe/Berlin] [log_6784c1f8c1e419.85609518] Resultado del modelo: Array
+(
+    [status] => success
+    [id_factura] => 16
+    [message] => Factura y detalles procesados correctamente.
+)
+
+[13-Jan-2025 08:34:17 Europe/Berlin] [log_6784c1f8c1e419.85609518] Error encontrado: [log_6784c1f8c1e419.85609518] Factura y detalles procesados correctamente.
+[13-Jan-2025 08:36:26 Europe/Berlin] [log_6784c27a653820.18249301] Inicio del procesamiento en el endpoint.
+[13-Jan-2025 08:36:27 Europe/Berlin] [log_6784c27a653820.18249301] Datos recibidos (JSON): {"fecha_emision":"2025-01-14","fecha_vencimiento":"2025-01-14","id_sucursal":"2","facturador":"2","cliente":4,"medidor_id":"4","estado_factura":"Sin autorizar","tipo_pago":"efectivo","valor_sin_impuesto":3,"iva":"0.00","total":3,"detalles":[{"id_razon":"2","descripcion":"Tarifa Básica Julio","descuento":0,"subtotal":3,"cantidad":1,"precioIVA":3}]}
+[13-Jan-2025 08:36:27 Europe/Berlin] [log_6784c27a653820.18249301] Datos decodificados: Array
+(
+    [fecha_emision] => 2025-01-14
+    [fecha_vencimiento] => 2025-01-14
+    [id_sucursal] => 2
+    [facturador] => 2
+    [cliente] => 4
+    [medidor_id] => 4
+    [estado_factura] => Sin autorizar
+    [tipo_pago] => efectivo
+    [valor_sin_impuesto] => 3
+    [iva] => 0.00
+    [total] => 3
+    [detalles] => Array
+        (
+            [0] => Array
+                (
+                    [id_razon] => 2
+                    [descripcion] => Tarifa Básica Julio
+                    [descuento] => 0
+                    [subtotal] => 3
+                    [cantidad] => 1
+                    [precioIVA] => 3
+                )
+
+        )
+
+)
+
+[13-Jan-2025 08:36:27 Europe/Berlin] [log_6784c27a653820.18249301] Campos obligatorios validados correctamente.
+[13-Jan-2025 08:36:27 Europe/Berlin] [log_6784c27a653820.18249301] Resultado del modelo: Array
+(
+    [status] => success
+    [id_factura] => 17
+    [message] => Factura y detalles procesados correctamente.
+)
+
+[13-Jan-2025 08:36:27 Europe/Berlin] [log_6784c27a653820.18249301] Factura procesada correctamente. ID de factura: 17
+[13-Jan-2025 09:12:51 Europe/Berlin] [log_6784cb03cbb993.77737992] Inicio del procesamiento en el endpoint.
+[13-Jan-2025 09:12:52 Europe/Berlin] [log_6784cb03cbb993.77737992] Datos recibidos (JSON): {"fecha_emision":"2025-01-13","fecha_vencimiento":"2025-01-14","id_sucursal":"1","facturador":"2","cliente":4,"medidor_id":"4","estado_factura":"Sin autorizar","tipo_pago":"efectivo","valor_sin_impuesto":3,"iva":"0.00","total":3,"detalles":[{"id_razon":"2","descripcion":"Tarifa Básica Junio","descuento":0,"subtotal":3,"cantidad":1,"precioIVA":3}]}
+[13-Jan-2025 09:12:52 Europe/Berlin] [log_6784cb03cbb993.77737992] Datos decodificados: Array
+(
+    [fecha_emision] => 2025-01-13
+    [fecha_vencimiento] => 2025-01-14
+    [id_sucursal] => 1
+    [facturador] => 2
+    [cliente] => 4
+    [medidor_id] => 4
+    [estado_factura] => Sin autorizar
+    [tipo_pago] => efectivo
+    [valor_sin_impuesto] => 3
+    [iva] => 0.00
+    [total] => 3
+    [detalles] => Array
+        (
+            [0] => Array
+                (
+                    [id_razon] => 2
+                    [descripcion] => Tarifa Básica Junio
+                    [descuento] => 0
+                    [subtotal] => 3
+                    [cantidad] => 1
+                    [precioIVA] => 3
+                )
+
+        )
+
+)
+
+[13-Jan-2025 09:12:52 Europe/Berlin] [log_6784cb03cbb993.77737992] Campos obligatorios validados correctamente.
+[13-Jan-2025 09:12:52 Europe/Berlin] [log_6784cb03cbb993.77737992] Resultado del modelo: Array
+(
+    [status] => success
+    [id_factura] => 29
+    [message] => Factura y detalles procesados correctamente.
+)
+
+[13-Jan-2025 09:12:52 Europe/Berlin] [log_6784cb03cbb993.77737992] Factura procesada correctamente. ID de factura: 29

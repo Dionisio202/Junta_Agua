@@ -13,14 +13,13 @@ export function renderTable(page = 1) {
   const startIndex = (page - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
   const pageData = filteredData.slice(startIndex, endIndex);
-
   const tableBody = document.getElementById("table-body");
   tableBody.innerHTML = pageData
     .map((factura, index) => {
       const isDisabled = ["Eliminado", "Autorizado"].includes(factura.estado.trim());
 
       return `
-        <tr data-id="${factura.secuencia}">
+        <tr data-id="${factura.id}">
           <td><input type="checkbox" class="row-checkbox" data-index="${index}" ${isDisabled ? "disabled" : ""}></td>
           <td>${factura.autorizado ? "Sí" : "No"}</td>
           <td>${factura.emision}</td>
@@ -34,10 +33,10 @@ export function renderTable(page = 1) {
               isDisabled
                 ? `<span class="disabled-text">Acciones deshabilitadas</span>`
                 : `
-                <a href="?view=factura/nuevafactura&id=${factura.secuencia}" class="edit-icon" title="Editar">
+                <a href="?view=factura/nuevafactura&id=${factura.id}" class="edit-icon" title="Editar">
                   <i class="fas fa-edit"></i>
                 </a>
-                <a href="javascript:void(0)" class="delete-icont" title="Borrar" data-id="${factura.secuencia}">
+                <a href="javascript:void(0)" class="delete-icont" title="Borrar" data-id="${factura.id}">
                   <i class="fas fa-trash"></i>
                 </a>`
             }

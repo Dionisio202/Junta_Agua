@@ -6,7 +6,8 @@ require_once '../app/models/MedicionesModel.php';
 require_once '../config/database.php';
 
 // Función para verificar el acceso según el rol del usuario
-function checkAccess($requiredRoles) {
+function checkAccess($requiredRoles)
+{
     $userRole = $_SESSION['Rol'] ?? 'Invitado'; // Obtén el rol del usuario o asigna 'Invitado' por defecto
     return in_array($userRole, $requiredRoles); // Verifica si el rol del usuario está permitido
 }
@@ -109,6 +110,14 @@ switch ($view) {
             exit();
         }
         include '../app/views/RegistroClientes.php';
+        break;
+    case 'editar': 
+        $user = $_GET['id'];
+        if (!checkAccess(['Contador', 'Presidente'])) {
+            echo "<p>Acceso denegado. No tienes permiso para acceder a esta vista.</p>";
+            exit();
+        }
+        include '../app/views/editar.php';
         break;
 
     // ==================== ERROR 404 ====================
