@@ -1,0 +1,1041 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+/* General Reset */
+*,
+::after,
+::before {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333333;
+    text-align: left;
+}
+
+.edit-page {
+    background-color: #3282b8
+}
+
+/* Container */
+.container {
+    display: flex;
+}
+
+/* Sidebar Styles */
+#sidebar {
+    width: 80px;
+    background-color: #0F4C75;
+    color: white;
+    padding: 32px 10px 20px 15px;
+    height: 100vh;
+    position: fixed;
+    z-index: 2;
+    transition: width 0.3s ease-in-out;
+}
+
+#toggler:checked ~ #sidebar {
+    width: 200px;
+}
+
+/* Sidebar Header */
+.sidebar-header {
+    padding-top: 30%;
+    text-align: center;
+    margin-bottom: 10%;
+}
+
+.sidebar-header h2 {
+    display: none;
+    font-size: 18px;
+    color: #ffffff;
+    text-align: center;
+}
+
+#toggler:checked ~ #sidebar .sidebar-header h2 {
+    display: block;
+}
+
+/* Sidebar Navigation */
+.sidebar-nav .sidebar-link {
+    display: flex;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: background-color 0.3s, padding-left 0.3s;
+}
+
+.sidebar-nav .sidebar-link i {
+    font-size: 1.5rem;
+    margin-right: 10px;
+}
+
+.sidebar-nav .sidebar-link span {
+    display: none;
+}
+
+#toggler:checked ~ #sidebar .sidebar-link span {
+    display: inline;
+}
+
+.sidebar-nav .sidebar-link:hover {
+    background-color: #386c8f;
+    padding-left: 20px;
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+    position: absolute;
+    bottom: 20px;
+    left: 5%;
+    width: 100%;
+    text-align: center;
+}
+
+.sidebar-footer .sidebar-link {
+    transition: opacity 0.3s;
+    color: #ffffff;
+
+}
+
+.sidebar-footer .sidebar-link span {
+    color: #ffffff;
+    display: none;
+}
+
+.sidebar-footer .sidebar-link i {
+    font-size: 1.5rem;
+    margin-right: 10px;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    margin-left: 80px;
+    transition: margin-left 0.3s;
+}
+
+#toggler:checked ~ .main-content {
+    margin-left: 200px;
+}
+
+.toggle-btn {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #FFF;
+    padding: 1rem;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 3;
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        width: 0;
+        overflow: hidden;
+        padding: 0;
+    }
+
+    .sidebar-header h2 {
+        padding-top: 30px;
+        display: none;
+        font-size: 18px;
+    }
+
+    .toggle-btn {
+        width: 7%;
+        background-color: #0F4C75;
+    }
+
+    #toggler:checked ~ #sidebar {
+        height: 100%;
+        background-color: #0F4C75;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    #toggler:checked ~ .main-content {
+        margin-left: 200px;
+    }
+}
+
+/* Para el apartado de usuario */
+.user-info {
+    text-align: right; 
+    font-size: 14px; 
+    padding: 5px;
+}
+
+/* Estilos para el rol de usuario */
+.user-role {
+    display: block;
+    font-size: 14px;
+    color: #16486a; /* color de texto azul */
+    font-weight: 600; /* un poco de énfasis */
+    margin-bottom: 5px; /* separación con otros elementos */
+    text-transform: capitalize; /* capitaliza el primer carácter */
+}
+
+/* Estilos para el nombre de usuario */
+.user-name {
+    font-size: 16px; /* tamaño de fuente ligeramente mayor */
+    color: #22638e; /* un azul más suave para el nombre */
+    font-weight: 700; /* mayor énfasis en el nombre */
+    text-transform: capitalize; /* capitaliza el primer carácter */
+}
+
+.header-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0;
+}
+
+.buttons-vertical {
+    display: flex;
+    flex-direction: column; /* Alinea los elementos en columna */
+    gap: 10px; /* Espaciado entre los botones */
+    width: 100%; /* Opcional: ajusta el ancho si es necesario */
+}
+
+button, .btn {
+    background-color: #3282B8;
+    color: #ffffff;
+    padding: 1em 2em; 
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.2s;
+}
+
+button:hover, .btn:hover {
+    background-color: #64a1ca;
+}
+
+button:disabled,.btn:disabled {
+    background-color: #b0c4de; 
+    color: #ffffff; 
+    cursor: not-allowed; 
+    opacity: 0.6; 
+    box-shadow: none; 
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+    color: #ffffff;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+}
+
+.btn-sm {
+    padding: 0.5em 1em;
+    font-size: 0.875rem;
+}
+
+/*para el grupo de botones en autorizaciones*/
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px; 
+    flex-wrap: wrap; 
+}
+
+.button-bar {
+    display: flex;
+    margin: 2%;
+}
+
+.edit-link {
+    display: inline-block;
+    padding: 14px 32px;
+    margin: 1%;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none; 
+    background-color: #f1c947;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.edit-link:hover {
+    background-color: #f4da86;
+}
+
+.cancel-link, .btn-delete {
+    display: inline-block;
+    padding: 14px 32px;
+    margin: 1%;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none; 
+    background-color: #c82121;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.cancel-link:hover, .btn-delete:hover {
+    background-color: #e45252;
+}
+
+/* De la tabla */
+.table-container {
+    background-color: #ffffff;
+    padding: 2.5%; 
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    max-width: 100%;
+    overflow-x: auto; 
+    
+}
+
+.table-container-centered {
+    display: flex;
+    flex-direction: column; /* Asegura el contenido alineado verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    justify-content: center; /* Centra verticalmente */
+    min-height: 100vh; /* Ocupa toda la altura de la pantalla */
+    margin: 0 auto; /* Centrado adicional para casos especiales */
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    margin-top: 20px;
+    border-spacing: 0;
+    min-width: 600px; 
+}
+
+th,td {
+    padding: 10px 15px;
+    text-align: left;
+    border-bottom: 4px solid #ffffff;     
+}
+
+th {
+    background-color: #3282B8;
+    color: #ffffff;
+}
+
+tr {
+    background-color: #f2f2f2;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th:first-child, 
+td:first-child {
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+}
+
+th:nth-last-child(1), td:nth-last-child(1) {
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+tr:hover {
+    background-color: #e0e0e0;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .table-container {
+        padding: 3%; /* Ajusta el padding para pantallas más pequeñas */
+    }
+
+    .table-container th, .table-container td {
+        padding: 8px 10px; /* Reduce el padding en pantallas más pequeñas */
+    }
+
+    .table-container table {
+        min-width: 100%; /* Permite que la tabla se ajuste al ancho de la pantalla */
+    }
+
+    .table-container button {
+        padding: 0.8em 1.5em; /* Ajuste de tamaño de los botones */
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .table-container th, .table-container td {
+        padding: 6px 8px; /* Menos padding para pantallas pequeñas */
+    }
+
+    .table-container button {
+        padding: 0.6em 1.2em;
+        font-size: 0.8rem;
+    }
+}
+
+/* Del paginador */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pagination span, .pagination .page-control {
+    margin: 0 5px;
+    cursor: pointer;
+    color: #16486a;
+    font-weight: 600;
+}
+
+.pagination span:hover, .pagination .page-control:hover {
+    color: #22638e;
+}
+
+.pagination #current-page {
+    margin: 0 10px;
+    font-weight: 700;
+}
+
+.page-number, .page-arrow {
+    margin: 0 5px;
+    cursor: pointer;
+    color: #1b5e8b;
+    font-weight: 600;
+}
+
+.page-number.active {
+    color: #ffffff;
+    background-color: #4f90bc;
+    padding: 5px 10px;
+    border-radius: 50%;
+}
+
+.page-arrow:hover,
+.page-number:hover {
+    color: #568cc6;
+}
+
+/* 
+    Estilos de mediciones
+*/
+
+/* Estilo del Formulario */
+.form {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.flex-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    
+}
+
+.form-item {
+    flex: 1 1 calc(33.33% - 20px);
+}
+
+.form-item:last-child {
+    margin-right: 0;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+    color: #34495e;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px 12px;
+    margin-top: 5px;
+    border: 1px solid #dfe6e9;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-control:focus {
+    border-color: #2980b9;
+    outline: none;
+}
+
+@media (max-width: 768px) {
+    .form-item {
+        flex: 1 1 calc(50% - 20px); /* En pantallas medianas, 2 columnas */
+    }
+}
+
+@media (max-width: 576px) {
+    .form-item {
+        flex: 1 1 100%; /* En pantallas pequeñas, 1 columna */
+    }
+}
+
+/* 
+    Estilos del contenedor de filtros 
+*/
+
+.filters {
+    display: flex;
+    flex: 1;
+    align-items: center; 
+    gap: 10px; 
+    flex-wrap: wrap;
+    margin-bottom: 1%;
+}
+
+.filter-input {
+    width: 100%;
+    max-width: 300px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    flex: 1;  
+    border-radius: 4px;
+}
+
+.disabled-action {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.date-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    flex-wrap: wrap; 
+    margin: 10px 0; 
+}
+
+.date-filter-container label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+.date-filter-container .filter-input {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 200px;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .filters {
+        flex-direction: column; 
+        align-items: flex-start; 
+    }
+    .date-filter-container {
+        flex-direction: column; 
+        gap: 5px;  
+    }
+    .filter-input {
+        width: 100%; 
+    }
+}
+
+/*
+    Columnas index autorizacion
+*/
+.columna1{
+    padding-top: 2%;
+    padding-left: 2%; 
+    padding-right: 2%;
+    flex: 1;
+    border-right: 2px solid #ccc; 
+}
+
+.columna2{
+    padding-top: 2%;
+    padding-left: 2%; 
+    padding-right: 2%;
+    flex: 1;
+}
+
+.columna3{
+    padding-top: 2%;
+    padding-left: 2%; 
+    border-left: 2px solid #ccc; 
+    flex: 2;
+    align-content: center;
+    line-height: 190%;
+
+}
+
+/**checkbox */
+.checkboxCustom {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.checkboxCustom input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.checkboxCustom:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.checkboxCustom input:checked ~ .checkmark {
+    background-color: #2196F3;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.checkboxCustom input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.checkboxCustom .checkmark:after {
+    top: 9px;
+    left: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+/**checkbox */
+.checkboxCustom {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.checkboxCustom input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.checkboxCustom:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.checkboxCustom input:checked ~ .checkmark {
+    background-color: #2196F3;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.checkboxCustom input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.checkboxCustom .checkmark:after {
+    top: 9px;
+    left: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+/* 
+    Módulo de Autorizaciones
+ */
+
+/* filtros de autorizaciones */
+.seccion-factura, .encabezado-autorizacion {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #333;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.seccion-factura h2 {
+    font-size: 20px;
+    color: #16486a;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.seccion-factura form {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 20px;
+}
+
+.seccion-factura .columna-izquierda {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+}
+
+.seccion-factura .columna-centro {
+    flex: 3;  
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+    border-left: 2px solid #ccc; 
+    border-right: 2px solid #ccc; 
+    padding-left: 2%; 
+    padding-right: 2%;
+}
+
+.seccion-factura label {
+    display: block;
+    font-size: 14px;
+    color: #16486a;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.seccion-factura input,
+.seccion-factura select {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    color: #555;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.seccion-factura input:focus,
+.seccion-factura select:focus {
+    border-color: #3282b8;
+    outline: none;
+    box-shadow: 0 0 5px rgba(50, 130, 184, 0.3);
+}
+
+.seccion-factura .input-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.seccion-factura .input-group input {
+    flex: 1;
+}
+
+.seccion-factura .btn-busqueda {
+    padding: 8px 10px;
+    border: none;
+    background-color: #3282b8;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.seccion-factura .btn-busqueda:hover {
+    background-color: #16486a;
+}
+
+.seccion-factura .grupo {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.seccion-factura .grupo > div {
+    flex: 1 1 calc(25% - 10px); 
+}
+
+.seccion-factura .grupo-2 > div {
+    flex: 1 1 calc(50% - 10px);
+}
+
+.seccion-factura .grupo-3 > div {
+    flex: 1 1 calc(33.333% - 10px);
+}
+
+.seccion-factura .buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.seccion-factura .buttons button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #3282b8;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+
+.seccion-factura .buttons button:hover {
+    background-color: #16486a;
+}
+
+/*
+    Estilos para el select de generar
+*/
+.generar-select-container {
+    display: flex;
+    justify-content: center;
+}
+
+.generar-select-container select {
+    background-color: #3282B8;
+    color: #ffffff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    appearance: none; 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+}
+
+.generar-select-container select:hover {
+    background-color: #64a1ca;
+}
+
+.generar-select-container option {
+    font-size: 14px;
+    color: #333333;
+    background-color: #ffffff;
+    padding: 10px;
+}
+
+/* Sección de Datos Documento Relacionado */
+.datos-resumen {
+    display: flex;
+    gap: 20px; 
+    align-items: flex-start; 
+}
+
+.datos-documento-relacionado {
+    flex: 2; 
+    margin: 1%; 
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+}
+
+.datos-documento-relacionado h3, .resumen-totales h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #16486a;
+    margin-bottom: 15px;
+}
+
+.field-group {
+    display: flex;
+    flex-direction: column; 
+    gap: 10px; 
+}
+
+.datos-documento-relacionado label {
+    font-weight: 600;
+    color: #16486a;
+}
+
+.datos-documento-relacionado input {
+    width: 30%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f2f2f2;
+    color: #555;
+    pointer-events: none; 
+}
+
+.datos-documento-relacionado input:focus {
+    outline: none;
+    border-color: #ccc;
+    box-shadow: none;
+}
+
+/* Resumen de Totales */
+    .resumen-totales {
+        size: 25%;
+        margin-left: auto;
+        display: block;
+        text-align: right;
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+.resumen-totales p {
+    margin: 1px 0; 
+}
+
+.resumen-totales span {
+    font-weight: bold; 
+}
+
+/* 
+    Apartado de estilos para el Modal
+ */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    width: 50%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+}
+
+.modal-content h2 {
+    font-size: 20px;
+    color: #16486a;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#modal-content {
+    margin-bottom: 20px;
+}
+
+/* Botón de Cerrar del modal */
+.close-modal {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #3282b8;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.close-modal:hover {
+    background-color: #16486a;
+}
